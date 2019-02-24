@@ -9,6 +9,6 @@ const Nav = () => (
       <a>Home!</a>
     </Link>
   </div>
-)
+);
 
 export default Nav;

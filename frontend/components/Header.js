@@ -3,7 +3,7 @@ import Nav from './Nav';
 const Header = () => (
   <div>
     <div className="bar">
-      <a href="" className="">Sick Fits</a>
+      <a href="/">Sick Fits</a>
       <Nav />
     </div>
     <div className="sub-bar">
@@ -11,6 +11,6 @@ const Header = () => (
     </div>
     <div>Cart</div>
   </div>
-)
+);
 
 export default Header;

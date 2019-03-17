@@ -33,8 +33,8 @@ class Item extends Component {
           >
             <a>Edit</a>
           </Link>
-          <button>Add to Cart</button>
-          <button>Delete</button>
+          <button type="button">Add to Cart</button>
+          <button type="button">Delete</button>
         </div>
       </ItemStyles>
     );

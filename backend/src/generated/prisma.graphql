@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/davy-hausser/sick-fits/dev
-# timestamp: Sat Mar 16 2019 12:46:03 GMT+0100 (Central European Standard Time)
+# timestamp: Sat Mar 23 2019 10:37:01 GMT+0100 (Central European Standard Time)
 
 type AggregateItem {
   count: Int!
@@ -38,6 +38,7 @@ type ItemConnection {
 }
 
 input ItemCreateInput {
+  id: ID
   title: String!
   description: String!
   image: String
@@ -505,6 +506,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   email: String!
 }

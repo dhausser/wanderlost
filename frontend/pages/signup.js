@@ -8,13 +8,11 @@ const Columns = styled.div`
 `;
 
 const SignupPage = props => (
-  <div>
-    <Columns>
-      <Signup />
-      <Signup />
-      <Signup />
-    </Columns>
-  </div>
+  <Columns>
+    <Signup />
+    <Signup />
+    <Signup />
+  </Columns>
 );
 
 export default SignupPage;

@@ -1,25 +1,24 @@
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
 
-require('dotenv').config({ path: 'variables.env' });
-const creatServer = require('./createServer');
-const db = require('./db');
+require('dotenv').config({ path: 'variables.env' })
+const creatServer = require('./createServer')
+const db = require('./db')
 
-const server = creatServer();
+const server = creatServer()
 
-server.express.use(cookieParser());
+server.express.use(cookieParser())
 
 // decode the JWT so we can get the user id and password
 server.express.use((req, res, next) => {
-  const { token } = req.cookies;
+  const { token } = req.cookies
   if (token) {
-    console.log('There is a token');
-    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    const { userId } = jwt.verify(token, process.env.APP_SECRET)
     // put the userId onto the req for future requests to access
-    req.userId = userId;
+    req.userId = userId
   }
-  next();
-});
+  next()
+})
 
 server.start(
   {
@@ -29,6 +28,6 @@ server.start(
     },
   },
   deets => {
-    console.log(`Server is now running on port http://localhost:${deets.port}`);
-  }
-);
+    console.log(`Server is now running on port http://localhost:${deets.port}`)
+  },
+)

@@ -54,3 +54,22 @@ export default function Items(props) {
     </Center>
   )
 }
+
+// export default props => (
+//   <Query
+//     query={ALL_ITEMS_QUERY}
+//     variables={{ skip: props.page * perPage - perPage }}
+//   >
+//     {({ items }) => (
+//       <Center>
+//         <ItemsList>
+//           {items.map(item => (
+//             <Item key={item.id} item={item} />
+//           ))}
+//         </ItemsList>
+//         <Pagination page={props.page} />
+//       </Center>
+//     )}
+//     )
+//   </Query>
+// )

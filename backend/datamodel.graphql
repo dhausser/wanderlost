@@ -12,7 +12,7 @@ type User {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   name: String!
-  email: String!
+  email: String! @unique
   password: String!
   resetToken: String
   resetTokenExpiry: Float

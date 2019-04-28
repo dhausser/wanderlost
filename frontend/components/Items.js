@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import gql from 'graphql-tag'
+import { gql } from 'apollo-boost'
 import styled from 'styled-components'
 import Item from './Item'
 import Pagination from './Pagination'

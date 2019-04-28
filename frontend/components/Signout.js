@@ -1,7 +1,7 @@
-import React from 'react';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import { CURRENT_USER_QUERY } from './User';
+import React from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import { CURRENT_USER_QUERY } from './User'
 
 const SIGN_OUT_MUTATION = gql`
   mutation SIGN_OUT_MUTATION {
@@ -9,7 +9,7 @@ const SIGN_OUT_MUTATION = gql`
       message
     }
   }
-`;
+`
 
 const Signout = props => (
   <Mutation
@@ -22,5 +22,5 @@ const Signout = props => (
       </button>
     )}
   </Mutation>
-);
-export default Signout;
+)
+export default Signout

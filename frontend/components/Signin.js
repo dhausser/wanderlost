@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { gql } from 'apollo-boost'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'

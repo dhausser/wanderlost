@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
-import { CURRENT_USER_QUERY } from './User';
+import React, { Component } from 'react'
+import { Mutation } from 'react-apollo'
+import { gql } from 'apollo-boost'
+import Form from './styles/Form'
+import Error from './ErrorMessage'
+import { CURRENT_USER_QUERY } from './User'
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -17,18 +17,18 @@ const SIGNUP_MUTATION = gql`
       name
     }
   }
-`;
+`
 
 class Signup extends Component {
   state = {
     name: '',
     password: '',
     email: '',
-  };
+  }
 
   saveToState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   render() {
     return (
@@ -41,9 +41,9 @@ class Signup extends Component {
           <Form
             method="post"
             onSubmit={async e => {
-              e.preventDefault();
-              await signup();
-              this.setState({ name: '', email: '', password: '' });
+              e.preventDefault()
+              await signup()
+              this.setState({ name: '', email: '', password: '' })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
@@ -85,8 +85,8 @@ class Signup extends Component {
           </Form>
         )}
       </Mutation>
-    );
+    )
   }
 }
 
-export default Signup;
+export default Signup

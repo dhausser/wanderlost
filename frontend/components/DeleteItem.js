@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { gql } from 'apollo-boost'
 import PropTypes from 'prop-types'
 import { ALL_ITEMS_QUERY } from './Items'
 

@@ -8,7 +8,7 @@ enum Permission {
 }
 
 type User {
-  id: ID! @id
+  id: ID! @unique @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   name: String!
@@ -17,10 +17,11 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
+  cart: [CartItem!]!
 }
 
 type Item {
-  id: ID! @id
+  id: ID! @unique @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   title: String!
@@ -28,5 +29,12 @@ type Item {
   image: String
   largeImage: String
   price: Int!
+  user: User!
+}
+
+type CartItem {
+  id: ID! @unique @id
+  quantity: Int! @default(value: 1)
+  item: Item #relationship to item
   user: User!
 }

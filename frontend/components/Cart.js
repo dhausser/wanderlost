@@ -22,21 +22,19 @@ export default () => {
   const toggleCart = useMutation(TOGGLE_CART_MUTATION)
   const { data } = useQuery(LOCAL_STATE_QUERY)
   return (
-    console.log(data) || (
-      <CartStyles open={data.cartOpen}>
-        <header>
-          <CloseButton onClick={toggleCart} title="close">
-            &times;
-          </CloseButton>
-          <Supreme>Your Cart</Supreme>
-          <p>You have __ Items in your cart.</p>
-        </header>
+    <CartStyles open={data.cartOpen}>
+      <header>
+        <CloseButton onClick={toggleCart} title="close">
+          &times;
+        </CloseButton>
+        <Supreme>Your Cart</Supreme>
+        <p>You have __ Items in your cart.</p>
+      </header>
 
-        <footer>
-          <p>$10.10</p>
-          <SickButton>Checkout</SickButton>
-        </footer>
-      </CartStyles>
-    )
+      <footer>
+        <p>$10.10</p>
+        <SickButton>Checkout</SickButton>
+      </footer>
+    </CartStyles>
   )
 }

@@ -29,7 +29,8 @@ export default () => {
   } = useQuery(LOCAL_STATE_QUERY)
   return (
     <User>
-      {({ data: { me } }) => {
+      {({ data }) => {
+        const me = data ? data.me : null
         if (!me) return null
         return (
           <CartStyles open={cartOpen}>

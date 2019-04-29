@@ -4,6 +4,7 @@ import { TOGGLE_CART_MUTATION } from './Cart'
 import NavStyles from './styles/NavStyles'
 import User from './User'
 import Signout from './Signout'
+import CartCount from './CartCount'
 
 export default function() {
   const toggleCart = useMutation(TOGGLE_CART_MUTATION)
@@ -30,6 +31,12 @@ export default function() {
                 <Signout />
                 <button type="button" onClick={toggleCart}>
                   My Cart
+                  <CartCount
+                    count={me.cart.reduce(
+                      (tally, cartItem) => tally + cartItem.quantity,
+                      0,
+                    )}
+                  />
                 </button>
               </>
             )}

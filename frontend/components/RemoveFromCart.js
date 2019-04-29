@@ -24,6 +24,7 @@ const BigButton = styled.button`
 `
 export default function RemoveFromCart({ id }) {
   function update(cache, payload) {
+    // This gets called as soon as we get a response back from the server after a mutation has been performed
     // 1. first read the cache
     const data = cache.readQuery({ query: CURRENT_USER_QUERY })
     // 2. remove that item from the cart

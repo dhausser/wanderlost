@@ -19,7 +19,7 @@ const CartItemStyles = styled.li`
   }
 `
 
-export default function({ cartItem }) {
+export default function CartItem({ cartItem }) {
   // first check if that item exists
   if (!cartItem.item)
     return (
@@ -46,6 +46,6 @@ export default function({ cartItem }) {
   )
 }
 
-CartItemStyles.propTypes = {
+CartItem.propTypes = {
   cartItem: PropTypes.object.isRequired,
 }

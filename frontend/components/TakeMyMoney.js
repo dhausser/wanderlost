@@ -27,17 +27,18 @@ function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)
 }
 
-function onToken(res, createOrder) {
+async function onToken(res, createOrder) {
   console.log('On Token Called!')
   console.log(res.id)
   // Manually call the mutation once we have the stripe token
-  createOrder({
+  const order = await createOrder({
     variables: {
       token: res.id,
     },
   }).catch(err => {
     alert(err.message)
   })
+  console.log(order)
 }
 
 export default props => (
@@ -52,7 +53,7 @@ export default props => (
             amount={calcTotalPrice(me.cart)}
             name="Sick Fits"
             description={`Order of ${totalItems(me.cart)} items!`}
-            // image={me.cart[0].item && me.cart[0].item.image}
+            image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
             stripeKey="pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA"
             currency="USD"
             email={me.email}

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
-import { gql } from 'apollo-boost'
-import Form from './styles/Form'
-import Error from './ErrorMessage'
-import { CURRENT_USER_QUERY } from './User'
+import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import CURRENT_USER_QUERY from './User';
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
@@ -21,60 +20,52 @@ const RESET_MUTATION = gql`
       name
     }
   }
-`
+`;
 
-export default function Reset(props) {
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+export default function Reset({ resetToken }) {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [reset, { loading, error }] = useMutation(RESET_MUTATION);
 
   return (
-    <Mutation
-      mutation={RESET_MUTATION}
-      variables={{
-        resetToken: props.resetToken,
-        password,
-        confirmPassword,
+    <Form
+      method="post"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await reset({
+          variables: { resetToken, password, confirmPassword },
+          refetchQueries: [{ query: CURRENT_USER_QUERY }],
+        });
+        setPassword('');
+        setConfirmPassword('');
       }}
-      refetchQueries={[{ query: CURRENT_USER_QUERY }]}
     >
-      {(reset, { error, loading }) => (
-        <Form
-          method="post"
-          onSubmit={async e => {
-            e.preventDefault()
-            await reset()
-            setPassword('')
-            setConfirmPassword('')
-          }}
-        >
-          <fieldset disabled={loading} aria-busy={loading}>
-            <h2>Reset your password</h2>
-            <Error error={error} />
-            <label htmlFor="password">
+      <fieldset disabled={loading} aria-busy={loading}>
+        <h2>Reset your password</h2>
+        <Error error={error} />
+        <label htmlFor="password">
               Password
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </label>
-            <label htmlFor="confirmPassword">
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <label htmlFor="confirmPassword">
               Confirm Password
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="confirmPassword"
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-              />
-            </label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </label>
 
-            <button type="submit">Reset your password</button>
-          </fieldset>
-        </Form>
-      )}
-    </Mutation>
-  )
+        <button type="submit">Reset your password</button>
+      </fieldset>
+    </Form>
+  );
 }

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from '@apollo/client'
 import { CURRENT_USER_QUERY } from './User'
 import Signin from './Signin'
 

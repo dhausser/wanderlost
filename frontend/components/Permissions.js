@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useQuery, useMutation } from 'react-apollo-hooks'
-import { gql } from 'apollo-boost'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import PropTypes from 'prop-types'
 import Error from './ErrorMessage'
 import Table from './styles/Table'

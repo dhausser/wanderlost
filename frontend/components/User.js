@@ -1,6 +1,4 @@
-import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
-import PropTypes from 'prop-types'
+import { gql } from '@apollo/client';
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -22,17 +20,6 @@ const CURRENT_USER_QUERY = gql`
       }
     }
   }
-`
+`;
 
-const User = props => (
-  <Query {...props} query={CURRENT_USER_QUERY}>
-    {payload => props.children(payload)}
-  </Query>
-)
-
-User.propTypes = {
-  children: PropTypes.func.isRequired,
-}
-
-export default User
-export { CURRENT_USER_QUERY }
+export default CURRENT_USER_QUERY;

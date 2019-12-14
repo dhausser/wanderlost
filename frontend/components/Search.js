@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import Downshift, { resetIdCounter } from 'downshift'
-import Router from 'next/router'
-import { ApolloConsumer } from 'react-apollo'
-import { gql } from 'apollo-boost'
-import debounce from 'lodash.debounce'
-import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
+import React, { useState } from 'react';
+import Downshift, { resetIdCounter } from 'downshift';
+import Router from 'next/router';
+import { ApolloConsumer, gql } from '@apollo/client';
+import debounce from 'lodash.debounce';
+import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_ITEM_QUERY = gql`
   query SEARCH_ITEM_QUERY($searchTerm: String!) {
@@ -18,7 +17,7 @@ const SEARCH_ITEM_QUERY = gql`
       title
     }
   }
-`
+`;
 
 function routeToItem(item) {
   Router.push({
@@ -26,33 +25,33 @@ function routeToItem(item) {
     query: {
       id: item.id,
     },
-  })
+  });
 }
 
 export default function Autocomplete() {
-  const [loading, setLoading] = useState(false)
-  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
 
   const onChange = debounce(async (e, client) => {
-    console.log('Searching...')
+    console.log('Searching...');
     // Turn loading on
-    setLoading(true)
+    setLoading(true);
     // Manually query apollo client
     const res = await client.query({
       query: SEARCH_ITEM_QUERY,
       variables: { searchTerm: e.target.value },
-    })
-    setItems(res.data.items)
-    setLoading(false)
-  }, 350)
+    });
+    setItems(res.data.items);
+    setLoading(false);
+  }, 350);
 
-  resetIdCounter()
+  resetIdCounter();
 
   return (
     <SearchStyles>
       <Downshift
         onChange={routeToItem}
-        itemToString={item => (item === null ? '' : item.title)}
+        itemToString={(item) => (item === null ? '' : item.title)}
       >
         {({
           getInputProps,
@@ -63,16 +62,16 @@ export default function Autocomplete() {
         }) => (
           <div>
             <ApolloConsumer>
-              {client => (
+              {(client) => (
                 <input
                   {...getInputProps({
                     type: 'search',
                     placeholder: 'Search For An Item',
                     id: 'search',
                     className: loading ? 'loading' : '',
-                    onChange: e => {
-                      e.persist()
-                      onChange(e, client)
+                    onChange: (e) => {
+                      e.persist();
+                      onChange(e, client);
                     },
                   })}
                 />
@@ -99,5 +98,5 @@ export default function Autocomplete() {
         )}
       </Downshift>
     </SearchStyles>
-  )
+  );
 }

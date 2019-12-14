@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useMutation } from 'react-apollo-hooks'
+import { useMutation } from '@apollo/client'
 import { TOGGLE_CART_MUTATION } from './Cart'
 import NavStyles from './styles/NavStyles'
 import User from './User'

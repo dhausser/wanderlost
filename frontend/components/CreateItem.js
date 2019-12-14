@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-import { Mutation } from 'react-apollo'
-import Router from 'next/router'
-import { gql } from 'apollo-boost'
-import Form from './styles/Form'
-import formatMoney from '../lib/formatMoney'
-import Error from './ErrorMessage'
+import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import Router from 'next/router';
+import Form from './styles/Form';
+import formatMoney from '../lib/formatMoney';
+import Error from './ErrorMessage';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -24,126 +23,118 @@ const CREATE_ITEM_MUTATION = gql`
       id
     }
   }
-`
+`;
 
-class CreateItem extends Component {
-  state = {
-    title: 'Cool shoes',
-    description: 'I love those shoes',
-    image: 'dog.jpg',
-    largeImage: 'large-dog.jpg',
-    price: 1000,
-  }
+const uploadFile = async (e) => {
+  console.log('Uploading file');
+  const { files } = e.target;
+  const data = new FormData();
+  data.append('file', files[0]);
+  data.append('upload_preset', 'sickfits');
 
-  handleChange = e => {
-    const { name, type, value } = e.target
-    const val = type === 'number' ? parseFloat(value) : value
-    this.setState({ [name]: val })
-  }
+  const res = await fetch(
+    'https://api.cloudinary.com/v1_1/davyhausser/image/upload',
+    {
+      method: 'POST',
+      body: data,
+    },
+  );
+  const file = await res.json();
+  console.log(file);
+  this.setState({
+    image: file.secure_url,
+    largeImage: file.eager[0].secure_url,
+  });
+};
 
-  uploadFile = async e => {
-    console.log('Uploading file')
-    const { files } = e.target
-    const data = new FormData()
-    data.append('file', files[0])
-    data.append('upload_preset', 'sickfits')
+function CreateItem() {
+  const [title, setTitle] = useState('Cool shoes');
+  const [description, setDescription] = useState('Cool shoes');
+  const [image] = useState('dog.jpg');
+  const [largeImage] = useState('large-dog.jpg');
+  const [price, setPrice] = useState(1000);
 
-    const res = await fetch(
-      'https://api.cloudinary.com/v1_1/davyhausser/image/upload',
-      {
-        method: 'POST',
-        body: data,
-      },
-    )
-    const file = await res.json()
-    console.log(file)
-    this.setState({
-      image: file.secure_url,
-      largeImage: file.eager[0].secure_url,
-    })
-  }
+  const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
+    variables: {
+      title, description, image, largeImage, price,
+    },
+  });
 
-  render() {
-    return (
-      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
-        {(createItem, { loading, error }) => (
-          <Form
-            onSubmit={async e => {
-              // Stop the form from submitting
-              e.preventDefault()
-              // Call the mutation
-              const res = await createItem()
-              // Change them to the single item page
-              console.log(res)
-              Router.push({
-                pathname: '/item',
-                query: { id: res.data.createItem.id },
-              })
-            }}
-          >
-            <Error error={error} />
-            <fieldset disabled={loading} aria-busy={loading}>
-              <label htmlFor="file">
-                Image
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  placeholder="Upload an image"
-                  required
-                  onChange={this.uploadFile}
-                />
-                {this.state.image && (
-                  <img
-                    src={this.state.image}
-                    width="200"
-                    alt="Upload Preview"
-                  />
-                )}
-              </label>
-              <label htmlFor="title">
-                Title
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  required
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="price">
-                Price
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="Price"
-                  required
-                  value={this.state.price}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="Description">
-                Description
-                <textarea
-                  id="description"
-                  name="description"
-                  placeholder="Enter A Description"
-                  required
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <button type="submit">Submit</button>
-            </fieldset>
-          </Form>
-        )}
-      </Mutation>
-    )
-  }
+  return (
+    <Form
+      onSubmit={async (e) => {
+        // Stop the form from submitting
+        e.preventDefault();
+        // Call the mutation
+        const res = await createItem();
+        // Change them to the single item page
+        console.log(res);
+        Router.push({
+          pathname: '/item',
+          query: { id: res.data.createItem.id },
+        });
+      }}
+    >
+      <Error error={error} />
+      <fieldset disabled={loading} aria-busy={loading}>
+        <label htmlFor="file">
+          Image
+          <input
+            type="file"
+            id="file"
+            name="file"
+            placeholder="Upload an image"
+            required
+            onChange={uploadFile}
+          />
+          {image && (
+            <img
+              src={image}
+              width="200"
+              alt="Upload Preview"
+            />
+          )}
+        </label>
+        <label htmlFor="title">
+          Title
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Title"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
+        <label htmlFor="price">
+          Price
+          <input
+            type="number"
+            id="price"
+            name="price"
+            placeholder="Price"
+            required
+            value={price}
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
+          />
+        </label>
+        <label htmlFor="Description">
+          Description
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Enter A Description"
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit</button>
+      </fieldset>
+    </Form>
+  );
 }
 
-export default CreateItem
-export { CREATE_ITEM_MUTATION }
+export default CreateItem;
+export { CREATE_ITEM_MUTATION };

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+/* eslint-disable no-unused-expressions */
+import React from 'react';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from './Header';
 import Meta from './Meta';
 
@@ -15,16 +16,16 @@ const theme = {
 
 const StyledPage = styled.div`
   background: white;
-  color: ${props => props.theme.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
 `;
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'radnika_next';
     src: url('/static/radnikanext-medium-webfont.woff2') format('woff2');
@@ -51,18 +52,17 @@ injectGlobal`
   }
 `;
 
-class Page extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <StyledPage>
-          <Meta />
-          <Header />
-          <Inner>{this.props.children}</Inner>
-        </StyledPage>
-      </ThemeProvider>
-    );
-  }
+function Page({ children }) {
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <StyledPage>
+        <Meta />
+        <Header />
+        <Inner>{children}</Inner>
+      </StyledPage>
+    </ThemeProvider>
+  );
 }
 
 export default Page;

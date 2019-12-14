@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import casual from 'casual';
 
 // seed it so we get consistent results
@@ -44,7 +45,7 @@ const fakeOrder = () => ({
   user: fakeUser(),
 });
 
-const fakeCartItem = overrides => ({
+const fakeCartItem = (overrides) => ({
   __typename: 'CartItem',
   id: 'omg123',
   quantity: 3,

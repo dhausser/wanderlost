@@ -1,14 +1,14 @@
-import { useQuery } from '@apollo/client'
-import { CURRENT_USER_QUERY } from './User'
-import Signin from './Signin'
+import React, { useQuery } from '@apollo/client';
+import CURRENT_USER_QUERY from './User';
+import Signin from './Signin';
 
 export default function PleaseSignIn(props) {
-  const { loading, error, data } = useQuery(CURRENT_USER_QUERY)
+  const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
   if (loading) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
   if (error) {
-    return <p>Error: {error.message}</p>
+    return <p>Error: {error.message}</p>;
   }
   if (!data.me) {
     return (
@@ -16,7 +16,7 @@ export default function PleaseSignIn(props) {
         <p>Please Sign In before continuing</p>
         <Signin />
       </div>
-    )
+    );
   }
-  return props.children
+  return props.children;
 }

@@ -116,7 +116,7 @@ function CreateItem() {
             placeholder="Price"
             required
             value={price}
-            onChange={(e) => setPrice(parseFloat(e.target.value))}
+            onChange={(e) => setPrice(formatMoney(parseFloat(e.target.value)))}
           />
         </label>
         <label htmlFor="Description">

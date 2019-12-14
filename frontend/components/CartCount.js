@@ -1,7 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import styled from 'styled-components'
+import React from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import styled from 'styled-components';
 
 const AnimationStyles = styled.span`
   position: relative;
@@ -24,10 +23,10 @@ const AnimationStyles = styled.span`
     transform: rotateX(0);
     transform: scale(4) rotateX(0.5turn);
   }
-`
+`;
 
 const Dot = styled.div`
-  background: ${props => props.theme.red};
+  background: ${(props) => props.theme.red};
   color: white;
   border-radius: 50%;
   padding: 0.5rem;
@@ -37,7 +36,7 @@ const Dot = styled.div`
   font-weight: 100;
   font-feature-settings: 'tnum';
   font-variant-numeric: tabular-nums;
-`
+`;
 
 export default ({ count }) => (
   <AnimationStyles>
@@ -53,4 +52,4 @@ export default ({ count }) => (
       </CSSTransition>
     </TransitionGroup>
   </AnimationStyles>
-)
+);

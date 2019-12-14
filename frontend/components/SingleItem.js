@@ -37,8 +37,8 @@ const SINGLE_ITEM_QUERY = gql`
 function SingleItem({ id }) {
   const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
 
-  if (error) return <Error error={error} />;
   if (loading) return <p>Loading...</p>;
+  if (error) return <Error error={error} />;
   if (!data.item) return <p>No Item Found for {id}</p>;
   const { item } = data;
   return (

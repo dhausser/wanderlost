@@ -9,6 +9,7 @@ import CartItem from './CartItem';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import formatMoney from '../lib/formatMoney';
 import TakeMyMoney from './TakeMyMoney';
+import Error from './ErrorMessage';
 
 export const LOCAL_STATE_QUERY = gql`
   query {
@@ -23,11 +24,14 @@ export const TOGGLE_CART_MUTATION = gql`
 `;
 
 export default () => {
-  const user = useQuery(CURRENT_USER_QUERY);
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
   const localState = useQuery(LOCAL_STATE_QUERY);
   const toggleCart = useMutation(TOGGLE_CART_MUTATION);
 
-  const { me } = user.data;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <Error error={error} />;
+
+  const { me } = data;
   if (!me) return null;
   return (
     <CartStyles open={localState.data.cartOpen}>

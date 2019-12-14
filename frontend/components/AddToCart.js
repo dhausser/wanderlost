@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { CURRENT_USER_QUERY } from './User';
+import CURRENT_USER_QUERY from './User';
 
 const ADD_TO_CART_MUTATION = gql`
   mutation addToCart($id: ID!) {

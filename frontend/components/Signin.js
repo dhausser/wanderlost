@@ -9,6 +9,7 @@ const SIGNIN_MUTATION = gql`
     signin(email: $email, password: $password) {
       id
       email
+      name
     }
   }
 `;
@@ -18,8 +19,8 @@ export default function Signin() {
   const [password, setPassword] = useState('');
 
   const [signup, { loading, error }] = useMutation(SIGNIN_MUTATION, {
-    variables: { email, password },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    variables: { email, password },
   });
 
   return (

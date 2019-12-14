@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-import { gql, useQuery, useMutation } from '@apollo/client'
-import PropTypes from 'prop-types'
-import Error from './ErrorMessage'
-import Table from './styles/Table'
-import SickButton from './styles/SickButton'
+import React, { useState, useEffect } from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
+import Error from './ErrorMessage';
+import Table from './styles/Table';
+import SickButton from './styles/SickButton';
 
 const possiblePermissions = [
   'ADMIN',
@@ -12,7 +12,7 @@ const possiblePermissions = [
   'ITEMUPDATE',
   'ITEMDELETE',
   'PERMISSIONUPDATE',
-]
+];
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
   mutation updatePermissions($permissions: [Permission], $userId: ID!) {
@@ -23,7 +23,7 @@ const UPDATE_PERMISSIONS_MUTATION = gql`
       email
     }
   }
-`
+`;
 
 const ALL_USERS_QUERY = gql`
   query {
@@ -34,11 +34,11 @@ const ALL_USERS_QUERY = gql`
       permissions
     }
   }
-`
+`;
 
 export default function Permissions() {
-  const { loading, error, data } = useQuery(ALL_USERS_QUERY)
-  if (loading) return <p>Loading...</p>
+  const { loading, error, data } = useQuery(ALL_USERS_QUERY);
+  if (loading) return <p>Loading...</p>;
   return (
     <div>
       <Error error={error} />
@@ -49,58 +49,57 @@ export default function Permissions() {
             <tr>
               <th>Name</th>
               <th>Email</th>
-              {possiblePermissions.map(permission => (
+              {possiblePermissions.map((permission) => (
                 <th key={permission}>{permission}</th>
               ))}
-              <th>👇</th>
+              <th><span role="img" aria-label="finger-pointing-down">👇</span></th>
             </tr>
           </thead>
           <tbody>
-            {data.users.map(user => (
+            {data.users.map((user) => (
               <UserPermission user={user} key={user.id} />
             ))}
           </tbody>
         </Table>
       </div>
     </div>
-  )
+  );
 }
 
-function UserPermission(props) {
-  const { user } = props
-  const [permissions, setPermissions] = useState(props.user.permissions)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+function UserPermission({ user }) {
+  const [permissions, setPermissions] = useState(user.permissions);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const updatePermissions = useMutation(UPDATE_PERMISSIONS_MUTATION, {
     variables: { permissions, userId: user.id },
-  })
+  });
   useEffect(() => {
     async function update() {
       try {
-        await updatePermissions()
-        setLoading(false)
+        await updatePermissions();
+        setLoading(false);
       } catch (e) {
-        setError(e)
+        setError(e);
       }
     }
-    update()
-  }, [permissions])
+    update();
+  }, [permissions]);
 
   function handlePermissionChange(e) {
-    const checkbox = e.target
+    const checkbox = e.target;
     // take a copy of the current permission
-    let updatedPermissions = [...permissions]
+    let updatedPermissions = [...permissions];
     // figure if we need to remove or add this permission
     if (checkbox.checked) {
       // add it in!
-      updatedPermissions.push(checkbox.value)
+      updatedPermissions.push(checkbox.value);
     } else {
       updatedPermissions = updatedPermissions.filter(
-        permission => permission !== checkbox.value,
-      )
+        (permission) => permission !== checkbox.value,
+      );
     }
-    setLoading(true)
-    setPermissions(updatedPermissions)
+    setLoading(true);
+    setPermissions(updatedPermissions);
   }
 
   return (
@@ -115,7 +114,7 @@ function UserPermission(props) {
       <tr>
         <td>{user.name}</td>
         <td>{user.email}</td>
-        {possiblePermissions.map(permission => (
+        {possiblePermissions.map((permission) => (
           <td key={permission}>
             <label htmlFor={`${user.id}-permission-${permission}`}>
               <input
@@ -139,7 +138,7 @@ function UserPermission(props) {
         </td>
       </tr>
     </>
-  )
+  );
 }
 
 UserPermission.propTypes = {
@@ -149,4 +148,4 @@ UserPermission.propTypes = {
     id: PropTypes.string,
     permission: PropTypes.array,
   }).isRequired,
-}
+};

@@ -1,8 +1,9 @@
+import React from 'react';
 import SingleItem from '../components/SingleItem';
 
-const Item = props => (
+const Item = ({ query }) => (
   <div>
-    <SingleItem id={props.query.id} />
+    <SingleItem id={query.id} />
   </div>
 );
 

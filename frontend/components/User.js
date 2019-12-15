@@ -1,4 +1,5 @@
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
+import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -21,5 +22,13 @@ const CURRENT_USER_QUERY = gql`
     }
   }
 `;
+
+const User = () => {
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+}
+
+User.PropTypes = {
+  children: PropTypes.func.isRequired 
+};
 
 export default CURRENT_USER_QUERY;

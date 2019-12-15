@@ -16,6 +16,9 @@ export default function () {
   if (error) return <Error error={error} />;
 
   const me = data ? data.me : null;
+
+  console.log(data);
+
   return (
     <NavStyles>
       <Link href="/items">

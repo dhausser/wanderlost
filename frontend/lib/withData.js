@@ -8,14 +8,7 @@ function createClient({ headers }) {
     cache: new InMemoryCache(),
     link: new HttpLink({
       uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
-      request: (operation) => {
-        operation.setContext({
-          fetchOptions: {
-            credentials: 'include',
-          },
-          headers,
-        });
-      },
+      credentials: 'include'
     }),
     resolvers: {
       Mutation: {

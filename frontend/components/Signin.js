@@ -18,7 +18,7 @@ export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [signup, { loading, error }] = useMutation(SIGNIN_MUTATION, {
+  const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
     variables: { email, password },
   });
@@ -28,7 +28,7 @@ export default function Signin() {
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
-        await signup();
+        await signin();
         setEmail('');
         setPassword('');
       }}

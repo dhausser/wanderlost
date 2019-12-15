@@ -5,11 +5,7 @@ import Error from './ErrorMessage';
 import CURRENT_USER_QUERY from './User';
 
 const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION(
-    $email: String!
-    $name: String!
-    $password: String!
-  ) {
+  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
       id
       email
@@ -23,17 +19,18 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const [signup, { error, loading }] = useMutation(SIGNUP_MUTATION);
+  const [signup, { error, loading }] = useMutation(SIGNUP_MUTATION, {
+    variables: { name, password, email },
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  });
 
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
-        await signup({
-          variables: { name, password, email },
-          refetchQueries: [{ query: CURRENT_USER_QUERY }],
-        });
+        const res = await signup();
+        console.log(res);
         setName('');
         setPassword('');
         setEmail('');

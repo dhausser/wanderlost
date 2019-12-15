@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 
 exports.transport = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -7,9 +7,9 @@ exports.transport = nodemailer.createTransport({
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-})
+});
 
-exports.makeANiceEmail = text => `
+exports.makeANiceEmail = (text) => `
   <div classname="email" style="
     border: 1px solid black;
     padding: 20px;
@@ -22,4 +22,4 @@ exports.makeANiceEmail = text => `
 
     <p>😘, Dave Boss</p>
   </div?
-`
+`;

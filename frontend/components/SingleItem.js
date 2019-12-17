@@ -1,5 +1,6 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import styled from 'styled-components';
 import Head from 'next/head';
 import Error from './ErrorMessage';

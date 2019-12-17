@@ -1,5 +1,6 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import StripeCheckout from 'react-stripe-checkout';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import Error from './ErrorMessage';

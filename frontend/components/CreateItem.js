@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import Router from 'next/router';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';

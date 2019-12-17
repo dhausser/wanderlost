@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/react-hooks';
 import Signin from './Signin';
 import CURRENT_USER_QUERY from './User';
 

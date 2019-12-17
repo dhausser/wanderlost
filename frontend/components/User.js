@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`

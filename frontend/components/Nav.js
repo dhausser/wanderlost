@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { TOGGLE_CART_MUTATION } from './Cart';
 import NavStyles from './styles/NavStyles';
 import CURRENT_USER_QUERY from './User';

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import CURRENT_USER_QUERY from './User';

@@ -1,5 +1,6 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import CURRENT_USER_QUERY from './User';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';

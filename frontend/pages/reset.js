@@ -3,7 +3,7 @@ import Reset from '../components/Reset';
 
 const ResetPage = ({ query }) => (
   <div>
-    <p>Reset your password {query.resetToken}</p>
+    <p>Reset your password</p>
     <Reset resetToken={query.resetToken} />
   </div>
 );

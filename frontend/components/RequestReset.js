@@ -14,7 +14,14 @@ const REQUEST_RESET_MUTATION = gql`
 
 export default function Signin() {
   const [email, setEmail] = useState('');
-  const [reset, { loading, error, called }] = useMutation(REQUEST_RESET_MUTATION);
+  const [reset, { loading, error, called }] = useMutation(
+    REQUEST_RESET_MUTATION,
+    {
+      variables: {
+        email
+      }
+    }
+  );
 
   return (
     <Form

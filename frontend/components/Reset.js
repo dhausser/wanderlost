@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import PropTypes from 'prop-types';
+import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
@@ -23,45 +25,57 @@ const RESET_MUTATION = gql`
   }
 `;
 
-export default function Reset({ resetToken }) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [reset, { loading, error }] = useMutation(RESET_MUTATION);
-
+function Reset({ resetToken }) {
+  const { inputs, handleChange, resetForm } = useForm({
+    password: '',
+    confirmPassword: '',
+  });
+  const [resetPassword, { error, loading, data }] = useMutation(
+    RESET_MUTATION,
+    {
+      variables: {
+        resetToken,
+        password: inputs.password,
+        confirmPassword: inputs.confirmPassword,
+      },
+      refetchQueries: [{ query: CURRENT_USER_QUERY }]
+    }
+  );
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
-        await reset({
-          variables: { resetToken, password, confirmPassword },
-          refetchQueries: [{ query: CURRENT_USER_QUERY }],
-        });
-        setPassword('');
-        setConfirmPassword('');
+        const res = await resetPassword();
+        console.log(res);
+        resetForm();
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset your password</h2>
+        {data && data.resetPassword && data.resetPassword.email &&
+        'Password has been reset successfully'}
         <Error error={error} />
         <label htmlFor="password">
-              Password
+          Password
           <input
             type="password"
             name="password"
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={inputs.password}
+            onChange={handleChange}
+            required
           />
         </label>
         <label htmlFor="confirmPassword">
-              Confirm Password
+          Confirm Password
           <input
             type="password"
             name="confirmPassword"
             placeholder="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={inputs.confirmPassword}
+            onChange={handleChange}
+            required
           />
         </label>
 
@@ -70,3 +84,9 @@ export default function Reset({ resetToken }) {
     </Form>
   );
 }
+
+Reset.propTypes = {
+  resetToken: PropTypes.string.isRequired,
+}
+
+export default Reset;

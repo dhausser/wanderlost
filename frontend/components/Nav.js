@@ -15,16 +15,14 @@ export default function () {
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
 
-  const me = data ? data.me : null;
-
-  console.log(data);
+  const authenticatedUser = data ? data.authenticatedUser : null;
 
   return (
     <NavStyles>
       <Link href="/items">
         <a href="/items">Shop</a>
       </Link>
-      {me && (
+      {authenticatedUser && (
         <>
           <Link href="/sell">
             <a href="/sell">Sell</a>
@@ -39,7 +37,7 @@ export default function () {
           <button type="button" onClick={toggleCart}>
                   My Cart
             <CartCount
-              count={me.cart.reduce(
+              count={authenticatedUser.cart.reduce(
                 (tally, cartItem) => tally + cartItem.quantity,
                 0,
               )}
@@ -47,7 +45,7 @@ export default function () {
           </button>
         </>
       )}
-      {!me && (
+      {!authenticatedUser && (
       <Link href="/signup">
         <a href="/signup">Signup</a>
       </Link>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
   query {
-    me {
+    authenticatedUser {
       id
       email
       name
@@ -24,12 +24,12 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-const User = () => {
-  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+function useUser() {
+  const { data } = useQuery(CURRENT_USER_QUERY);
+  if (data) {
+    return data.authenticatedUser;
+  }
 }
 
-User.PropTypes = {
-  children: PropTypes.func.isRequired 
-};
-
 export default CURRENT_USER_QUERY;
+export { CURRENT_USER_QUERY, useUser };

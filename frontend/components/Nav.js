@@ -1,22 +1,14 @@
-import React from 'react';
 import Link from 'next/link';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { TOGGLE_CART_MUTATION } from './Cart';
+import { useUser } from './User';
+import { useCart } from './LocalState';
 import NavStyles from './styles/NavStyles';
-import CURRENT_USER_QUERY from './User';
 import Signout from './Signout';
 import CartCount from './CartCount';
 import Error from './ErrorMessage';
 
 export default function () {
-  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
-  const toggleCart = useMutation(TOGGLE_CART_MUTATION);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <Error error={error} />;
-
-  const authenticatedUser = data ? data.authenticatedUser : null;
-
+  const authenticatedUser = useUser();
+  const { toggleCart } = useCart();
   return (
     <NavStyles>
       <Link href="/items">

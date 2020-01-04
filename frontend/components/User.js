@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -29,7 +28,8 @@ function useUser() {
   if (data) {
     return data.authenticatedUser;
   }
+  return null;
 }
 
-export default CURRENT_USER_QUERY;
+export default <p>Hey</p>;
 export { CURRENT_USER_QUERY, useUser };

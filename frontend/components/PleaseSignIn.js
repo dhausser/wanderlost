@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Signin from './Signin';
-import CURRENT_USER_QUERY from './User';
+import { CURRENT_USER_QUERY } from './User';
 
 export default function PleaseSignIn(props) {
   const { loading, error, data } = useQuery(CURRENT_USER_QUERY);

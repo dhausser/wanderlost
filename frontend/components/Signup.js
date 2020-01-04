@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import CURRENT_USER_QUERY from './User';
+import { CURRENT_USER_QUERY } from './User';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {

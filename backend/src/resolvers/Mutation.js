@@ -273,7 +273,7 @@ const Mutations = {
       info,
     );
   },
-  async createOrder(parent, args, ctx, info) {
+  async checkout(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
     const { userId } = ctx.request;
     if (!userId) { throw new Error('You must be signed in to complete this order.'); }

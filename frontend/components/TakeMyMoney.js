@@ -34,7 +34,7 @@ async function onToken(res, checkout) {
       token: res.id,
     },
   }).catch((err) => {
-    alert(err.authenticatedUserssage);
+    alert(err.message);
   });
   Router.push({
     pathname: '/order',
@@ -42,7 +42,7 @@ async function onToken(res, checkout) {
   })
 }
 
-export default ({ children }) => {
+function TakeMyMoney({ children }) {
   const authenticatedUser = useUser();
   const [checkout, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
@@ -67,3 +67,5 @@ export default ({ children }) => {
     </StripeCheckout>
   );
 };
+
+export default TakeMyMoney;

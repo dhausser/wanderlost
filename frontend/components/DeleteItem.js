@@ -3,20 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
-import { perPage } from '../config';
-
-export const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
-      id
-      title
-      price
-      description
-      image
-      largeImage
-    }
-  }
-`;
+import { ALL_ITEMS_QUERY } from './Items';
 
 const DELETE_ITEM_MUTATION = gql`
   mutation DELETE_ITEM_MUTATION($id: ID!) {
@@ -25,6 +12,7 @@ const DELETE_ITEM_MUTATION = gql`
     }
   }
 `;
+
 function update(cache, payload) {
   // manually update the cache on the client so it matches the server
   // 1. Read the cache  for the items we want
@@ -35,8 +23,11 @@ function update(cache, payload) {
   cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
 }
 
-export default function DeleteItem({ id, children }) {
-  const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION);
+function DeleteItem({ id, children }) {
+  const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
+    variables: { id },
+    update,
+  });
   if (error) {
     return <Error error={error} />;
   }
@@ -45,10 +36,7 @@ export default function DeleteItem({ id, children }) {
       type="button"
       onClick={() => {
         if (confirm('Are you sure you want to delete this?')) {
-          deleteItem({
-            variables: { id },
-            update,
-          }).catch((err) => {
+          deleteItem().catch((err) => {
             alert(err.message);
           });
         }
@@ -63,3 +51,5 @@ DeleteItem.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node,
 };
+
+export default DeleteItem;

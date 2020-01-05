@@ -1,23 +1,17 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useUser } from './User';
 import Signin from './Signin';
-import { CURRENT_USER_QUERY } from './User';
 
-export default function PleaseSignIn(props) {
-  const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-  if (!data.me) {
+function PleaseSignIn({ children }) {
+  const me = useUser();
+  if (!me) {
     return (
-      <div className="">
+      <div>
         <p>Please Sign In before continuing</p>
         <Signin />
       </div>
     );
   }
-  return props.children;
+  return children;
 }
+
+export default PleaseSignIn;

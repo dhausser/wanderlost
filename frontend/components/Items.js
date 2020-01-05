@@ -31,7 +31,7 @@ const ItemsList = styled.div`
   margin: 0 auto;
 `;
 
-export default function Items({ page }) {
+function Items({ page }) {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
     variables: { skip: page * perPage - perPage },
   });
@@ -54,3 +54,6 @@ export default function Items({ page }) {
     </Center>
   );
 }
+
+export default Items;
+export { ALL_ITEMS_QUERY };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
+import useForm from '../lib/useForm';
 import { gql } from 'apollo-boost';
 import Router from 'next/router';
 import Form from './styles/Form';
@@ -26,7 +27,7 @@ const CREATE_ITEM_MUTATION = gql`
   }
 `;
 
-const uploadFile = async (e) => {
+const uploadFile = async ({ e, setImage, setLargeImage }) => {
   console.log('Uploading file');
   const { files } = e.target;
   const data = new FormData();
@@ -42,18 +43,19 @@ const uploadFile = async (e) => {
   );
   const file = await res.json();
   console.log(file);
-  this.setState({
-    image: file.secure_url,
-    largeImage: file.eager[0].secure_url,
-  });
+  setImage(file.secure_url);
+  setLargeImage(file.eager[0].secure_url);
 };
 
 function CreateItem() {
-  const [title, setTitle] = useState('Cool shoes');
-  const [description, setDescription] = useState('Cool shoes');
-  const [image] = useState('dog.jpg');
-  const [largeImage] = useState('large-dog.jpg');
-  const [price, setPrice] = useState(1000);
+  // TODO: Remove the local state
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [image, setImage] = useState();
+  const [largeImage, setLargeImage] = useState();
+  const [price, setPrice] = useState();
+
+  const { inputs, handleChange } = useForm({});
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: {
@@ -86,7 +88,11 @@ function CreateItem() {
             name="file"
             placeholder="Upload an image"
             required
-            onChange={uploadFile}
+            onChange={(e) => uploadFile({
+              e,
+              setImage,
+              setLargeImage
+            })}
           />
           {image && (
             <img
@@ -96,6 +102,7 @@ function CreateItem() {
             />
           )}
         </label>
+
         <label htmlFor="title">
           Title
           <input
@@ -104,10 +111,11 @@ function CreateItem() {
             name="title"
             placeholder="Title"
             required
-            value={title}
+            value={inputs.title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </label>
+
         <label htmlFor="price">
           Price
           <input
@@ -116,18 +124,19 @@ function CreateItem() {
             name="price"
             placeholder="Price"
             required
-            value={price}
-            onChange={(e) => setPrice(formatMoney(parseFloat(e.target.value)))}
+            value={inputs.price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </label>
-        <label htmlFor="Description">
+
+        <label htmlFor="description">
           Description
           <textarea
             id="description"
             name="description"
             placeholder="Enter A Description"
             required
-            value={description}
+            value={inputs.description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </label>

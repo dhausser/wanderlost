@@ -25,6 +25,7 @@ type Query {
   itemsConnection(where: ItemWhereInput): ItemConnection!
   authenticatedUser: User
   users: [User]!
+  order(id: ID!): Order
 }
 
 type User {

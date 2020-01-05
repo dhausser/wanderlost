@@ -1,4 +1,3 @@
-// import { useCart } from './LocalState';
 import { useCart } from './LocalState';
 import { useUser } from './User';
 import CartStyles from './styles/CartStyles';

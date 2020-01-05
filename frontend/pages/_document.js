@@ -13,7 +13,11 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html lang="en-US">
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <script src="https://js.stripe.com/v3/"></script>
+          <link rel="stylesheet" href="MyCardElement.css"></link>
+        </Head>
         <body>
           <Main />
           <NextScript />

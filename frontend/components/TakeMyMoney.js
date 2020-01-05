@@ -37,7 +37,7 @@ async function onToken(res, checkout) {
     alert(err.authenticatedUserssage);
   });
   Router.push({
-    pathnaauthenticatedUser: '/order',
+    pathname: '/order',
     query: { id: order.data.checkout.id },
   })
 }

@@ -3,6 +3,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import Page from '../components/Page';
 import withData from '../lib/withData';
 import { CartStateProvider } from '../components/LocalState';
+import { StripeProvider } from 'react-stripe-elements';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -20,9 +21,11 @@ class MyApp extends App {
     return (
       <ApolloProvider client={apollo}>
         <CartStateProvider>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
+          {/* <StripeProvider apiKey="pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA"> */}
+            <Page>
+              <Component {...pageProps} />
+            </Page>
+          {/* </StripeProvider> */}
         </CartStateProvider>
       </ApolloProvider>
     );

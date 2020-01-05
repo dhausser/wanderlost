@@ -247,7 +247,7 @@ const Mutations = {
       info,
     );
   },
-  async removeFromCart(parent, args, ctx, info) {
+  async deleteCartItem(parent, args, ctx, info) {
     // 1. Find the cart item
     const cartItem = await ctx.db.query.cartItem(
       {

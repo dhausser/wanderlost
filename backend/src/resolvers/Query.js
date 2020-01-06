@@ -45,6 +45,23 @@ const Query = {
     // 4. Return the order
     return order;
   },
+  async orders(parent, args, ctx, info) {
+    // 1. Make sure they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You aren\'t logged in!');
+    }
+    // 2. Query the current order
+    const orders = await ctx.db.query.order({
+      where: { user: ctx.request.userId },
+    }, info);
+    // 3. Check if they have the permission to view orders
+    const hasPermissionToSeeOrder = ctx.request.user.permissions.includes('ADMIN');
+    if (!hasPermissionToSeeOrder) {
+      throw new Error('You can\'t see this buddd');
+    }
+    // 4. Return the order
+    return orders;
+  },
 };
 
 module.exports = Query;

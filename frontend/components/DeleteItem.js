@@ -19,8 +19,8 @@ function DeleteItem({ id, children }) {
       const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
       cache.writeQuery({
         query: ALL_ITEMS_QUERY,
-        data: { items: items.filter(({ id }) => id !== deleteItem.id) }
-      })
+        data: { items: items.filter((item) => item.id !== deleteItem.id) },
+      });
     },
   });
 

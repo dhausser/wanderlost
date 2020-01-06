@@ -26,6 +26,7 @@ type Query {
   authenticatedUser: User
   users: [User]!
   order(id: ID!): Order
+  orders: [Order]!
 }
 
 type User {

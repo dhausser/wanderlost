@@ -8,7 +8,6 @@ import CartItem from './CartItem';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import formatMoney from '../lib/formatMoney';
 import TakeMyMoney from './TakeMyMoney';
-import Error from './ErrorMessage';
 
 export default () => {
   const me = useUser();

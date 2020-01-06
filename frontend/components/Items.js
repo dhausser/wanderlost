@@ -43,8 +43,6 @@ function Items({ page }) {
     return <p>Error: {error.message}</p>;
   }
 
-  console.log(data.items);
-
   return (
     <Center>
       <ItemsList>

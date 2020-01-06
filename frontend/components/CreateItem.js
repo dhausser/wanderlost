@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import useForm from '../lib/useForm';
-import { gql } from 'apollo-boost';
 import Router from 'next/router';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { ALL_ITEMS_QUERY } from './Items';
@@ -36,9 +35,9 @@ function CreateItem() {
       const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
       cache.writeQuery({
         query: ALL_ITEMS_QUERY,
-        data: { items: items.concat([{ ...inputs }]) }
-      })
-    }
+        data: { items: items.concat([{ ...inputs }]) },
+      });
+    },
   });
 
   return (

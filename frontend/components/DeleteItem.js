@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
@@ -13,24 +12,22 @@ const DELETE_ITEM_MUTATION = gql`
   }
 `;
 
-function update(cache, payload) {
-  // manually update the cache on the client so it matches the server
-  // 1. Read the cache  for the items we want
-  const data = cache.readQuery({ query: ALL_ITEMS_QUERY });
-  // 2. Filter the deleted item out of the page
-  data.items = data.items.filter((item) => item.id !== payload.data.deleteItem.id);
-  // 3. Put the items back!
-  cache.writeQuery({ query: ALL_ITEMS_QUERY, data });
-}
-
 function DeleteItem({ id, children }) {
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
-    update,
+    update(cache, { data: { deleteItem } }) {
+      const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
+      cache.writeQuery({
+        query: ALL_ITEMS_QUERY,
+        data: { items: items.filter(({ id }) => id !== deleteItem.id) }
+      })
+    },
   });
+
   if (error) {
     return <Error error={error} />;
   }
+
   return (
     <button
       type="button"

@@ -42,7 +42,7 @@ function Item({ item }) {
 }
 
 Item.propTypes = {
-  item: PropTypes.objectOf.isRequired,
+  item: PropTypes.object.isRequired,
 };
 
 export default Item;

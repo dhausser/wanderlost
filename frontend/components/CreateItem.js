@@ -4,8 +4,8 @@ import useForm from '../lib/useForm';
 import { gql } from 'apollo-boost';
 import Router from 'next/router';
 import Form from './styles/Form';
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
+import { ALL_ITEMS_QUERY } from './Items';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -27,40 +27,18 @@ const CREATE_ITEM_MUTATION = gql`
   }
 `;
 
-const uploadFile = async ({ e, setImage, setLargeImage }) => {
-  console.log('Uploading file');
-  const { files } = e.target;
-  const data = new FormData();
-  data.append('file', files[0]);
-  data.append('upload_preset', 'sickfits');
-
-  const res = await fetch(
-    'https://api.cloudinary.com/v1_1/davyhausser/image/upload',
-    {
-      method: 'POST',
-      body: data,
-    },
-  );
-  const file = await res.json();
-  console.log(file);
-  setImage(file.secure_url);
-  setLargeImage(file.eager[0].secure_url);
-};
-
 function CreateItem() {
-  // TODO: Remove the local state
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [image, setImage] = useState();
-  const [largeImage, setLargeImage] = useState();
-  const [price, setPrice] = useState();
-
-  const { inputs, handleChange } = useForm({});
+  const { inputs, handleChange } = useForm();
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
-    variables: {
-      title, description, image, largeImage, price,
-    },
+    variables: inputs,
+    update(cache, { data: { createItem } }) {
+      const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
+      cache.writeQuery({
+        query: ALL_ITEMS_QUERY,
+        data: { items: items.concat([{ ...inputs }]) }
+      })
+    }
   });
 
   return (
@@ -71,7 +49,6 @@ function CreateItem() {
         // Call the mutation
         const res = await createItem();
         // Change them to the single item page
-        console.log(res);
         Router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },
@@ -88,15 +65,11 @@ function CreateItem() {
             name="file"
             placeholder="Upload an image"
             required
-            onChange={(e) => uploadFile({
-              e,
-              setImage,
-              setLargeImage
-            })}
+            onChange={handleChange}
           />
-          {image && (
+          {inputs.image && (
             <img
-              src={image}
+              src={inputs.image}
               width="200"
               alt="Upload Preview"
             />
@@ -112,7 +85,7 @@ function CreateItem() {
             placeholder="Title"
             required
             value={inputs.title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleChange}
           />
         </label>
 
@@ -125,7 +98,7 @@ function CreateItem() {
             placeholder="Price"
             required
             value={inputs.price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={handleChange}
           />
         </label>
 
@@ -137,7 +110,7 @@ function CreateItem() {
             placeholder="Enter A Description"
             required
             value={inputs.description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleChange}
           />
         </label>
         <button type="submit">Submit</button>

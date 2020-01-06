@@ -43,11 +43,14 @@ function Items({ page }) {
     return <p>Error: {error.message}</p>;
   }
 
+  console.log(data.items);
+
   return (
     <Center>
       <ItemsList>
         {data.items.map((item) => (
           <Item key={item.id} item={item} />
+
         ))}
       </ItemsList>
       <Pagination page={page} />

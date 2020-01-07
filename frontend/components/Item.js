@@ -28,7 +28,7 @@ function Item({ item }) {
       <div className="buttonList">
         <Link
           href={{
-            pathname: 'update',
+            pathname: '/update',
             query: { id: item.id },
           }}
         >
@@ -42,7 +42,7 @@ function Item({ item }) {
 }
 
 Item.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.shape().isRequired,
 };
 
 export default Item;

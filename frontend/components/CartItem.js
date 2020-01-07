@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import formatMoney from '../lib/formatMoney';
@@ -48,5 +47,8 @@ export default function CartItem({ cartItem }) {
 }
 
 CartItem.propTypes = {
-  cartItem: PropTypes.objectOf.isRequired,
+  cartItem: PropTypes.shape({
+    id: PropTypes.string,
+    quantity: PropTypes.number,
+  }).isRequired,
 };

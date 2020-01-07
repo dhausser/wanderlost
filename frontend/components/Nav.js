@@ -4,7 +4,6 @@ import { useCart } from './LocalState';
 import NavStyles from './styles/NavStyles';
 import Signout from './Signout';
 import CartCount from './CartCount';
-import Error from './ErrorMessage';
 
 export default function () {
   const me = useUser();
@@ -12,18 +11,18 @@ export default function () {
   return (
     <NavStyles>
       <Link href="/items">
-        <a>Shop</a>
+        <a href="/items">Shop</a>
       </Link>
       {me && (
         <>
           <Link href="/sell">
-            <a>Sell</a>
+            <a href="/sell">Sell</a>
           </Link>
           <Link href="/orders">
-            <a>Orders</a>
+            <a href="/orders">Orders</a>
           </Link>
           <Link href="/me">
-            <a>Account</a>
+            <a href="/me">Account</a>
           </Link>
           <Signout />
           <button type="button" onClick={toggleCart}>

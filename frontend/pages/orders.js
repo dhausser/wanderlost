@@ -1,10 +1,10 @@
 import PleaseSignIn from '../components/PleaseSignIn';
-import Orders from '../components/Orders';
+import OrderList from '../components/OrderList';
 
 const OrdersPage = () => (
   <div>
     <PleaseSignIn>
-      <Orders />
+      <OrderList />
     </PleaseSignIn>
   </div>
 );

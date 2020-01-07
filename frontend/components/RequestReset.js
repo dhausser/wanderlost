@@ -18,9 +18,9 @@ export default function Signin() {
     REQUEST_RESET_MUTATION,
     {
       variables: {
-        email
-      }
-    }
+        email,
+      },
+    },
   );
 
   return (

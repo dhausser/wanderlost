@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from './Header';
 import Meta from './Meta';

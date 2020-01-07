@@ -1,4 +1,3 @@
-import React from 'react';
 import NProgress from 'nprogress';
 import StripeCheckout from 'react-stripe-checkout';
 import { useMutation } from '@apollo/react-hooks';
@@ -39,7 +38,7 @@ async function onToken(res, checkout) {
   Router.push({
     pathname: '/order',
     query: { id: order.data.checkout.id },
-  })
+  });
 }
 
 function TakeMyMoney({ children }) {
@@ -54,9 +53,9 @@ function TakeMyMoney({ children }) {
       name="Sick Fits"
       description={`Order of ${totalItems(authenticatedUser.cart)} items!`}
       image={
-        authenticatedUser.cart.length &&
-        authenticatedUser.cart[0].item &&
-        authenticatedUser.cart[0].item.image
+        authenticatedUser.cart.length
+        && authenticatedUser.cart[0].item
+        && authenticatedUser.cart[0].item.image
       }
       stripeKey="pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA"
       currency="USD"
@@ -66,6 +65,6 @@ function TakeMyMoney({ children }) {
       {children}
     </StripeCheckout>
   );
-};
+}
 
 export default TakeMyMoney;

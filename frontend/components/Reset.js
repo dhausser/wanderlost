@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
@@ -38,8 +38,8 @@ function Reset({ resetToken }) {
         password: inputs.password,
         confirmPassword: inputs.confirmPassword,
       },
-      refetchQueries: [{ query: CURRENT_USER_QUERY }]
-    }
+      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    },
   );
   return (
     <Form
@@ -53,8 +53,8 @@ function Reset({ resetToken }) {
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset your password</h2>
-        {data && data.resetPassword && data.resetPassword.email &&
-        'Password has been reset successfully'}
+        {data && data.resetPassword && data.resetPassword.email
+        && 'Password has been reset successfully'}
         <Error error={error} />
         <label htmlFor="password">
           Password
@@ -87,6 +87,6 @@ function Reset({ resetToken }) {
 
 Reset.propTypes = {
   resetToken: PropTypes.string.isRequired,
-}
+};
 
 export default Reset;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { CURRENT_USER_QUERY } from './User';

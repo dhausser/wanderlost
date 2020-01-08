@@ -1,10 +1,10 @@
 import NProgress from 'nprogress';
 import StripeCheckout from 'react-stripe-checkout';
 import { useMutation } from '@apollo/react-hooks';
-import Router from 'next/router';
 import { gql } from 'apollo-boost';
+import Router from 'next/router';
 import calcTotalPrice from '../lib/calcTotalPrice';
-import Error from './ErrorMessage';
+import { useCart } from './LocalState';
 import { CURRENT_USER_QUERY, useUser } from './User';
 
 const CREATE_ORDER_MUTATION = gql`
@@ -43,7 +43,9 @@ async function onToken(res, checkout) {
 
 function TakeMyMoney({ children }) {
   const authenticatedUser = useUser();
+  const { toggleCart } = useCart();
   const [checkout, { loading }] = useMutation(CREATE_ORDER_MUTATION, {
+    update: () => toggleCart(false),
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
   if (loading) return null;

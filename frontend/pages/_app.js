@@ -1,10 +1,9 @@
-import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Page from '../components/Page';
 import withData from '../lib/withData';
 import { CartStateProvider } from '../components/LocalState';
 
-function MyApp({ Component, apollo, pageProps }) {
+function App({ Component, apollo, pageProps }) {
   return (
     <ApolloProvider client={apollo}>
       <CartStateProvider>
@@ -16,7 +15,7 @@ function MyApp({ Component, apollo, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
+App.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
@@ -26,4 +25,4 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   return { pageProps };
 };
 
-export default withData(MyApp);
+export default withData(App);

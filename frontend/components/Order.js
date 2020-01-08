@@ -31,9 +31,9 @@ const SINGLE_ORDER_QUERY = gql`
 
 function Order({ id }) {
   const { loading, error, data } = useQuery(SINGLE_ORDER_QUERY, {
-    variables: { id }
+    variables: { id },
   });
-  if (error) return <Error error={error}></Error>;
+  if (error) return <Error error={error} />;
   if (loading) return <p>Loading...</p>;
   const { order } = data;
   return (
@@ -66,7 +66,7 @@ function Order({ id }) {
         <span>{order.items.length}</span>
       </p>
       <div className="items">
-        {order.items.map(item => (
+        {order.items.map((item) => (
           <div className="order-item" key={item.id}>
             <img src={item.image} alt={item.title} />
             <div className="item-details">
@@ -80,11 +80,11 @@ function Order({ id }) {
         ))}
       </div>
     </OrderStyles>
-  )
+  );
 }
 
 Order.propTypes = {
   id: PropTypes.string.isRequired,
-}
+};
 
 export default Order;

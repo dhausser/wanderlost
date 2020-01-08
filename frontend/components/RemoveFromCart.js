@@ -22,14 +22,15 @@ const BigButton = styled.button`
   }
 `;
 
-// This gets called as soon as we get a response back from the server after a mutation has been performed
+// This gets called as soon as we get a response back
+// from the server after a mutation has been performed
 function updateCart(cache, payload) {
   // 1. first read the cache
   const data = cache.readQuery({ query: CURRENT_USER_QUERY });
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
   data.authenticatedUser.cart = data.authenticatedUser.cart.filter(
-    (cartItem) => cartItem.id !== cartItemId
+    (cartItem) => cartItem.id !== cartItemId,
   );
   // 3. write it back to the cache
   cache.writeQuery({ query: CURRENT_USER_QUERY, data });

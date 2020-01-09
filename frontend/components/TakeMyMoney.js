@@ -2,7 +2,7 @@ import NProgress from 'nprogress';
 import StripeCheckout from 'react-stripe-checkout';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import { useCart } from './LocalState';
 import { CURRENT_USER_QUERY, useUser } from './User';
@@ -26,6 +26,7 @@ function totalItems(cart) {
 }
 
 async function onToken(res, checkout) {
+  const router = useRouter();
   NProgress.start();
   // Manually call the mutation once we have the stripe token
   const order = await checkout({
@@ -35,7 +36,7 @@ async function onToken(res, checkout) {
   }).catch((err) => {
     alert(err.message);
   });
-  Router.push({
+  router.push({
     pathname: '/order',
     query: { id: order.data.checkout.id },
   });

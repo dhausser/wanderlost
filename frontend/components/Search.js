@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Downshift, { resetIdCounter } from 'downshift';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { ApolloConsumer } from '@apollo/react-common';
 import { gql } from 'apollo-boost';
 import debounce from 'lodash.debounce';
@@ -20,18 +20,20 @@ const SEARCH_ITEM_QUERY = gql`
   }
 `;
 
-function routeToItem(item) {
-  Router.push({
-    pathname: '/item',
-    query: {
-      id: item.id,
-    },
-  });
-}
 
 export default function Autocomplete() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
+  const router = useRouter();
+
+  function routeToItem(item) {
+    router.push({
+      pathname: '/item',
+      query: {
+        id: item.id,
+      },
+    });
+  }
 
   const onChange = debounce(async (e, client) => {
     console.log('Searching...');

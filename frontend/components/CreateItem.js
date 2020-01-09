@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import useForm from '../lib/useForm';
@@ -28,6 +28,7 @@ const CREATE_ITEM_MUTATION = gql`
 
 function CreateItem() {
   const { inputs, handleChange } = useForm();
+  const router = useRouter();
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
@@ -48,7 +49,7 @@ function CreateItem() {
         // Call the mutation
         const res = await createItem();
         // Change them to the single item page
-        Router.push({
+        router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },
         });

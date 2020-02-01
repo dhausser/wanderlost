@@ -1,12 +1,15 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useMutation, gql } from '@apollo/client';
+import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 
 const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
+  mutation SIGNUP_MUTATION(
+    $email: String!,
+    $name: String!,
+    $password: String!
+  ) {
     signup(email: $email, name: $name, password: $password) {
       id
       email
@@ -16,38 +19,34 @@ const SIGNUP_MUTATION = gql`
 `;
 
 function Signup() {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-
-  const [signup, { error, loading }] = useMutation(SIGNUP_MUTATION, {
-    variables: { name, password, email },
+  const { inputs, handleChange } = useForm();
+  const [signup, { error, loading, data }] = useMutation(SIGNUP_MUTATION, {
+    variables: inputs,
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
-
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
-        const res = await signup();
-        console.log(res);
-        setName('');
-        setPassword('');
-        setEmail('');
+        await signup();
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
+        {data && data.signup && (
+          <p>Signed up with {data.signup.email} — Please Sign In now</p>
+        )}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
         <label htmlFor="email">
-                Email
+          Email
           <input
             type="email"
             name="email"
             placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={inputs.email}
+            onChange={handleChange}
+            autoComplete="email"
           />
         </label>
         <label htmlFor="name">
@@ -56,8 +55,9 @@ function Signup() {
             type="text"
             name="name"
             placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={inputs.name}
+            onChange={handleChange}
+            autoComplete="name"
           />
         </label>
         <label htmlFor="password">
@@ -66,8 +66,9 @@ function Signup() {
             type="password"
             name="password"
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={inputs.password}
+            onChange={handleChange}
+            autoComplete="new-password"
           />
         </label>
 
@@ -78,3 +79,4 @@ function Signup() {
 }
 
 export default Signup;
+export { SIGNUP_MUTATION };

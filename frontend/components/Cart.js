@@ -3,13 +3,12 @@ import { useUser } from './User';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import CloseButton from './styles/CloseButton';
-import SickButton from './styles/SickButton';
 import CartItem from './CartItem';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import formatMoney from '../lib/formatMoney';
-import TakeMyMoney from './TakeMyMoney';
+import Checkout from './Checkout';
 
-export default () => {
+function Cart() {
   const me = useUser();
   const { cartOpen, toggleCart } = useCart();
   if (!me) return null;
@@ -30,14 +29,14 @@ export default () => {
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
-      <footer>
-        <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-        {me.cart.length && (
-        <TakeMyMoney>
-          <SickButton>Checkout</SickButton>
-        </TakeMyMoney>
-        )}
-      </footer>
+      {me.cart.length && (
+        <footer>
+          <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+          <Checkout />
+        </footer>
+      )}
     </CartStyles>
   );
-};
+}
+
+export default Cart;

@@ -1,6 +1,7 @@
 .env
 .DS_Store
-node_modules/
-haters/
-.next/
-.vscode/
+node_modules
+haters
+.next
+.vscode
+out

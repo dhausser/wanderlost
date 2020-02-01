@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
 import Table from './styles/Table';
@@ -37,14 +36,14 @@ const ALL_USERS_QUERY = gql`
   }
 `;
 
-export default function Permissions() {
+const Permissions = () => {
   const { loading, error, data } = useQuery(ALL_USERS_QUERY);
   if (loading) return <p>Loading...</p>;
   return (
     <div>
       <Error error={error} />
       <div>
-        <h2>Manage Users</h2>
+        <h2>Manage Permissions</h2>
         <Table>
           <thead>
             <tr>
@@ -65,7 +64,7 @@ export default function Permissions() {
       </div>
     </div>
   );
-}
+};
 
 function UserPermission({ user }) {
   const [permissions, setPermissions] = useState(user.permissions);
@@ -150,3 +149,5 @@ UserPermission.propTypes = {
     permission: PropTypes.array,
   }).isRequired,
 };
+
+export default Permissions;

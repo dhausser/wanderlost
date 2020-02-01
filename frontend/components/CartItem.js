@@ -18,7 +18,7 @@ const CartItemStyles = styled.li`
   }
 `;
 
-export default function CartItem({ cartItem }) {
+const CartItem = ({ cartItem }) => {
   // first check if that item exists
   if (!cartItem.item) {
     return (
@@ -44,7 +44,7 @@ export default function CartItem({ cartItem }) {
       <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
   );
-}
+};
 
 CartItem.propTypes = {
   cartItem: PropTypes.shape({
@@ -52,3 +52,5 @@ CartItem.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
 };
+
+export default CartItem;

@@ -1,5 +1,5 @@
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+/* eslint-disable no-alert */
+import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
 import { perPage } from '../config';

@@ -1,6 +1,5 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, gql } from '@apollo/client';
 import styled from 'styled-components';
-import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 import { CURRENT_USER_QUERY } from './User';
 
@@ -29,11 +28,20 @@ function updateCart(cache, payload) {
   const data = cache.readQuery({ query: CURRENT_USER_QUERY });
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
-  data.authenticatedUser.cart = data.authenticatedUser.cart.filter(
+  const updatedCart = data.authenticatedUser.cart.filter(
     (cartItem) => cartItem.id !== cartItemId,
   );
   // 3. write it back to the cache
-  cache.writeQuery({ query: CURRENT_USER_QUERY, data });
+  cache.writeQuery({
+    query: CURRENT_USER_QUERY,
+    data: {
+      ...data,
+      authenticatedUser: {
+        ...data.authenticatedUser,
+        cart: updatedCart,
+      },
+    },
+  });
 }
 
 function RemoveFromCart({ id }) {
@@ -52,6 +60,7 @@ function RemoveFromCart({ id }) {
     <BigButton
       disabled={loading}
       onClick={() => {
+        // eslint-disable-next-line no-alert
         removeFromCart().catch((err) => alert(err.message));
       }}
       title="Delete Item"

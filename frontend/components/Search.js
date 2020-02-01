@@ -1,16 +1,18 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
 import Downshift, { resetIdCounter } from 'downshift';
 import { useRouter } from 'next/router';
-import { ApolloConsumer } from '@apollo/react-common';
-import { gql } from 'apollo-boost';
+import { useLazyQuery, gql } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
-const SEARCH_ITEM_QUERY = gql`
+const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEM_QUERY($searchTerm: String!) {
     items(
       where: {
-        OR: [{ title_contains: $searchTerm }, { description: $searchTerm }]
+        OR: [
+          { title_contains: $searchTerm }
+          { description: $searchTerm }
+        ]
       }
     ) {
       id
@@ -20,36 +22,21 @@ const SEARCH_ITEM_QUERY = gql`
   }
 `;
 
-
-export default function Autocomplete() {
-  const [loading, setLoading] = useState(false);
-  const [items, setItems] = useState([]);
+function routeToItem(item) {
   const router = useRouter();
+  router.push({
+    pathname: '/item',
+    query: {
+      id: item.id,
+    },
+  });
+}
 
-  function routeToItem(item) {
-    router.push({
-      pathname: '/item',
-      query: {
-        id: item.id,
-      },
-    });
-  }
-
-  const onChange = debounce(async (e, client) => {
-    console.log('Searching...');
-    // Turn loading on
-    setLoading(true);
-    // Manually query apollo client
-    const res = await client.query({
-      query: SEARCH_ITEM_QUERY,
-      variables: { searchTerm: e.target.value },
-    });
-    setItems(res.data.items);
-    setLoading(false);
-  }, 350);
-
+function Autocomplete() {
+  const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY);
+  const items = data ? data.items : [];
+  const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
-
   return (
     <SearchStyles>
       <Downshift
@@ -64,22 +51,21 @@ export default function Autocomplete() {
           highlightedIndex,
         }) => (
           <div>
-            <ApolloConsumer>
-              {(client) => (
-                <input
-                  {...getInputProps({
-                    type: 'search',
-                    placeholder: 'Search For An Item',
-                    id: 'search',
-                    className: loading ? 'loading' : '',
-                    onChange: (e) => {
-                      e.persist();
-                      onChange(e, client);
-                    },
-                  })}
-                />
-              )}
-            </ApolloConsumer>
+            <input
+              {...getInputProps({
+                type: 'search',
+                placeholder: 'Search For An Item',
+                id: 'search',
+                className: loading ? 'loading' : '',
+                onChange: (e) => {
+                  e.persist();
+                  findItemsButChill({
+                    variables: { searchTerm: e.target.value },
+                  });
+                },
+              })}
+            />
+
             {isOpen && (
               <DropDown>
                 {items.map((item, index) => (
@@ -103,3 +89,5 @@ export default function Autocomplete() {
     </SearchStyles>
   );
 }
+
+export default Autocomplete;

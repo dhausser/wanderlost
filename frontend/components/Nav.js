@@ -5,7 +5,7 @@ import NavStyles from './styles/NavStyles';
 import Signout from './Signout';
 import CartCount from './CartCount';
 
-export default function () {
+function Nav() {
   const me = useUser();
   const { toggleCart } = useCart();
   return (
@@ -44,3 +44,5 @@ export default function () {
     </NavStyles>
   );
 }
+
+export default Nav;

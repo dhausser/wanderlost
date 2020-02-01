@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Title from './styles/Title';
@@ -8,7 +7,7 @@ import formatMoney from '../lib/formatMoney';
 import DeleteItem from './DeleteItem';
 import AddToCart from './AddToCart';
 
-function Item({ item }) {
+export default function Item({ item }) {
   return (
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}
@@ -19,7 +18,7 @@ function Item({ item }) {
             query: { id: item.id },
           }}
         >
-          <a>{item.title}</a>
+          <a href="/item">{item.title}</a>
         </Link>
       </Title>
       <PriceTag>{formatMoney(item.price)}</PriceTag>
@@ -31,7 +30,7 @@ function Item({ item }) {
             query: { id: item.id },
           }}
         >
-          <a>Edit</a>
+          <a href="/update">Edit</a>
         </Link>
         <AddToCart id={item.id} />
         <DeleteItem id={item.id}>Delete this Item</DeleteItem>
@@ -43,5 +42,3 @@ function Item({ item }) {
 Item.propTypes = {
   item: PropTypes.shape().isRequired,
 };
-
-export default Item;

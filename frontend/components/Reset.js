@@ -1,5 +1,4 @@
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
@@ -17,9 +16,7 @@ const RESET_MUTATION = gql`
       password: $password
       confirmPassword: $confirmPassword
     ) {
-      id
-      email
-      name
+      message
     }
   }
 `;
@@ -45,8 +42,7 @@ function Reset({ resetToken }) {
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
-        const res = await resetPassword();
-        console.log(res);
+        await resetPassword();
         resetForm();
       }}
     >

@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, gql } from '@apollo/client';
 import { format } from 'date-fns';
 import Head from 'next/head';
-import { gql } from 'apollo-boost';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import OrderStyles from './styles/OrderStyles';
@@ -88,3 +87,4 @@ Order.propTypes = {
 };
 
 export default Order;
+export { SINGLE_ORDER_QUERY };

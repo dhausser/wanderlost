@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from './Header';
 import Meta from './Meta';

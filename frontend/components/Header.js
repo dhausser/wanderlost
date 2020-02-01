@@ -1,10 +1,20 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import NProgress from 'nprogress';
 import Nav from './Nav';
 import Cart from './Cart';
 import Search from './Search';
+
+Router.onRouteChangeStart = () => {
+  NProgress.start();
+};
+Router.onRouteChangeComplete = () => {
+  NProgress.done();
+};
+Router.onRouteChangeError = () => {
+  NProgress.done();
+};
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -44,34 +54,21 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header = () => {
-  const router = useRouter();
-  router.onRouteChangeStart = () => {
-    NProgress.start();
-  };
-  router.onRouteChangeComplete = () => {
-    NProgress.done();
-  };
-  router.onRouteChangeError = () => {
-    NProgress.done();
-  };
-
-  return (
-    <StyledHeader>
-      <div className="bar">
-        <Logo>
-          <Link href="/">
-            <a href="/">Sick Fits</a>
-          </Link>
-        </Logo>
-        <Nav />
-      </div>
-      <div className="sub-bar">
-        <Search />
-      </div>
-      <Cart />
-    </StyledHeader>
-  );
-};
+const Header = () => (
+  <StyledHeader>
+    <div className="bar">
+      <Logo>
+        <Link href="/">
+          <a href="/">Sick Fits</a>
+        </Link>
+      </Logo>
+      <Nav />
+    </div>
+    <div className="sub-bar">
+      <Search />
+    </div>
+    <Cart />
+  </StyledHeader>
+);
 
 export default Header;

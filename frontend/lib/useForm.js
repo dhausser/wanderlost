@@ -19,7 +19,7 @@ const uploadFile = async ({ value, inputs, updateInputs }) => {
     ...inputs,
     image: file.secure_url,
     largeImage: file.eager[0].secure_url,
-  })
+  });
 };
 
 export default function useForm(initial = {}) {
@@ -47,6 +47,6 @@ export default function useForm(initial = {}) {
   return {
     inputs,
     handleChange,
-    resetForm
+    resetForm,
   };
 }

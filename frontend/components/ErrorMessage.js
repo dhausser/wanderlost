@@ -44,7 +44,7 @@ DisplayError.defaultProps = {
 };
 
 DisplayError.propTypes = {
-  error: PropTypes.object,
+  error: PropTypes.shape(),
 };
 
 export default DisplayError;

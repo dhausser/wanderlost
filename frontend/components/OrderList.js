@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, gql } from '@apollo/client';
 import { formatDistance } from 'date-fns';
-import { gql } from 'apollo-boost';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import OrderItemStyles from './styles/OrderItemStyles';

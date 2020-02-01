@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, gql } from '@apollo/client';
 import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
 import { perPage } from '../config';
+import Error from './ErrorMessage';
 
 const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
@@ -16,18 +15,17 @@ const PAGINATION_QUERY = gql`
   }
 `;
 
-const Pagination = (props) => {
-  const { data, loading } = useQuery(PAGINATION_QUERY);
+function Pagination({ page }) {
+  const { error, loading, data } = useQuery(PAGINATION_QUERY);
   if (loading) return <p>Loading...</p>;
-
+  if (error) return <Error error={error} />;
   const { count } = data.itemsConnection.aggregate;
   const pages = Math.ceil(count / perPage);
-  const { page } = props;
   return (
-    <PaginationStyles>
+    <PaginationStyles data-testid="pagination">
       <Head>
         <title>
-              Sick Fits! Page {page} of {pages}
+          Sick Fits! — Page {page} of {pages}
         </title>
       </Head>
       <Link
@@ -36,12 +34,15 @@ const Pagination = (props) => {
           query: { page: page - 1 },
         }}
       >
-        <a className="prev" aria-disabled={page <= 1}>
-              ← Prev
+        <a href="items" className="prev" aria-disabled={page <= 1}>
+          ← Prev
         </a>
       </Link>
       <p>
-        {page} of {pages}
+        Page {page} of{' '}
+        <span className="totalPages" data-testid="totalPages">
+          {pages}
+        </span>
       </p>
       <p>{count} Items Total</p>
       <Link
@@ -50,12 +51,13 @@ const Pagination = (props) => {
           query: { page: page + 1 },
         }}
       >
-        <a className="prev" aria-disabled={page >= pages}>
-              Next →
+        <a href="items" className="next" aria-disabled={page >= pages}>
+          Next →
         </a>
       </Link>
     </PaginationStyles>
   );
-};
+}
 
 export default Pagination;
+export { PAGINATION_QUERY };

@@ -1,12 +1,9 @@
-import PleaseSignIn from '../components/PleaseSignIn';
 import Account from '../components/Account';
 
-const UserAccount = () => (
+const Me = () => (
   <div>
-    <PleaseSignIn>
-      <Account />
-    </PleaseSignIn>
+    <Account />
   </div>
 );
 
-export default UserAccount;
+export default Me;

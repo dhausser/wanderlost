@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useMutation, gql } from '@apollo/client';
+import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
@@ -15,23 +14,22 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
-export default function Signin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
-    variables: { email, password },
+function Signin() {
+  const { inputs, handleChange, resetForm } = useForm({
+    email: '',
+    password: '',
   });
-
+  const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
+    variables: inputs,
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  });
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
         await signin();
-        setEmail('');
-        setPassword('');
+        resetForm();
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
@@ -43,8 +41,8 @@ export default function Signin() {
             type="email"
             name="email"
             placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={inputs.email}
+            onChange={handleChange}
           />
         </label>
         <label htmlFor="password">
@@ -53,8 +51,8 @@ export default function Signin() {
             type="password"
             name="password"
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={inputs.password}
+            onChange={handleChange}
           />
         </label>
 
@@ -63,3 +61,5 @@ export default function Signin() {
     </Form>
   );
 }
+
+export default Signin;

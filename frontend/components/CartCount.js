@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 
@@ -37,7 +38,7 @@ const Dot = styled.div`
   font-variant-numeric: tabular-nums;
 `;
 
-export default ({ count }) => (
+const CartCount = ({ count }) => (
   <AnimationStyles>
     <TransitionGroup>
       <CSSTransition
@@ -52,3 +53,8 @@ export default ({ count }) => (
     </TransitionGroup>
   </AnimationStyles>
 );
+
+CartCount.propTypes = {
+  count: PropTypes.number.isRequired,
+};
+export default CartCount;

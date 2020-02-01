@@ -1,5 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
 import Head from 'next/head';
 import Error from './ErrorMessage';
@@ -35,8 +34,9 @@ const SINGLE_ITEM_QUERY = gql`
 `;
 
 function SingleItem({ id }) {
-  const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
-
+  const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, {
+    variables: { id },
+  });
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
   if (!data.item) return <p>No Item Found for {id}</p>;
@@ -56,3 +56,4 @@ function SingleItem({ id }) {
 }
 
 export default SingleItem;
+export { SINGLE_ITEM_QUERY };

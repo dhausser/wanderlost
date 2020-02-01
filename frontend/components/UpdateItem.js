@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { useQuery, useMutation, gql } from '@apollo/client';
+import PropTypes from 'prop-types';
 import Form from './styles/Form';
-import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
+import useForm from '../lib/useForm';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -38,71 +37,76 @@ const UPDATE_ITEM_MUTATION = gql`
 `;
 
 function UpdateItem({ id }) {
-  const [title, setTitle] = useState('Cool shoes');
-  const [description, setDescription] = useState('Cool shoes');
-  const [price, setPrice] = useState(1000);
-
-  const { data, loading } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
-  const [updateItemMutation, { error }] = useMutation(UPDATE_ITEM_MUTATION, {
-    variables: {},
+  const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
+    variables: {
+      id,
+    },
   });
-
+  const { inputs, handleChange } = useForm(data.item);
+  const [updateItem, { loading: updating, error }] = useMutation(
+    UPDATE_ITEM_MUTATION,
+    {
+      variables: {
+        id,
+        ...inputs,
+      },
+    },
+  );
   if (loading) return <p>Loading...</p>;
-  if (!data.item) return <p>No Item Found for ID {id}</p>;
+  if (!data || !data.item) return <p>No Item Found for ID {id}</p>;
+
   return (
-    <Form onSubmit={(e) => async function updateItem() {
+    <Form onSubmit={async (e) => {
       e.preventDefault();
-      await updateItemMutation({
-        variables: {
-          id, title, description, price,
-        },
-      });
+      await updateItem();
     }}
     >
       <Error error={error} />
-      <fieldset disabled={loading} aria-busy={loading}>
+      <fieldset disabled={loading} aria-busy={updating}>
         <label htmlFor="title">
-              Title
+          Title
           <input
             type="text"
             id="title"
             name="title"
             placeholder="Title"
             required
-            defaultValue={data.item.title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={inputs.title}
+            onChange={handleChange}
           />
         </label>
         <label htmlFor="price">
-              Price
+          Price
           <input
             type="number"
             id="price"
             name="price"
             placeholder="Price"
             required
-            defaultValue={data.item.price}
-            onChange={(e) => setPrice(formatMoney(parseFloat(e.target.value)))}
+            value={inputs.price}
+            onChange={handleChange}
           />
         </label>
-        <label htmlFor="Description">
-              Description
+        <label htmlFor="description">
+          Description
           <textarea
             id="description"
             name="description"
             placeholder="Enter A Description"
             required
-            defaultValue={data.item.description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={data.item.description}
+            onChange={handleChange}
           />
         </label>
-        <button type="submit">
-              Sav{loading ? 'ing' : 'e'} Changes
-        </button>
+        <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
       </fieldset>
     </Form>
   );
 }
+
+UpdateItem.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default UpdateItem;
 export { UPDATE_ITEM_MUTATION };

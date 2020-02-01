@@ -1,6 +1,5 @@
+import { useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';

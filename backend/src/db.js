@@ -13,19 +13,19 @@ export default async () => {
   }).catch((err) => {
     console.error(err.stack);
     process.exit(1);
-  }).then(async (client) => {
+  }).then(async () => {
     await OrderDAO.injectDB(client);
     await UserDAO.injectDB(client);
   });
 
-  try {
-    const listings = client.db(process.env.DBNAME).collection('listingsAndReviews');
-    console.log(listings);
-    return { listings };
-  } catch (e) {
-    console.error(
-      `Unable to establish collection handles in resourceDAO: ${e}`,
-    );
-    return null;
-  }
+  // try {
+  //   const listings = client.db(process.env.DBNAME).collection('listingsAndReviews');
+  //   console.log(listings);
+  //   return { listings };
+  // } catch (e) {
+  //   console.error(
+  //     `Unable to establish collection handles in resourceDAO: ${e}`,
+  //   );
+  //   return null;
+  // }
 };

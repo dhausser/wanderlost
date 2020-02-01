@@ -1,7 +1,7 @@
 const { forwardTo } = require('prisma-binding');
 const { hasPermission } = require('../utils');
 
-const Query = {
+export default {
   items: forwardTo('db'),
   item: forwardTo('db'),
   itemsConnection: forwardTo('db'),
@@ -57,5 +57,3 @@ const Query = {
     }, info);
   },
 };
-
-module.exports = Query;

@@ -6,7 +6,7 @@ const { transport, makeANiceEmail } = require('../mail');
 const { hasPermission } = require('../utils');
 const stripe = require('../stripe');
 
-const Mutations = {
+export default {
   async createItem(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that!');
@@ -329,5 +329,3 @@ const Mutations = {
     return order;
   },
 };
-
-module.exports = Mutations;

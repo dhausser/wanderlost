@@ -8,7 +8,7 @@ import OrderItemStyles from './styles/OrderItemStyles';
 
 const USER_ORDERS_QUERY = gql`
   query {
-    allOrders {
+    orders {
       id
       total
       createdAt
@@ -34,12 +34,12 @@ function OrderList() {
   const { loading, error, data } = useQuery(USER_ORDERS_QUERY);
   if (error) return <Error error={error} />;
   if (loading) return <p>Loading...</p>;
-  const { allOrders } = data;
+  const { orders } = data;
   return (
     <div>
-      <h2>You have {allOrders.length} orders</h2>
+      <h2>You have {orders.length} orders</h2>
       <OrderUl>
-        {allOrders.map((order) => (
+        {orders.map((order) => (
           <OrderItemStyles key={order.id}>
             <Link
               href={{

@@ -6,7 +6,7 @@ const { transport, makeANiceEmail } = require('../mail');
 const { hasPermission } = require('../utils');
 const stripe = require('../stripe');
 
-export default {
+const Mutations = {
   async createItem(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that!');
@@ -134,7 +134,8 @@ export default {
       subject: 'Your Password Reset Token',
       html: makeANiceEmail(`Your Password Reset Token is here!
       \n\n
-      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+      <a href="${process.env
+    .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
     });
 
     // 4. Return the message
@@ -271,10 +272,10 @@ export default {
       info,
     );
   },
-  async checkout(parent, args, ctx, info) {
+  async createOrder(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
     const { userId } = ctx.request;
-    if (!userId) { throw new Error('You must be signed in to complete this order.'); }
+    if (!userId) throw new Error('You must be signed in to complete this order.');
     const user = await ctx.db.query.user(
       { where: { id: userId } },
       `{
@@ -309,6 +310,7 @@ export default {
       delete orderItem.id;
       return orderItem;
     });
+
     // 5. create the Order
     const order = await ctx.db.mutation.createOrder({
       data: {
@@ -329,3 +331,5 @@ export default {
     return order;
   },
 };
+
+module.exports = Mutations;

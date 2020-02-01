@@ -16,7 +16,7 @@ type Mutation {
   updatePermissions(permissions: [Permission], userId: ID!): User
   addToCart(id: ID!): CartItem
   deleteCartItem(id: ID!): CartItem
-  checkout(token: String!): Order!
+  createOrder(token: String!): Order!
 }
 
 type Query {
@@ -26,10 +26,10 @@ type Query {
   authenticatedUser: User
   users: [User]!
   order(id: ID!): Order
-  allOrders: [Order]!
+  orders(orderBy: OrderOrderByInput): [Order]!
 }
 
-type User {
+type User{
   id: ID!
   name: String!
   email: String!

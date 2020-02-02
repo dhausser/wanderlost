@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-const uploadFile = async ({ value, inputs, updateInputs }) => {
-  console.log('Uploading file');
+async function uploadFile({ value, inputs, setInputs }) {
   const data = new FormData();
   data.append('file', value);
   data.append('upload_preset', 'sickfits');
@@ -14,39 +13,48 @@ const uploadFile = async ({ value, inputs, updateInputs }) => {
     },
   );
   const file = await res.json();
-  console.log(file);
-  updateInputs({
+  setInputs({
     ...inputs,
     image: file.secure_url,
     largeImage: file.eager[0].secure_url,
   });
-};
+}
 
 export default function useForm(initial = {}) {
-  const [inputs, updateInputs] = useState(initial);
+  const [inputs, setInputs] = useState(initial);
 
   function handleChange(e) {
-    let { value, name, type } = e.target;
+    const { name, type } = e.target;
+    let { value } = e.target;
     if (type === 'number') {
-      value = parseInt(value);
+      value = parseInt(value, 10);
     }
     if (type === 'file') {
       [value] = e.target.files;
-      uploadFile({ value, inputs, updateInputs });
+      uploadFile({ value, inputs, setInputs });
     }
-    updateInputs({
+    setInputs({
       ...inputs,
-      [name]: e.target.value,
+      [name]: value,
     });
+    console.log(inputs);
   }
 
   function resetForm() {
-    updateInputs(initial);
+    setInputs(initial);
+  }
+
+  function clearForm() {
+    const blankState = Object.fromEntries(
+      Object.entries(inputs).map(([key]) => [key, '']),
+    );
+    setInputs(blankState);
   }
 
   return {
     inputs,
     handleChange,
     resetForm,
+    clearForm,
   };
 }

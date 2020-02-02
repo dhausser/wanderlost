@@ -8,7 +8,7 @@ import OrderItemStyles from './styles/OrderItemStyles';
 
 const USER_ORDERS_QUERY = gql`
   query {
-    orders {
+    orders(orderBy: createdAt_DESC){
       id
       total
       createdAt

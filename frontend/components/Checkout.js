@@ -14,6 +14,7 @@ import SickButton from './styles/SickButton';
 import { CURRENT_USER_QUERY } from './User';
 import { useCart } from './LocalState';
 
+const stripeLoad = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA');
 
 const CREATE_ORDER_MUTATION = gql`
   mutation checkout($token: String!) {
@@ -36,10 +37,9 @@ const style = {
 };
 
 function Checkout() {
-  const stripe = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA');
   return (
     <>
-      <Elements stripe={stripe}>
+      <Elements stripe={stripeLoad}>
         <CheckoutForm />
       </Elements>
     </>
@@ -73,7 +73,6 @@ function useCheckout() {
     });
 
     // 4. Handle any errors
-
     if (paymentError) {
       NProgress.done();
       return setError(error);

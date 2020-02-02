@@ -272,7 +272,7 @@ const Mutations = {
       info,
     );
   },
-  async createOrder(parent, args, ctx, info) {
+  async checkout(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
     const { userId } = ctx.request;
     if (!userId) throw new Error('You must be signed in to complete this order.');
@@ -293,21 +293,26 @@ const Mutations = {
       (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
       0,
     );
-    console.log(`Going to charge for a total of ${amount}`);
-    // 3. Create the stripe charge (turn token into $$$)
-    const charge = await stripe.charges.create({
+
+    // 3. Create the Payment Intent, given the Payment Method ID by passing confirm: true,
+    // We do stripe.paymentIntent.create() and stripe.paymentIntent.confirm() in 1 go.
+    const charge = await stripe.paymentIntents.create({
       amount,
       currency: 'USD',
-      source: args.token,
+      confirm: true,
+      payment_method: args.token,
     });
+
     // 4. Convert the CartItems to OrderItems
     const orderItems = user.cart.map((cartItem) => {
       const orderItem = {
         ...cartItem.item,
         quantity: cartItem.quantity,
         user: { connect: { id: userId } },
+        image: cartItem.item.image,
       };
       delete orderItem.id;
+      delete orderItem.user;
       return orderItem;
     });
 
@@ -320,6 +325,7 @@ const Mutations = {
         user: { connect: { id: userId } },
       },
     });
+
     // 6. Clean up - clear the users cart, delete cartItems
     const cartItemIds = user.cart.map((cartItem) => cartItem.id);
     await ctx.db.mutation.deleteManyCartItems({

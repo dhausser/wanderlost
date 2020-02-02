@@ -9,7 +9,7 @@ const Home = ({ query }) => (
 
 Home.propTypes = {
   query: PropTypes.shape({
-    page: PropTypes.number,
+    page: PropTypes.string,
   }).isRequired,
 };
 

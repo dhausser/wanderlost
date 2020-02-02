@@ -1,6 +1,6 @@
 #endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://sick-fits-prod-dh-28a4471209.herokuapp.com/sick-fits-prod/prod
-datamodel: datamodel.prisma
+endpoint: https://sick-fits-prod-dcfb0f9d13.herokuapp.com/sick-fits-prod/prod
+datamodel: datamodel.graphql
 secret: ${env:PRISMA_SECRET}
 hooks:
   post-deploy:

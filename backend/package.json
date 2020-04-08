@@ -11,7 +11,7 @@
     "deploy": "prisma deploy --env-file .env"
   },
   "dependencies": {
-    "apollo-datasource": "^0.6.4",
+    "apollo-datasource": "^0.7.0",
     "apollo-server": "^2.9.16",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",

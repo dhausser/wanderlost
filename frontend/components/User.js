@@ -30,5 +30,4 @@ function useUser() {
   return null;
 }
 
-export default <p>Hey</p>;
 export { CURRENT_USER_QUERY, useUser };

@@ -1,7 +1,4 @@
 .env
 .DS_Store
 node_modules
-haters
-.next
-.vscode
 out

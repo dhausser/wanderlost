@@ -1,18 +1,14 @@
 {
   "name": "sick-fits-backend",
-  "version": "1.0.0",
-  "description": "the backend of sick fits",
   "private": true,
-  "repository": "https://github.com/dhausser/sick-fits",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "dev": "ts-node ./src/index.ts",
+    "start": "nodemon -e js,graphql -x node src/index.js --inspect src/index.js",
     "test": "jest",
     "deploy": "prisma deploy --env-file .env"
   },
   "dependencies": {
     "@prisma/client": "^2.0.0-beta.2",
-    "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
@@ -20,16 +16,21 @@
     "graphql": "^14.6.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.2",
-    "nodemon": "^2.0.2",
     "stripe": "^8.12.0"
   },
-  "license": "MIT",
-  "babel": {
-    "presets": [
-      "env"
-    ]
-  },
   "devDependencies": {
-    "@prisma/cli": "^2.0.0-beta.2"
+    "@prisma/cli": "^2.0.0-beta.2",
+    "@types/node": "^13.11.1",
+    "nodemon": "^2.0.3",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }

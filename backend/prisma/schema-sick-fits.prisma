@@ -9,11 +9,11 @@ datasource db {
 
 enum Permission {
   ADMIN
-  ITEMCREATE
-  ITEMDELETE
-  ITEMUPDATE
-  PERMISSIONUPDATE
   USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
 }
 
 model User {
@@ -25,8 +25,20 @@ model User {
   resetTokenExpiry Float?
   permissions      Permission?
   cart             CartItem[]
+  post             Post[]
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
+}
+
+model Post {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(false)
+  title     String
+  content   String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?  @map("author")
 }
 
 model Item {
@@ -53,7 +65,7 @@ model CartItem {
 
 model Order {
   id        String      @default(cuid()) @id
-  items     OrderItem[] @relation(references: [id])
+  items     OrderItem[]
   total     Int
   charge    String
   createdAt DateTime    @default(now())

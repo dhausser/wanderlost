@@ -10,7 +10,7 @@ function Home ({ query }) {
   <div>
     <Items
       page={parseFloat(query.page) || 1}
-      count={data.itemsConnection.aggregate.count}
+      // count={data.itemsConnection.aggregate.count}
     />
   </div>
 )};

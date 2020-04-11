@@ -3,11 +3,11 @@
 exports[`<Item/> renders and matches the snapshot 1`] = `
 <div>
   <div
-    class="ItemStyles__Item-sc-16pk14u-0 dXyHNM"
+    class="ItemStyles__Item-sc-16pk14u-0 hZbgff"
   >
     <img
       alt="dogs are best"
-      src="dog.jpg"
+      src="dog-small.jpg"
     />
     <h3
       class="Title-sc-16nq74k-0 cBlaqK"
@@ -43,7 +43,7 @@ exports[`<Item/> renders and matches the snapshot 1`] = `
       <button
         type="button"
       >
-        Delete This Item
+        Delete this Item
       </button>
     </div>
   </div>

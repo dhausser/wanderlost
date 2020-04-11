@@ -10,6 +10,7 @@ Person.prototype.fetchFavFoods = function() {
   });
 };
 
+
 describe('mocking learning', () => {
   it('mocks a reg function', () => {
     const fetchDogs = jest.fn();
@@ -23,7 +24,7 @@ describe('mocking learning', () => {
   it('can create a person', () => {
     const me = new Person('Wes', ['pizza', 'burgs']);
     expect(me.name).toBe('Wes');
-  });
+  })
 
   it('can fetch foods', async () => {
     const me = new Person('Wes', ['pizza', 'burgs']);
@@ -31,5 +32,5 @@ describe('mocking learning', () => {
     me.fetchFavFoods = jest.fn().mockResolvedValue(['sushi', 'ramen']);
     const favFoods = await me.fetchFavFoods();
     expect(favFoods).toContain('sushi');
-  });
+  })
 });

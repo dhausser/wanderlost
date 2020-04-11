@@ -3,7 +3,7 @@
 exports[`<CartCount/> matches the snapshot 1`] = `
 <div>
   <span
-    class="CartCount__AnimationStyles-xxvp4g-0 hGREFj"
+    class="CartCount__AnimationStyles-xxvp4g-0 fxCBCs"
   >
     <div>
       <div
@@ -19,7 +19,7 @@ exports[`<CartCount/> matches the snapshot 1`] = `
 exports[`<CartCount/> updates via props 1`] = `
 <div>
   <span
-    class="CartCount__AnimationStyles-xxvp4g-0 hGREFj"
+    class="CartCount__AnimationStyles-xxvp4g-0 fxCBCs"
   >
     <div>
       <div

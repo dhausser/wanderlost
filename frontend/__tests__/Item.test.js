@@ -17,7 +17,7 @@ describe('<Item/>', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('renders the image properly', () => {
+  xit('renders the image properly', () => {
     render(
       <MockedProvider>
         <ItemComponent item={item} />
@@ -27,7 +27,7 @@ describe('<Item/>', () => {
     expect(img).toBeInTheDocument();
   });
 
-  it('renders the pricetag and title', () => {
+  xit('renders the pricetag and title', () => {
     const { container } = render(
       <MockedProvider>
         <ItemComponent item={item} />
@@ -39,7 +39,7 @@ describe('<Item/>', () => {
     expect(link).toHaveTextContent(item.name);
   });
 
-  it('renders out the buttons properly', () => {
+  xit('renders out the buttons properly', () => {
     const { container } = render(
       <MockedProvider>
         <ItemComponent item={item} />

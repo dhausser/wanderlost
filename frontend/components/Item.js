@@ -18,7 +18,7 @@ export default function Item({ item }) {
             query: { id: item.id },
           }}
         >
-          <a href="/item">{item.title}</a>
+          <a>{item.title}</a>
         </Link>
       </Title>
       <PriceTag>{formatMoney(item.price)}</PriceTag>
@@ -26,11 +26,11 @@ export default function Item({ item }) {
       <div className="buttonList">
         <Link
           href={{
-            pathname: '/update',
+            pathname: 'update',
             query: { id: item.id },
           }}
         >
-          <a href="/update">Edit</a>
+          <a>Edit ✏️</a>
         </Link>
         <AddToCart id={item.id} />
         <DeleteItem id={item.id}>Delete this Item</DeleteItem>

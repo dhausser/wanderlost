@@ -1,23 +1,63 @@
-require('dotenv').config({ path: '.env' })
-const express = require('express')
-const cookieParser = require('cookie-parser')
-const jsonwebtoken = require('jsonwebtoken')
+import dotenv from 'dotenv'
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import jwt from 'jsonwebtoken'
 
-const { ApolloServer } = require('apollo-server')
-const { PrismaClient } = require('@prisma/client')
+import { ApolloServer } from 'apollo-server-express'
+import { PrismaClient } from '@prisma/client'
 
-const typeDefs = require('./schema')
-const resolvers = require('./resolvers')
+import typeDefs from './schema'
+import resolvers from './resolvers'
+import { TokenInterface } from './types'
 
+dotenv.config()
 const app = express()
 const port = process.env.PORT
 const prisma = new PrismaClient()
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-const server = new ApolloServer({ typeDefs, resolvers, context: { prisma } })
+app.use(cookieParser())
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }: { url: string }) => {
-  console.log(`🚀  Server ready at ${url}`)
+// decode the JWT so we can get the user Id on each request
+app.use((req: any, res, next) => {
+  const { token } = req.cookies
+  if (token) {
+    const { userId } = jwt.verify(
+      token,
+      process.env.APP_SECRET as string,
+    ) as TokenInterface
+    // put the userId onto the req for future requests to access
+    req.userId = userId
+  }
+  next()
 })
+
+app.use(async (req: any, res, next) => {
+  if (!req.userId) return next()
+  const user = await prisma.user.findOne({ where: { id: req.userId } })
+  if (user) {
+    req.user = user
+  }
+  next()
+})
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }: { req: any; res: any }) => {
+    return { req, res, prisma, user: req.user }
+  },
+})
+
+server.applyMiddleware({
+  app,
+  cors: {
+    credentials: true,
+    origin: [process.env.FRONTEND_URL as string],
+  },
+})
+
+app.listen({ port }, () =>
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`,
+  ),
+)

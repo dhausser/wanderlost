@@ -1,41 +1,23 @@
-import { PrismaClient } from '@prisma/client'
+require('dotenv').config({ path: '.env' })
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const jsonwebtoken = require('jsonwebtoken')
 
+const { ApolloServer } = require('apollo-server')
+const { PrismaClient } = require('@prisma/client')
+
+const typeDefs = require('./schema')
+const resolvers = require('./resolvers')
+
+const app = express()
+const port = process.env.PORT
 const prisma = new PrismaClient()
 
-async function getAllUsers() {
-  const allUsers = await prisma.user.findMany()
-  console.log(allUsers)
-  return allUsers
-}
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({ typeDefs, resolvers, context: { prisma } })
 
-async function createUser() {
-  const user = await prisma.user.create({
-    data: {
-      name: 'Davy Hausser',
-      email: 'dhausser@prisma.io',
-      permissions: 'ADMIN',
-      password: '123456',
-    },
-  })
-  return user
-}
-
-async function deleteUser() {
-  const deletedUser = await prisma.user.delete({
-    where: { email: 'dhausser@prisma.io' },
-  })
-}
-
-async function main() {
-  await createUser()
-  // await deleteUser()
-  await getAllUsers()
-}
-
-main()
-  .catch((e) => {
-    throw e
-  })
-  .finally(async () => {
-    await prisma.disconnect()
-  })
+// The `listen` method launches a web server.
+server.listen().then(({ url }: { url: string }) => {
+  console.log(`🚀  Server ready at ${url}`)
+})

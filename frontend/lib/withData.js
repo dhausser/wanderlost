@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import withApollo from 'next-with-apollo';
 import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
 import { onError } from '@apollo/link-error';

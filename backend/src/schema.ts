@@ -60,19 +60,31 @@ export default gql`
     updatedAt: String!
   }
 
-  type Query {
-    users: [User]
-    authenticatedUser: User
-  }
-
   type UserInput {
     email: String!
     password: String!
     name: String!
   }
 
+  type Query {
+    items: [Item]!
+    item(id: ID!): Item
+    users: [User]
+    user: User
+  }
+
   type Mutation {
+    createItem(
+      title: String!
+      description: String!
+      price: Int!
+      image: String
+      largeImage: String
+    ): Item!
+    updateItem(id: ID!, title: String, description: String, price: Int): Item!
+    deleteItem(id: ID!): Item
     signup(email: String!, password: String!, name: String!): User!
     signin(email: String!, password: String!): User
+    signout: String
   }
 `

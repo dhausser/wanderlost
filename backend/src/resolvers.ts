@@ -1,28 +1,72 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Context, UserInput } from './types'
+import { Context, UserInput, ItemInput } from './types'
 
 export default {
   Query: {
-    authenticatedUser(_: any, __: null, { req, prisma, user }: Context) {
+    async items(_: any, __: null, { prisma }: Context) {
+      return prisma.item.findMany()
+    },
+    async item(_: any, { id }: { id: string }, { prisma }: Context) {
+      return prisma.item.findOne({ where: { id } })
+    },
+    user(_: any, __: null, { req, prisma, user }: Context) {
       if (user) {
-        console.log('User present in context', user.email)
         return user
       }
       return null
-      // // console.log(userId)
-      // if (!req.userId) {
-      //   return null
-      // }
-      // return prisma.user.findOne({
-      //   where: { id: req.userId },
-      // })
     },
     users(_: any, __: null, { prisma }: Context) {
       return prisma.user.findMany()
     },
   },
   Mutation: {
+    async createItem(_: any, args: ItemInput, { prisma, user }: Context) {
+      if (!user) {
+        throw new Error('You must be logged in to do that!')
+      }
+      const item = await prisma.item.create({
+        data: {
+          ...args,
+          user: {
+            connect: { id: user.id },
+          },
+        },
+      })
+      return item
+    },
+    async updateItem(_: any, args: ItemInput, { prisma }: Context) {
+      // first take a copy of the updates
+      const updates = { ...args }
+      // remove the ID from the updates
+      delete updates.id
+      // run the update method
+      return prisma.item.update({
+        data: updates,
+        where: { id: args.id },
+      })
+    },
+    async deleteItem(
+      _: any,
+      { id }: { id: string },
+      { prisma, user }: Context,
+    ) {
+      const where = { id }
+      // 1. find the item
+      const item = await prisma.item.findOne({ where })
+      // 2. Check if they own that item, or have the permissions
+      // const ownsItem = item.user.id === user.id
+      // const hasPermissions = user.permissions.some((permission) =>
+      //   ['ADMIN', 'ITEMDELETE'].includes(permission),
+      // )
+
+      // if (!ownsItem && !hasPermissions) {
+      //   throw new Error("You don't have permission to do that!")
+      // }
+
+      // 3. Delete it!
+      return prisma.item.delete({ where })
+    },
     async signup(
       _: any,
       { email, password, name }: UserInput,
@@ -72,6 +116,10 @@ export default {
       })
       // 5. Return the user
       return user
+    },
+    signout(_: never, __: never, { res }: Context) {
+      res.clearCookie('token')
+      return null
     },
   },
 }

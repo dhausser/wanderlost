@@ -2,22 +2,22 @@ import { useQuery, gql } from '@apollo/client';
 
 const CURRENT_USER_QUERY = gql`
   query {
-    authenticatedUser {
+    user {
       id
       email
       name
       permissions
-      cart {
-        id
-        quantity
-        item {
-          id
-          price
-          image
-          title
-          description
-        }
-      }
+      # cart {
+      #   id
+      #   quantity
+      #   item {
+      #     id
+      #     price
+      #     image
+      #     title
+      #     description
+      #   }
+      # }
     }
   }
 `;
@@ -25,7 +25,7 @@ const CURRENT_USER_QUERY = gql`
 function useUser() {
   const { data } = useQuery(CURRENT_USER_QUERY);
   if (data) {
-    return data.authenticatedUser;
+    return data.user;
   }
   return null;
 }

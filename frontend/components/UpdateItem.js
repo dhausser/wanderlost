@@ -1,4 +1,5 @@
 import { useQuery, useMutation, gql } from '@apollo/client';
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
@@ -6,7 +7,7 @@ import useForm from '../lib/useForm';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
-    item(where: { id: $id }) {
+    item(id: $id) {
       id
       title
       description
@@ -37,7 +38,8 @@ const UPDATE_ITEM_MUTATION = gql`
 `;
 
 function UpdateItem({ id }) {
-  const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
+  // const router = useRouter();
+  const { data = {}, loading } = useQuery(SINGLE_ITEM_QUERY, {
     variables: {
       id,
     },
@@ -50,15 +52,21 @@ function UpdateItem({ id }) {
         id,
         ...inputs,
       },
-    },
+    }
   );
   if (loading) return <p>Loading...</p>;
   if (!data || !data.item) return <p>No Item Found for ID {id}</p>;
 
+  console.log(data.item)
+
   return (
     <Form onSubmit={async (e) => {
       e.preventDefault();
-      await updateItem();
+      const res = await updateItem();
+      // router.push({
+      //   pathname: '/item',
+      //   query: { id },
+      // });
     }}
     >
       <Error error={error} />
@@ -94,7 +102,7 @@ function UpdateItem({ id }) {
             name="description"
             placeholder="Enter A Description"
             required
-            value={data.item.description}
+            value={inputs.description}
             onChange={handleChange}
           />
         </label>

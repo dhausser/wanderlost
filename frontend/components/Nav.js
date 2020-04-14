@@ -27,12 +27,12 @@ function Nav() {
           <Signout />
           <button type="button" onClick={toggleCart}>
             My Cart
-            <CartCount
+            {/* <CartCount
               count={me.cart.reduce(
                 (tally, cartItem) => tally + cartItem.quantity,
                 0,
               )}
-            />
+            /> */}
           </button>
         </>
       )}

@@ -5,8 +5,8 @@ import Pagination from './Pagination';
 import { perPage } from '../config';
 
 const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+  query ALL_ITEMS_QUERY {
+    items {
       id
       title
       price
@@ -16,6 +16,19 @@ const ALL_ITEMS_QUERY = gql`
     }
   }
 `;
+
+// const ALL_ITEMS_QUERY = gql`
+//   query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
+//     items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+//       id
+//       title
+//       price
+//       description
+//       image
+//       largeImage
+//     }
+//   }
+// `;
 
 const Center = styled.div`
   text-align: center;
@@ -30,9 +43,10 @@ const ItemsList = styled.div`
 `;
 
 function Items({ page }) {
-  const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
-    variables: { skip: page * perPage - perPage },
-  });
+  // const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
+  //   variables: { skip: page * perPage - perPage },
+  // });
+  const { data, loading, error } = useQuery(ALL_ITEMS_QUERY);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -49,7 +63,7 @@ function Items({ page }) {
 
         ))}
       </ItemsList>
-      <Pagination page={page} />
+      {/* <Pagination page={page} /> */}
     </Center>
   );
 }

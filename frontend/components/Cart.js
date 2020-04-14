@@ -19,12 +19,12 @@ function Cart() {
           &times;
         </CloseButton>
         <Supreme>{me.name}'s Cart</Supreme>
-        <p>
+        {/* <p>
           You Have {me.cart.length} Item{me.cart.length === 1 ? '' : 's'} in
           your cart.
-        </p>
+        </p> */}
       </header>
-      <ul>
+      {/* <ul>
         {me.cart.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
@@ -34,7 +34,7 @@ function Cart() {
           <p>{formatMoney(calcTotalPrice(me.cart))}</p>
           <Checkout />
         </footer>
-      )}
+      )} */}
     </CartStyles>
   );
 }

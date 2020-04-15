@@ -20,8 +20,11 @@ export default {
       allItems.reverse()
 
       const total = allItems.length
-      const items = allItems.slice(offset, limit)
+      const items = allItems.slice(offset, offset + limit)
       const hasMore = allItems.length > offset + limit
+
+      console.log(allItems.length)
+      console.log(items.length)
 
       return {
         total,

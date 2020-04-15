@@ -23,24 +23,11 @@ export default {
       const items = allItems.slice(offset, offset + limit)
       const hasMore = allItems.length > offset + limit
 
-      console.log(allItems.length)
-      console.log(items.length)
-
       return {
         total,
         hasMore,
         items,
       }
-
-      // return {
-      //   items,
-      //   cursor: items.length ? items[items.length - 1].cursor : null,
-      //   // if the cursor of the end of the paginated results is the same as the
-      //   // last item in _all_ results, then there are no more results after this
-      //   hasMore: items.length
-      //     ? items[items.length - 1].id !== allItems[allItems.length - 1].id
-      //     : false,
-      // }
     },
     async item(_: any, { id }: { id: string }, { prisma }: Context) {
       return prisma.item.findOne({ where: { id } })

@@ -22,6 +22,12 @@ export default gql`
     orders: [OrderItem]
   }
 
+  type ItemConnection {
+    items: [Item]!
+    total: Int!
+    hasMore: Boolean!
+  }
+
   type Item {
     id: ID!
     title: String!
@@ -67,7 +73,7 @@ export default gql`
   }
 
   type Query {
-    items: [Item]!
+    items(offset: Int, limit: Int): ItemConnection!
     item(id: ID!): Item
     users: [User]
     user: User

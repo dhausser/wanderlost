@@ -32,7 +32,7 @@ function CreateItem() {
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
     update(cache) {
-      const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
+      const { items: { items } } = cache.readQuery({ query: ALL_ITEMS_QUERY });
       cache.writeQuery({
         query: ALL_ITEMS_QUERY,
         data: { items: items.concat([{ ...inputs }]) },

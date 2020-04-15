@@ -5,14 +5,14 @@ import { PAGINATION_QUERY } from '../components/Pagination';
 
 
 function Home ({ query }) {
-  // const { data, loading } = useQuery(PAGINATION_QUERY)
-  // if (loading) return 'Loading...';
-  // if (error) return error.message;
+  const { loading, error, data } = useQuery(PAGINATION_QUERY)
+  if (loading) return 'Loading...';
+  if (error) return error.message;
   return (
     <div>
       <Items
-        // page={parseFloat(query.page) || 1}
-        // count={data.itemsConnection.aggregate.count}
+        page={parseFloat(query.page) || 1}
+        count={data.items.total}
       />
     </div>
 )};

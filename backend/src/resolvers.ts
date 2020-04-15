@@ -1,11 +1,43 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Context, UserInput, ItemInput } from './types'
+import {
+  Context,
+  UserInput,
+  ItemInput,
+  Pagination,
+  ItemConnection,
+} from './types'
 
 export default {
   Query: {
-    async items(_: any, __: null, { prisma }: Context) {
-      return prisma.item.findMany()
+    async items(
+      _: any,
+      { limit = 4, offset }: Pagination,
+      { prisma }: Context,
+    ) {
+      console.log({ offset, limit })
+      const allItems = await prisma.item.findMany()
+      allItems.reverse()
+
+      const total = allItems.length
+      const items = allItems.slice(offset, limit)
+      const hasMore = allItems.length > offset + limit
+
+      return {
+        total,
+        hasMore,
+        items,
+      }
+
+      // return {
+      //   items,
+      //   cursor: items.length ? items[items.length - 1].cursor : null,
+      //   // if the cursor of the end of the paginated results is the same as the
+      //   // last item in _all_ results, then there are no more results after this
+      //   hasMore: items.length
+      //     ? items[items.length - 1].id !== allItems[allItems.length - 1].id
+      //     : false,
+      // }
     },
     async item(_: any, { id }: { id: string }, { prisma }: Context) {
       return prisma.item.findOne({ where: { id } })

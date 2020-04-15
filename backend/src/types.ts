@@ -1,6 +1,6 @@
 import { PrismaClient, User } from '@prisma/client'
 
-export declare enum Permissions {
+export enum Permissions {
   ADMIN,
   ITEMCREATE,
   ITEMDELETE,
@@ -9,14 +9,14 @@ export declare enum Permissions {
   USER,
 }
 
-export declare interface UserInput {
+export interface UserInput {
   email: string
   password: string
   name: string
   permissions: Permissions[]
 }
 
-export declare interface ItemInput {
+export interface ItemInput {
   id: string
   title: string
   description: string
@@ -26,7 +26,17 @@ export declare interface ItemInput {
   user: any
 }
 
-export declare interface Context {
+export interface Item {
+  id: string
+  title: string
+  description: string
+  image: string
+  largeImage: string
+  price: number
+  user: any
+}
+
+export interface Context {
   req: {
     userId: string | undefined
     headers: {
@@ -38,8 +48,19 @@ export declare interface Context {
   user: any
 }
 
-export declare interface TokenInterface {
+export interface TokenInterface {
   email: string
   name: string
   userId: number
+}
+
+export interface Pagination {
+  offset: number
+  limit: number
+}
+
+export interface ItemConnection {
+  cursor: number
+  hasMore: boolean
+  items: Item[]
 }

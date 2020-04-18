@@ -17,27 +17,14 @@ const DELETE_ITEM_MUTATION = gql`
 
 function DeleteItem({ id, children }) {
   const { query } = useRouter();
-
   let page = 1;
-  let offset = 0;
-
-  if (query) {
-    ({ page } = query);
-    offset = page * perPage - perPage;
-  }
+  if (query) ({ page } = query);
 
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
     refetchQueries: [
-      { query: ALL_ITEMS_QUERY, variables: { offset } },
+      { query: ALL_ITEMS_QUERY, variables: { offset: page * perPage - perPage } },
       { query: PAGINATION_QUERY }]
-    // update(cache) {
-    //   const { items: { items } } = cache.readQuery({ query: ALL_ITEMS_QUERY });
-    //   cache.writeQuery({
-    //     query: ALL_ITEMS_QUERY,
-    //     data: { items: items.filter(item => item.id !== id) },
-    //   });
-    // },
   });
 
   if (error) {

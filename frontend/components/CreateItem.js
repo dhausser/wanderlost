@@ -5,6 +5,7 @@ import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { ALL_ITEMS_QUERY } from './Items';
 import { PAGINATION_QUERY } from './Pagination';
+import { perPage } from '../config';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -29,6 +30,8 @@ const CREATE_ITEM_MUTATION = gql`
 function CreateItem() {
   const { inputs, handleChange } = useForm();
   const router = useRouter();
+  let page = 1;
+  if (router.query) ({ page } = router.query);
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
@@ -39,7 +42,10 @@ function CreateItem() {
         data: { items: items.concat([{ ...inputs }]) },
       });
     },
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }]
+    refetchQueries: [
+      { query: ALL_ITEMS_QUERY, variables: { offset: page * perPage - perPage } },
+      { query: PAGINATION_QUERY }
+    ]
   });
 
   return (

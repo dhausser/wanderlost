@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import useForm from '../lib/useForm';
+import { ALL_ITEMS_QUERY } from './Items';
+import { perPage } from '../config';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -37,36 +40,50 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `;
 
-function UpdateItem({ id }) {
-  // const router = useRouter();
-  const { data = {}, loading } = useQuery(SINGLE_ITEM_QUERY, {
-    variables: {
-      id,
-    },
+function UpdateItem() {
+  const router = useRouter();
+  const { id } = router.query;
+  let page = 1;
+  if (router.query) ({ page } = router.query);
+
+  const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
+    variables: { id }
   });
-  const { inputs, handleChange } = useForm(data.item);
+  const { inputs, setInputs, handleChange } = useForm(data?.item);
+
+  useEffect(() => {
+    if (data?.item) {
+      setInputs(data.item);
+      // inputs.title = data.item.title;
+      // inputs.price = data.item.price;
+      // inputs.description = data.item.description;
+    }
+  }, [data])
+
   const [updateItem, { loading: updating, error }] = useMutation(
     UPDATE_ITEM_MUTATION,
     {
-      variables: {
-        id,
-        ...inputs,
-      },
+      variables: { id, ...inputs },
+      refetchQueries: {
+        query: ALL_ITEMS_QUERY,
+        variables: { offset: page * perPage - perPage }
+      }
     }
   );
-  if (loading) return <p>Loading...</p>;
-  if (!data || !data.item) return <p>No Item Found for ID {id}</p>;
 
-  console.log(data.item)
+  if (loading) return <p>Loading...</p>;
+  if (!data || !data.item) {
+    return <p>No Item Found for ID {id}</p>;
+  }
 
   return (
     <Form onSubmit={async (e) => {
       e.preventDefault();
-      const res = await updateItem();
-      // router.push({
-      //   pathname: '/item',
-      //   query: { id },
-      // });
+      await updateItem();
+      router.push({
+        pathname: '/item',
+        query: { id },
+      });
     }}
     >
       <Error error={error} />

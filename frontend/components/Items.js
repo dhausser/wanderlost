@@ -49,7 +49,6 @@ function Items({ page }) {
       <ItemsList>
         {data.items.items.map((item) => (
           <Item key={item.id} item={item} />
-
         ))}
       </ItemsList>
       <Pagination page={page} />

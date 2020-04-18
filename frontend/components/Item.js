@@ -8,6 +8,8 @@ import DeleteItem from './DeleteItem';
 import AddToCart from './AddToCart';
 
 export default function Item({ item }) {
+  const { id } = item;
+  console.log(id);
   return (
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}

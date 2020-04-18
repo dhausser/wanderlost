@@ -98,7 +98,7 @@ export default gql`
     resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
     updatePermissions(permissions: [Permission], userId: ID!): User
     addToCart(id: ID!): CartItem
-    removeFromCart(id: ID!): CartItem
+    deleteCartItem(id: ID!): CartItem
     createOrder(token: String!): Order!
   }
 `

@@ -1,12 +1,9 @@
 /* eslint-disable no-alert */
 import { useMutation, gql } from '@apollo/client';
-import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
 import { ALL_ITEMS_QUERY } from './Items';
 import { PAGINATION_QUERY } from './Pagination';
-import { perPage } from '../config';
-
 const DELETE_ITEM_MUTATION = gql`
   mutation DELETE_ITEM_MUTATION($id: ID!) {
     deleteItem(id: $id) {
@@ -16,19 +13,10 @@ const DELETE_ITEM_MUTATION = gql`
 `;
 
 function DeleteItem({ id, children }) {
-  const { query } = useRouter();
-  // let page = 1;
-  // let offset = 0;
-  // if (query) {
-  //   ({ page } = query);
-  //   offset = page * perPage - perPage;
-  // };
-
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
     refetchQueries: [
       { query: ALL_ITEMS_QUERY },
-      // { query: ALL_ITEMS_QUERY, variables: { offset } },
       { query: PAGINATION_QUERY }]
   });
 

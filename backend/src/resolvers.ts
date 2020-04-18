@@ -33,7 +33,6 @@ export default {
     },
     user(_: any, __: null, { req, prisma, user }: Context) {
       if (user) {
-        console.log(user);
         return user
       }
       return null
@@ -189,8 +188,13 @@ export default {
         }
       })
     },
-    async removeFromCart(_: never, { id }: { id: string }, context: Context) {
-      /** TODO */
+    async deleteCartItem(_: never, { id }: { id: string }, { user, prisma }: Context) {
+      const cartItem = await prisma.cartItem.findOne({ where: { id } });
+      if (!cartItem) throw new Error('No CartItem found!');
+      if (cartItem.userId !== user.id) throw new Error('The item must be in your own cart');
+      const deleted = await prisma.cartItem.delete({ where: { id } });
+      console.log(deleted);
+      return deleted;
     },
     async createOrder(_: never, { id }: { id: string }, context: Context) {
       /** TODO */

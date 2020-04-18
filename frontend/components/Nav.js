@@ -5,10 +5,6 @@ import NavStyles from './styles/NavStyles';
 import Signout from './Signout';
 import CartCount from './CartCount';
 
-/**
- * TODO: CartItem
- */
-
 function Nav() {
   const me = useUser();
   const { toggleCart } = useCart();

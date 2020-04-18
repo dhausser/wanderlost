@@ -15,7 +15,6 @@ export default {
       { limit = 4, offset = 0 }: Pagination,
       { prisma }: Context,
     ) {
-      console.log({ offset, limit })
       const allItems = await prisma.item.findMany()
       allItems.reverse()
 

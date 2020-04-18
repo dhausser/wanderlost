@@ -41,3 +41,28 @@ model CartItem {
   user     User   @relation(fields: [userId], references: [id])
   userId   String
 }
+
+model OrderItem {
+  id          String @default(cuid()) @id
+  title       String
+  description String
+  image       String
+  largeImage  String
+  price       Int
+  quantity    Int    @default(1)
+  user        User   @relation(fields: [userId], references: [id])
+  userId      String
+  order       Order  @relation(fields: [orderId], references: [id])
+  orderId     String
+}
+
+model Order {
+  id        String      @default(cuid()) @id
+  items     OrderItem[]
+  total     Int
+  user      User        @relation(fields: [userId], references: [id])
+  userId    String
+  charge    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}

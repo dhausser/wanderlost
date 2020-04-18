@@ -1,14 +1,21 @@
+import Stripe from "stripe";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2020-03-02",
+  typescript: true
+});
+
 import {
   Context,
   UserInput,
   ItemInput,
   Pagination,
-  ItemConnection,
+  CartItem
 } from './types'
 
-export default {
+const resolvers = {
   Query: {
     async items(
       _: any,
@@ -29,7 +36,7 @@ export default {
       }
     },
     async item(_: any, { id }: { id: string }, { prisma }: Context) {
-      return prisma.item.findOne({ where: { id } })
+      return prisma.item.findOne({ where: { id } });
     },
     user(_: any, __: null, { req, prisma, user }: Context) {
       if (user) {
@@ -40,13 +47,18 @@ export default {
     users(_: any, __: null, { prisma }: Context) {
       return prisma.user.findMany()
     },
-    order(_: any, { id }: { id: string }, { prisma }: Context) {
-      /** TODO */
-      // return prisma.order.findOne({ where: { id } });
+    async order(_: any, { id }: { id: string }, { prisma }: Context) {
+      const order = await prisma.order.findOne({
+        where: { id },
+        include: { user: true, items: true },
+      });
+      return order
     },
-    orders(_: any, __: null, { user, prisma }: Context) {
-      /** TODO */
-      // return prisma.order.findMany({ where: { user: user.id } });
+    async orders(_: any, __: null, { user, prisma }: Context) {
+      return prisma.order.findMany({
+        where: { userId: user.id },
+        include: { items: true },
+      });
     },
   },
   Mutation: {
@@ -146,24 +158,23 @@ export default {
       // 5. Return the user
       return user
     },
-    signout(_: never, __: never, { res }: Context) {
+    signout(_: any, __: any, { res }: Context) {
       res.clearCookie('token')
       return null
     },
-    async requestReset(_: never, args: void, context: Context) {
+    async requestReset(_: any, args: void, context: Context) {
       /** TODO */
     },
-    async resetPassword(_: never, args: void, context: Context) {
+    async resetPassword(_: any, args: void, context: Context) {
       /** TODO */
     },
-    async updatePermissions(_: never, args: void, context: Context) {
+    async updatePermissions(_: any, args: void, context: Context) {
       /** TODO */
     },
-    async addToCart(_: never, { id }: { id: string }, { user, prisma }: Context) {
+    async addToCart(_: any, { id }: { id: string }, { user, prisma }: Context) {
       if (!user) {
         throw new Error('You must be signed in')
       }
-      console.log('Adding to cart:', id);
       const [existingCartItem] = await prisma.cartItem.findMany({
         where: {
           userId: user.id,
@@ -171,7 +182,6 @@ export default {
         }
       });
       if (existingCartItem) {
-        console.log('This item is already in the cart')
         return prisma.cartItem.update({
           where: { id: existingCartItem.id },
           data: { quantity: existingCartItem.quantity + 1 }
@@ -188,15 +198,62 @@ export default {
         }
       })
     },
-    async deleteCartItem(_: never, { id }: { id: string }, { user, prisma }: Context) {
+    async deleteCartItem(_: any, { id }: { id: string }, { user, prisma }: Context) {
       const cartItem = await prisma.cartItem.findOne({ where: { id } });
       if (!cartItem) throw new Error('No CartItem found!');
       if (cartItem.userId !== user.id) throw new Error('The item must be in your own cart');
       const deleted = await prisma.cartItem.delete({ where: { id } });
       return deleted;
     },
-    async createOrder(_: never, { id }: { id: string }, context: Context) {
-      /** TODO */
+    async checkout(_: any, { token }: { token: string }, { user, prisma }: Context) {
+      if (!user) throw new Error('You must be signed in to complete this order.');
+      const amount = user.cart.reduce(
+        (tally: number, cartItem: CartItem) => tally + cartItem.item.price * cartItem.quantity,
+        0,
+      );
+      const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'USD',
+        confirm: true,
+        payment_method: token,
+      });
+      const orderItems = user.cart.map((cartItem: CartItem) => {
+        const { title, description, price, image, largeImage } = cartItem.item;
+        const orderItem = {
+          title,
+          description,
+          price,
+          image,
+          largeImage,
+          quantity: cartItem.quantity,
+          user: { connect: { id: user.id } },
+        }
+        return orderItem
+      })
+      const order = await prisma.order.create({
+        data: {
+          total: paymentIntent.amount,
+          charge: paymentIntent.id,
+          items: { create: orderItems },
+          user: { connect: { id: user.id } },
+        },
+        include: { items: true },
+      })
+
+      /** TODO: Delete Many */
+      // const cartItemIds = user.cart.map((cartItem: CartItem) => cartItem.id);
+      // await prisma.cartItem.deleteMany({
+      //   where: {
+      //     id: cartItemIds,
+      //   },
+      // });
+      user.cart.forEach(async ({ id }: { id: string }) =>
+        prisma.cartItem.delete({ where: { id } })
+      )
+
+      return order;
     }
   },
 }
+
+export default resolvers;

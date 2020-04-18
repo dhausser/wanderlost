@@ -34,6 +34,13 @@ export interface Item {
   largeImage: string
   price: number
   user: any
+  createdAt: String
+  updatedAt: String
+}
+
+export interface CartItem extends Item {
+  quantity: number
+  item: Item
 }
 
 export interface Context {

@@ -99,6 +99,6 @@ export default gql`
     updatePermissions(permissions: [Permission], userId: ID!): User
     addToCart(id: ID!): CartItem
     deleteCartItem(id: ID!): CartItem
-    createOrder(token: String!): Order!
+    checkout(token: String!): Order!
   }
 `

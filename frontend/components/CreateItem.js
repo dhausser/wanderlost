@@ -30,20 +30,20 @@ const CREATE_ITEM_MUTATION = gql`
 function CreateItem() {
   const { inputs, handleChange } = useForm();
   const router = useRouter();
-  let page = 1;
-  if (router.query) ({ page } = router.query);
+  // let page = 1;
+  // if (router.query) ({ page } = router.query);
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
-    update(cache) {
-      const { items: { items } } = cache.readQuery({ query: ALL_ITEMS_QUERY });
-      cache.writeQuery({
-        query: ALL_ITEMS_QUERY,
-        data: { items: items.concat([{ ...inputs }]) },
-      });
-    },
+    // update(cache) {
+    //   const { items: { items } } = cache.readQuery({ query: ALL_ITEMS_QUERY });
+    //   cache.writeQuery({
+    //     query: ALL_ITEMS_QUERY,
+    //     data: { items: items.concat([{ ...inputs }]) },
+    //   });
+    // },
     refetchQueries: [
-      { query: ALL_ITEMS_QUERY, variables: { offset: page * perPage - perPage } },
+      { query: ALL_ITEMS_QUERY },
       { query: PAGINATION_QUERY }
     ]
   });

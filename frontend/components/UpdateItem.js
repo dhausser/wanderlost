@@ -43,8 +43,6 @@ const UPDATE_ITEM_MUTATION = gql`
 function UpdateItem() {
   const router = useRouter();
   const { id } = router.query;
-  let page = 1;
-  if (router.query) ({ page } = router.query);
 
   const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
     variables: { id }
@@ -54,9 +52,6 @@ function UpdateItem() {
   useEffect(() => {
     if (data?.item) {
       setInputs(data.item);
-      // inputs.title = data.item.title;
-      // inputs.price = data.item.price;
-      // inputs.description = data.item.description;
     }
   }, [data])
 
@@ -66,7 +61,6 @@ function UpdateItem() {
       variables: { id, ...inputs },
       refetchQueries: {
         query: ALL_ITEMS_QUERY,
-        variables: { offset: page * perPage - perPage }
       }
     }
   );

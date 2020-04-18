@@ -12,7 +12,7 @@ export default {
   Query: {
     async items(
       _: any,
-      { limit = 4, offset = 0 }: Pagination,
+      { offset = 0, limit = 4 }: Pagination,
       { prisma }: Context,
     ) {
       const allItems = await prisma.item.findMany()

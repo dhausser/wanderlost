@@ -6,15 +6,15 @@
     "start": "node dist/index",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && npm -s run generate && tsc",
-    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma-nexus": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
     "postinstall": "npm -s run generate",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index",
-    "db": "prisma studio --experimental",
-    "db-save": "prisma migrate save --experimental",
-    "db-up": "prisma migrate up --experimental",
-    "update": "prisma generate"
+    "studio": "prisma studio --experimental",
+    "migrate:save": "prisma migrate save --experimental",
+    "migrate:up": "prisma migrate up --experimental",
+    "generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^2.0.0-beta.2",
@@ -23,7 +23,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "graphql": "^14.6.0",
+    "graphql": "^15.0.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.2",
     "stripe": "^8.12.0"

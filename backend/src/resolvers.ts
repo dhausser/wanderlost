@@ -12,7 +12,7 @@ export default {
   Query: {
     async items(
       _: any,
-      { limit = 4, offset }: Pagination,
+      { limit = 4, offset = 0 }: Pagination,
       { prisma }: Context,
     ) {
       console.log({ offset, limit })

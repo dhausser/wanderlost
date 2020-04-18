@@ -9,32 +9,38 @@ import formatMoney from '../lib/formatMoney';
 import Checkout from './Checkout';
 
 function Cart() {
-  const me = useUser();
+  let totalItems = 0;
+  const user = useUser();
   const { cartOpen, toggleCart } = useCart();
-  if (!me) return null;
+  if (!user) return null;
+
+  totalItems = user.cart.reduce((acc, current) => {
+    return acc = acc + current.quantity;
+  }, 0);
+
   return (
     <CartStyles open={cartOpen}>
       <header>
         <CloseButton onClick={toggleCart} title="close">
           &times;
         </CloseButton>
-        <Supreme>{me.name}'s Cart</Supreme>
-        {/* <p>
-          You Have {me.cart.length} Item{me.cart.length === 1 ? '' : 's'} in
+        <Supreme>{user.name}'s Cart</Supreme>
+        <p>
+          You Have {totalItems} Item{totalItems === 1 ? '' : 's'} in
           your cart.
-        </p> */}
+        </p>
       </header>
-      {/* <ul>
-        {me.cart.map((cartItem) => (
+      <ul>
+        {user.cart.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
-      {me.cart.length && (
+      {user.cart.length && (
         <footer>
-          <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+          <p>{formatMoney(calcTotalPrice(user.cart))}</p>
           <Checkout />
         </footer>
-      )} */}
+      )}
     </CartStyles>
   );
 }

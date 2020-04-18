@@ -33,7 +33,10 @@ app.use((req: any, res, next) => {
 
 app.use(async (req: any, res, next) => {
   if (!req.userId) return next()
-  const user = await prisma.user.findOne({ where: { id: req.userId } })
+  const user = await prisma.user.findOne({
+    where: { id: req.userId },
+    include: { cart: { include: { item: true } } },
+  })
   if (user) {
     req.user = user
   }

@@ -7,17 +7,17 @@ const CURRENT_USER_QUERY = gql`
       email
       name
       permissions
-      # cart {
-      #   id
-      #   quantity
-      #   item {
-      #     id
-      #     price
-      #     image
-      #     title
-      #     description
-      #   }
-      # }
+      cart {
+        id
+        quantity
+        item {
+          id
+          price
+          image
+          title
+          description
+        }
+      }
     }
   }
 `;
@@ -25,6 +25,7 @@ const CURRENT_USER_QUERY = gql`
 function useUser() {
   const { data } = useQuery(CURRENT_USER_QUERY);
   if (data) {
+    console.log(data.user);
     return data.user;
   }
   return null;

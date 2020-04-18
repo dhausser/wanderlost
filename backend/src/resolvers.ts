@@ -33,12 +33,21 @@ export default {
     },
     user(_: any, __: null, { req, prisma, user }: Context) {
       if (user) {
+        console.log(user);
         return user
       }
       return null
     },
     users(_: any, __: null, { prisma }: Context) {
       return prisma.user.findMany()
+    },
+    order(_: any, { id }: { id: string }, { prisma }: Context) {
+      /** TODO */
+      // return prisma.order.findOne({ where: { id } });
+    },
+    orders(_: any, __: null, { user, prisma }: Context) {
+      /** TODO */
+      // return prisma.order.findMany({ where: { user: user.id } });
     },
   },
   Mutation: {
@@ -142,5 +151,49 @@ export default {
       res.clearCookie('token')
       return null
     },
+    async requestReset(_: never, args: void, context: Context) {
+      /** TODO */
+    },
+    async resetPassword(_: never, args: void, context: Context) {
+      /** TODO */
+    },
+    async updatePermissions(_: never, args: void, context: Context) {
+      /** TODO */
+    },
+    async addToCart(_: never, { id }: { id: string }, { user, prisma }: Context) {
+      if (!user) {
+        throw new Error('You must be signed in')
+      }
+      console.log('Adding to cart:', id);
+      const [existingCartItem] = await prisma.cartItem.findMany({
+        where: {
+          userId: user.id,
+          itemId: id
+        }
+      });
+      if (existingCartItem) {
+        console.log('This item is already in the cart')
+        return prisma.cartItem.update({
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 }
+        })
+      }
+      return await prisma.cartItem.create({
+        data: {
+          user: {
+            connect: { id: user.id }
+          },
+          item: {
+            connect: { id }
+          }
+        }
+      })
+    },
+    async removeFromCart(_: never, { id }: { id: string }, context: Context) {
+      /** TODO */
+    },
+    async createOrder(_: never, { id }: { id: string }, context: Context) {
+      /** TODO */
+    }
   },
 }

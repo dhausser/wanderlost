@@ -13,7 +13,7 @@ model User {
   name             String
   password         String
   item             Item[]
-  cartItem         CartItem[]
+  cart             CartItem[]
   resetToken       String?
   resetTokenExpiry Float?
   createdAt        DateTime   @default(now())
@@ -35,7 +35,7 @@ model Item {
 
 model CartItem {
   id       String @default(cuid()) @id
-  quantity Int
+  quantity Int    @default(1)
   item     Item   @relation(fields: [itemId], references: [id])
   itemId   String
   user     User   @relation(fields: [userId], references: [id])

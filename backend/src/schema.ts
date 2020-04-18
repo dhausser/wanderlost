@@ -75,8 +75,10 @@ export default gql`
   type Query {
     items(offset: Int, limit: Int): ItemConnection!
     item(id: ID!): Item
-    users: [User]
     user: User
+    users: [User]
+    order(id: ID!): Order
+    orders: [Order]!
   }
 
   type Mutation {
@@ -92,5 +94,11 @@ export default gql`
     signup(email: String!, password: String!, name: String!): User!
     signin(email: String!, password: String!): User
     signout: String
+    requestReset(email: String!): String
+    resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+    updatePermissions(permissions: [Permission], userId: ID!): User
+    addToCart(id: ID!): CartItem
+    removeFromCart(id: ID!): CartItem
+    createOrder(token: String!): Order!
   }
 `

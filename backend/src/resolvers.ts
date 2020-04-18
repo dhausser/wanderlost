@@ -193,7 +193,6 @@ export default {
       if (!cartItem) throw new Error('No CartItem found!');
       if (cartItem.userId !== user.id) throw new Error('The item must be in your own cart');
       const deleted = await prisma.cartItem.delete({ where: { id } });
-      console.log(deleted);
       return deleted;
     },
     async createOrder(_: never, { id }: { id: string }, context: Context) {

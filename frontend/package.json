@@ -1,16 +1,17 @@
 {
   "name": "ecommerce-nextjs-apollo-client",
-  "version": "1.0.0",
-  "description": "Sick Fits! An example React, GraphQL, Next and Apollo",
-  "main": "index.js",
+  "private": true,
+  "engines": {
+    "node": "13.x"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT",
-    "test": "NODE_ENV=test jest --watch"
+    "start": "next start",
+    "test": "NODE_ENV=test jest --watch",
+    "heroku-postbuild": "next build"
   },
   "author": "",
-  "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.43",
     "@apollo/link-error": "^2.0.0-beta.3",
@@ -22,7 +23,7 @@
     "babel-plugin-styled-components": "^1.10.7",
     "date-fns": "^2.10.0",
     "downshift": "^5.0.3",
-    "graphql": "^15.0.0",
+    "graphql": "^14.5.4",
     "lodash.debounce": "^4.0.8",
     "next": "^9.3.4",
     "next-with-apollo": "^5.0.0",

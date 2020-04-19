@@ -12,7 +12,7 @@ import { TokenInterface } from './types'
 
 dotenv.config()
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 4000;
 const prisma = new PrismaClient()
 
 app.use(cookieParser())
@@ -59,7 +59,9 @@ server.applyMiddleware({
   },
 })
 
-app.listen({ port }, () =>
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () =>
   console.log(
     `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`,
   ),

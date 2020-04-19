@@ -1,5 +1,5 @@
 {
-  "name": "sick-fits-backend",
+  "name": "ecommerce-prisma-graphql-apollo-server",
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -1,1 +1,6 @@
-# sick-fits-backend
+# Ecommerce
+
+Built with:
+- Next.js
+- Apollo GraphQL
+- Prisma

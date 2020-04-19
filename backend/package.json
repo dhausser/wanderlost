@@ -12,10 +12,9 @@
     "build": "tsc",
     "build:clean": "npm -s run clean && npm -s run generate && tsc",
     "studio": "prisma studio --experimental",
-    "migrate:save": "prisma migrate save --experimental",
-    "migrate:up": "prisma migrate up --experimental",
-    "generate": "prisma generate",
-    "heroku-postbuild": "tsc"
+    "migrate:save": "npx prisma migrate save --experimental",
+    "migrate:up": "npx prisma migrate up --experimental",
+    "generate": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^2.0.0-beta.2",

@@ -37,7 +37,7 @@ app.use(async (req: any, res, next) => {
     where: { id: req.userId },
     include: { cart: { include: { item: true } } },
   })
-  if (user) {
+  if (user && user.id) {
     req.user = user
   }
   next()
@@ -58,8 +58,6 @@ server.applyMiddleware({
     origin: [process.env.FRONTEND_URL as string],
   },
 })
-
-app.get('/', (req, res) => res.send('Hello World!'))
 
 app.listen(port, () =>
   console.log(

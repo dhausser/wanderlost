@@ -4,7 +4,7 @@ import Items from '../components/Items';
 import { PAGINATION_QUERY } from '../components/Pagination';
 
 
-function Home ({ query }) {
+function Home({ query }) {
   const { loading, error, data } = useQuery(PAGINATION_QUERY)
   if (loading) return 'Loading...';
   if (error) return error.message;
@@ -15,7 +15,8 @@ function Home ({ query }) {
         count={data.items.total}
       />
     </div>
-)};
+  )
+};
 
 Home.propTypes = {
   query: PropTypes.shape({

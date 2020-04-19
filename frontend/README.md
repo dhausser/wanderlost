@@ -1,4 +1,6 @@
-# Advanced-React
+# Ecommerce Next.js with Apollo Client
 
-frontend
-# sick-fits-frontend
+Built with:
+- Next.js
+- Apollo GraphQL
+- Prisma

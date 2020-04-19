@@ -1,6 +1,10 @@
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { randomBytes } from 'crypto';
+import { promisify } from 'util';
+import { transport, makeANiceEmail } from './mail';
+import { hasPermission } from './utils';
 import Stripe from "stripe";
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2020-03-02",
@@ -95,15 +99,18 @@ const resolvers = {
       const where = { id }
       // 1. find the item
       const item = await prisma.item.findOne({ where })
+      if (!item) {
+        throw new Error('Item does not exist')
+      }
       // 2. Check if they own that item, or have the permissions
-      // const ownsItem = item.user.id === user.id
-      // const hasPermissions = user.permissions.some((permission) =>
-      //   ['ADMIN', 'ITEMDELETE'].includes(permission),
-      // )
+      const ownsItem = item.userId === user.id
+      const hasPermissions = user.permissions.some((permission: string) =>
+        ['ADMIN', 'ITEMDELETE'].includes(permission),
+      )
 
-      // if (!ownsItem && !hasPermissions) {
-      //   throw new Error("You don't have permission to do that!")
-      // }
+      if (!ownsItem && !hasPermissions) {
+        throw new Error("You don't have permission to do that!")
+      }
 
       // 3. Delete it!
       return prisma.item.delete({ where })
@@ -118,6 +125,7 @@ const resolvers = {
           email: email.toLocaleLowerCase(),
           name,
           password: await bcrypt.hash(password, 10),
+          permissions: { set: ['USER', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE'] },
         },
       })
       const token = jwt.sign(
@@ -162,14 +170,83 @@ const resolvers = {
       res.clearCookie('token')
       return null
     },
-    async requestReset(_: any, args: void, context: Context) {
-      /** TODO */
+    async requestReset(_: any, { email }: { email: string }, { prisma }: Context) {
+      const user = await prisma.user.findOne({ where: { email } });
+      if (!user) {
+        throw new Error(`No user found for email: ${email}'`);
+      }
+      const randomBytesPromiseified = promisify(randomBytes)
+      const resetToken = (await randomBytesPromiseified(20)).toString('hex')
+      const resetTokenExpiry = Date.now() + 3600000 // 1 hour from now
+      const res = await prisma.user.update({
+        where: { email },
+        data: { resetToken, resetTokenExpiry },
+      })
+      const mailRes = await transport.sendMail({
+        from: 'dave@bos.com',
+        to: user.email,
+        subject: 'Your Password Reset Token',
+        html: makeANiceEmail(`Your Password Reset Token is here!
+      \n\n
+      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+      })
+      return { message: 'Thanks!' }
     },
-    async resetPassword(_: any, args: void, context: Context) {
-      /** TODO */
+    async resetPassword(
+      _: any,
+      { password, confirmPassword, resetToken }: { password: string, confirmPassword: string, resetToken: string },
+      { res, prisma }: Context) {
+      // 1. check if the passwords match
+      if (password !== confirmPassword) {
+        throw new Error("Yo Passwords don't match!")
+      }
+      // 2. check if its a legit reset token
+      // 3. Check if its expired
+      const [user] = await prisma.user.findMany({
+        where: { resetToken },
+      })
+      if (!user) {
+        throw new Error('This token is either invalid or expired!')
+      }
+      // 4. Hash their new password
+      const hash = await bcrypt.hash(password, 10)
+      // 5. Save the new password to the user and remove old resetToken fields
+      const updatedUser = await prisma.user.update({
+        where: { email: user.email },
+        data: {
+          password: hash,
+          resetToken: null,
+          resetTokenExpiry: null,
+        },
+      })
+      // 6. Generate JWT
+      const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET as string)
+      // 7. Set the JWT cookie
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365,
+      })
+      // 8. return the new user
+      return updatedUser
     },
-    async updatePermissions(_: any, args: void, context: Context) {
-      /** TODO */
+    async updatePermissions(_: any, { permissions }: { permissions: any }, { user, prisma }: Context) {
+      // 1. Check if they are logged in
+      if (!user) {
+        throw new Error('You must be logged in!')
+      }
+      // 3. Check if they have permissions to do this
+      hasPermission(user, ['ADMIN', 'PERMISSIONUPDATE'])
+      // 4. Update the permissions
+      return prisma.user.update(
+        {
+          data: {
+            permissions: { set: permissions },
+          },
+          where: {
+            id: user.id,
+          },
+        },
+      )
     },
     async addToCart(_: any, { id }: { id: string }, { user, prisma }: Context) {
       if (!user) {

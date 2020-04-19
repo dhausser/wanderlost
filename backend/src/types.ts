@@ -9,6 +9,18 @@ export enum Permissions {
   USER,
 }
 
+// export type PermissionsInput = {
+//   "USER"
+//   | "ADMIN"
+//   | "ITEMCREATE"
+//   | "ITEMUPDATE"
+//   | "ITEMDELETE"
+//   | "PERMISSIONUPDATE"
+//   | ("USER" | "ADMIN" | "ITEMCREATE" | "ITEMUPDATE" | "ITEMDELETE" | "PERMISSIONUPDATE")[]
+//   | null
+//   | undefined
+// }
+
 export interface UserInput {
   email: string
   password: string

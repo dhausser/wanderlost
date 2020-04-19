@@ -7,10 +7,8 @@ import Error from './ErrorMessage';
 
 const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
-    itemsConnection {
-      aggregate {
-        count
-      }
+    items {
+      total
     }
   }
 `;
@@ -19,8 +17,8 @@ function Pagination({ page }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
-  const { count } = data.itemsConnection.aggregate;
-  const pages = Math.ceil(count / perPage);
+  const { total } = data.items;
+  const pages = Math.ceil(total / perPage);
   return (
     <PaginationStyles data-testid="pagination">
       <Head>
@@ -44,7 +42,7 @@ function Pagination({ page }) {
           {pages}
         </span>
       </p>
-      <p>{count} Items Total</p>
+      <p>{total} Items Total</p>
       <Link
         href={{
           pathname: 'items',

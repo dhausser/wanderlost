@@ -1,38 +1,51 @@
 {
   "name": "sick-fits-backend",
-  "version": "1.0.0",
-  "description": "the backend of sick fits",
+  "license": "MIT",
   "private": true,
-  "repository": "https://github.com/dhausser/sick-fits",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
-    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
-    "test": "jest",
-    "deploy": "prisma deploy --env-file .env"
+    "start": "node dist/index",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && npm -s run generate && tsc",
+    "generate:prisma-nexus": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node --transpile-only src/schema",
+    "postinstall": "npm -s run generate",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config src/index",
+    "studio": "prisma studio --experimental",
+    "migrate:save": "prisma migrate save --experimental",
+    "migrate:up": "prisma migrate up --experimental",
+    "generate": "prisma generate"
   },
   "dependencies": {
-    "apollo-datasource": "^0.7.0",
-    "apollo-server": "^2.9.16",
-    "babel-preset-env": "^1.7.0",
+    "@prisma/client": "^2.0.0-beta.2",
+    "@types/cookie-parser": "^1.4.2",
+    "apollo-server-express": "^2.12.0",
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.4",
+    "concurrently": "^5.1.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
-    "esm": "^3.2.25",
-    "graphql": "^14.6.0",
-    "graphql-yoga": "^1.18.3",
+    "express": "^4.17.1",
+    "graphql": "^15.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.2",
     "nodemailer": "^6.4.2",
-    "nodemon": "^2.0.2",
-    "prisma": "^1.34.10",
-    "prisma-binding": "^2.3.16",
     "stripe": "^8.12.0"
   },
-  "license": "MIT",
-  "babel": {
-    "presets": [
-      "env"
-    ]
+  "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.2",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/node": "^13.11.1",
+    "@types/nodemailer": "^6.4.0",
+    "ts-node": "^8.8.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
   },
-  "devDependencies": {}
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  },
+  "engines": {
+    "node": ">=13.13.0"
+  }
 }

@@ -6,8 +6,8 @@ import Table from './styles/Table';
 import SickButton from './styles/SickButton';
 
 const possiblePermissions = [
-  'ADMIN',
   'USER',
+  'ADMIN',
   'ITEMCREATE',
   'ITEMUPDATE',
   'ITEMDELETE',
@@ -70,7 +70,7 @@ function UserPermission({ user }) {
   const [permissions, setPermissions] = useState(user.permissions);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const updatePermissions = useMutation(UPDATE_PERMISSIONS_MUTATION, {
+  const [updatePermissions] = useMutation(UPDATE_PERMISSIONS_MUTATION, {
     variables: { permissions, userId: user.id },
   });
   useEffect(() => {

@@ -6,9 +6,9 @@ import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
 import OrderItemStyles from './styles/OrderItemStyles';
 
-const USER_ORDERS_QUERY = gql`
+export const USER_ORDERS_QUERY = gql`
   query {
-    orders(orderBy: createdAt_DESC){
+    orders {
       id
       total
       createdAt
@@ -55,7 +55,8 @@ function OrderList() {
                 <div className="order-meta">
                   <p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
                   <p>{order.items.length} Products</p>
-                  <p>{formatDistance(new Date(order.createdAt), new Date())}</p>
+                  <p>{order.createdAt}</p>
+                  {/* <p>{formatDistance(new Date(order.createdAt), new Date())}</p> */}
                   <p>{formatMoney(order.total)}</p>
                 </div>
                 <div className="images">

@@ -10,7 +10,7 @@ const SIGN_OUT_MUTATION = gql`
 `;
 
 function Signout() {
-  const [signout] = useMutation(SIGN_OUT_MUTATION, {
+  const [signout, { data }] = useMutation(SIGN_OUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
   return (

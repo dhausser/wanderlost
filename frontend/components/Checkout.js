@@ -13,12 +13,14 @@ import styled from 'styled-components';
 import SickButton from './styles/SickButton';
 import { CURRENT_USER_QUERY } from './User';
 import { useCart } from './LocalState';
+import { USER_ORDERS_QUERY } from './OrderList';
 
 const stripeLoad = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA');
 
 const CREATE_ORDER_MUTATION = gql`
   mutation checkout($token: String!) {
-    checkout(token: $token) {
+    checkout(token: $token)
+    {
       id
       charge
       total
@@ -38,11 +40,9 @@ const style = {
 
 function Checkout() {
   return (
-    <>
-      <Elements stripe={stripeLoad}>
-        <CheckoutForm />
-      </Elements>
-    </>
+    <Elements stripe={stripeLoad}>
+      <CheckoutForm />
+    </Elements>
   );
 }
 
@@ -54,8 +54,9 @@ function useCheckout() {
   const router = useRouter();
 
   const [checkout] = useMutation(CREATE_ORDER_MUTATION, {
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_ORDERS_QUERY }],
   });
+
 
   // manually call the mutation once we have the stripe token
 
@@ -84,7 +85,6 @@ function useCheckout() {
         token: paymentMethod.id,
       },
     }).catch((err) => {
-      // eslint-disable-next-line no-alert
       alert(err.message);
     });
 

@@ -2,8 +2,8 @@
 import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 import Error from './ErrorMessage';
-import { perPage } from '../config';
-
+import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './Pagination';
 const DELETE_ITEM_MUTATION = gql`
   mutation DELETE_ITEM_MUTATION($id: ID!) {
     deleteItem(id: $id) {
@@ -12,25 +12,12 @@ const DELETE_ITEM_MUTATION = gql`
   }
 `;
 
-const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
-      id
-    }
-  }
-`;
-
 function DeleteItem({ id, children }) {
   const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
     variables: { id },
-    // eslint-disable-next-line no-shadow
-    update(cache, { data: { deleteItem } }) {
-      const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
-      cache.writeQuery({
-        query: ALL_ITEMS_QUERY,
-        data: { items: items.filter((item) => item.id !== deleteItem.id) },
-      });
-    },
+    refetchQueries: [
+      { query: ALL_ITEMS_QUERY },
+      { query: PAGINATION_QUERY }]
   });
 
   if (error) {

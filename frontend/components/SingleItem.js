@@ -24,7 +24,7 @@ const SingleItemStyles = styled.div`
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
-    item(where: { id: $id }) {
+    item(id: $id) {
       id
       title
       description

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { useQuery, gql } from '@apollo/client';
 import { format } from 'date-fns';
 import Head from 'next/head';
@@ -28,7 +29,9 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `;
 
-function Order({ id }) {
+function Order() {
+  const router = useRouter();
+  const { id } = router.query;
   const { loading, error, data } = useQuery(SINGLE_ORDER_QUERY, {
     variables: { id },
   });
@@ -51,9 +54,10 @@ function Order({ id }) {
       <p>
         <span>Date</span>
         <span>
-          {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
+          {order.createdAt}
+          {/* {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
             awareOfUnicodeTokens: true,
-          })}
+          })} */}
         </span>
       </p>
       <p>

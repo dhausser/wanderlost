@@ -9,7 +9,6 @@ function Form() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(inputs);
         }}
       >
         <label htmlFor="name">

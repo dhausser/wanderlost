@@ -1,4 +1,4 @@
-import { useMutation, gql } from '@apollo/client';
+import { useApolloClient, useMutation, gql } from '@apollo/client';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { CURRENT_USER_QUERY } from './User';
@@ -28,16 +28,17 @@ function updateCart(cache, payload) {
   const data = cache.readQuery({ query: CURRENT_USER_QUERY });
   // 2. remove that item from the cart
   const cartItemId = payload.data.deleteCartItem.id;
-  const updatedCart = data.authenticatedUser.cart.filter(
+  const updatedCart = data.user.cart.filter(
     (cartItem) => cartItem.id !== cartItemId,
   );
+
   // 3. write it back to the cache
   cache.writeQuery({
     query: CURRENT_USER_QUERY,
     data: {
       ...data,
-      authenticatedUser: {
-        ...data.authenticatedUser,
+      user: {
+        ...data.user,
         cart: updatedCart,
       },
     },
@@ -45,6 +46,7 @@ function updateCart(cache, payload) {
 }
 
 function RemoveFromCart({ id }) {
+  // const client = useApolloClient();
   const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
     variables: { id },
     update: updateCart,

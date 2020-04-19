@@ -4,6 +4,7 @@ import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { ALL_ITEMS_QUERY } from './Items';
+import { PAGINATION_QUERY } from './Pagination';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -31,23 +32,18 @@ function CreateItem() {
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
-    update(cache) {
-      const { items } = cache.readQuery({ query: ALL_ITEMS_QUERY });
-      cache.writeQuery({
-        query: ALL_ITEMS_QUERY,
-        data: { items: items.concat([{ ...inputs }]) },
-      });
-    },
+    refetchQueries: [
+      { query: ALL_ITEMS_QUERY },
+      { query: PAGINATION_QUERY }
+    ]
   });
 
   return (
     <Form
       onSubmit={async (e) => {
-        // Stop the form from submitting
         e.preventDefault();
-        // Call the mutation
+        console.log(e)
         const res = await createItem();
-        // Change them to the single item page
         router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },

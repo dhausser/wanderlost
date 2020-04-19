@@ -5,14 +5,17 @@ import Pagination from './Pagination';
 import { perPage } from '../config';
 
 const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
-      id
-      title
-      price
-      description
-      image
-      largeImage
+  query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {
+    items(offset: $offset, limit: $limit) {
+      items {
+        id
+        title
+        price
+        description
+        image
+        largeImage
+      }
+      hasMore
     }
   }
 `;
@@ -31,7 +34,7 @@ const ItemsList = styled.div`
 
 function Items({ page }) {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
-    variables: { skip: page * perPage - perPage },
+    variables: { offset: page * perPage - perPage },
   });
 
   if (loading) {
@@ -44,9 +47,8 @@ function Items({ page }) {
   return (
     <Center>
       <ItemsList>
-        {data.items.map((item) => (
+        {data.items.items.map((item) => (
           <Item key={item.id} item={item} />
-
         ))}
       </ItemsList>
       <Pagination page={page} />

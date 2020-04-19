@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import useForm from '../lib/useForm';
+import { ALL_ITEMS_QUERY } from './Items';
+import { perPage } from '../config';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
-    item(where: { id: $id }) {
+    item(id: $id) {
       id
       title
       description
@@ -36,29 +40,44 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `;
 
-function UpdateItem({ id }) {
+function UpdateItem() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
-    variables: {
-      id,
-    },
+    variables: { id }
   });
-  const { inputs, handleChange } = useForm(data.item);
+  const { inputs, setInputs, handleChange } = useForm(data?.item);
+
+  useEffect(() => {
+    if (data?.item) {
+      setInputs(data.item);
+    }
+  }, [data])
+
   const [updateItem, { loading: updating, error }] = useMutation(
     UPDATE_ITEM_MUTATION,
     {
-      variables: {
-        id,
-        ...inputs,
-      },
-    },
+      variables: { id, ...inputs },
+      refetchQueries: {
+        query: ALL_ITEMS_QUERY,
+      }
+    }
   );
+
   if (loading) return <p>Loading...</p>;
-  if (!data || !data.item) return <p>No Item Found for ID {id}</p>;
+  if (!data || !data.item) {
+    return <p>No Item Found for ID {id}</p>;
+  }
 
   return (
     <Form onSubmit={async (e) => {
       e.preventDefault();
       await updateItem();
+      router.push({
+        pathname: '/item',
+        query: { id },
+      });
     }}
     >
       <Error error={error} />
@@ -94,7 +113,7 @@ function UpdateItem({ id }) {
             name="description"
             placeholder="Enter A Description"
             required
-            value={data.item.description}
+            value={inputs.description}
             onChange={handleChange}
           />
         </label>

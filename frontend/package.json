@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "next start",
     "test": "NODE_ENV=test jest --watch"
   },
   "dependencies": {

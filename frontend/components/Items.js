@@ -26,10 +26,18 @@ const Center = styled.div`
 
 const ItemsList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 60px;
   max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* @media only screen and (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  } */
 `;
 
 function Items({ page }) {

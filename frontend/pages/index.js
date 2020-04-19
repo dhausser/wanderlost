@@ -1,10 +1,10 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
 import Items from '../components/Items';
 import { PAGINATION_QUERY } from '../components/Pagination';
 
-
 function Home({ query }) {
+  console.log(query);
   const { loading, error, data } = useQuery(PAGINATION_QUERY)
   if (loading) return 'Loading...';
   if (error) return error.message;

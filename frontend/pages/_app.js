@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { ApolloProvider } from '@apollo/client';
 import Page from '../components/Page';
 import withData from '../lib/withData';

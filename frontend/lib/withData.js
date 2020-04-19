@@ -6,9 +6,6 @@ import { getDataFromTree } from '@apollo/react-ssr';
 import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
 
-const uri = process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint;
-console.log(uri);
-
 function createClient({ headers, initialState }) {
   return new ApolloClient({
     link: ApolloLink.from([

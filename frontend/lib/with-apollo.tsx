@@ -218,7 +218,7 @@ function createApolloClient(initialState, ctx) {
   return new ApolloClient({
     ssrMode,
     link: new HttpLink({
-      uri: process.env.endpoint, // Server URL (must be absolute)
+      uri, // Server URL (must be absolute)
       credentials: 'include', // Additional fetch() options like `credentials` or `headers`
       headers: ctx && ctx.req ? ctx.req.headers : null,
       fetch,

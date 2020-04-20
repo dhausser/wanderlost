@@ -2,9 +2,10 @@ import { useQuery, gql } from '@apollo/client';
 import styled from 'styled-components';
 import Item from './Item';
 import Pagination from './Pagination';
-import { perPage } from '../config';
 
-const ALL_ITEMS_QUERY = gql`
+const perPage = process.env.perPage
+
+export const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {
     items(offset: $offset, limit: $limit) {
       items {
@@ -34,13 +35,9 @@ const ItemsList = styled.div`
   @media only screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
   }
-
-  /* @media only screen and (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  } */
 `;
 
-function Items({ page }) {
+export default function Items({ page }) {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
     variables: { offset: page * perPage - perPage },
   });
@@ -63,6 +60,3 @@ function Items({ page }) {
     </Center>
   );
 }
-
-export default Items;
-export { ALL_ITEMS_QUERY };

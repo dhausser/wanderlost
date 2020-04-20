@@ -3,12 +3,12 @@ import styled, { keyframes } from 'styled-components';
 const loading = keyframes`
   from {
     background-position: 0 0;
-    /* rotate: 0; */
+    rotate: 0;
   }
 
   to {
     background-position: 100% 100%;
-    /* rotate: 360deg; */
+    rotate: 360deg;
   }
 `;
 
@@ -33,14 +33,14 @@ const Form = styled.form`
     border: 1px solid black;
     &:focus {
       outline: 0;
-      /* border-color: ${(props) => props.theme.red}; */
+      border-color: ${(props) => props.theme.red};
       border-color: blue;
     }
   }
   button,
   input[type='submit'] {
     width: auto;
-    background: red;
+    background: blue;
     color: white;
     border: 0;
     font-size: 2rem;
@@ -58,7 +58,7 @@ const Form = styled.form`
       height: 10px;
       content: '';
       display: block;
-      background-image: linear-gradient(to right, #ff3019 0%, #e2b04a 50%, #ff3019 100%);
+      background-image: linear-gradient(to right, #0052CC 0%, #36B37E 50%, #0052CC 100%);
     }
     &[aria-busy='true']::before {
       background-size: 50% auto;

@@ -1,9 +1,9 @@
-import useForm from '../lib/useForm';
+import useForm from '../lib/useForm'
 
 function Form() {
-  const { inputs, handleChange, resetForm } = useForm({ name: '', age: '' });
+  const { inputs, handleChange, resetForm } = useForm({ name: '', age: '' })
   return (
-    <div>
+    <>
       <pre>{JSON.stringify(inputs)}</pre>
       <button type="button" onClick={resetForm}>Reset</button>
       <form
@@ -31,8 +31,8 @@ function Form() {
           />
         </label>
       </form>
-    </div>
-  );
+    </>
+  )
 }
 
-export default Form;
+export default Form

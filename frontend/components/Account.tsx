@@ -2,7 +2,7 @@ import { useMutation, gql } from '@apollo/client';
 import { useUser } from './User';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
-import PleaseSignIn from './PleaseSignIn';
+import PrivateRoute from './PrivateRoute';
 import FormItem from './FormItem';
 
 const UPDATE_USER_MUTATION = gql`
@@ -45,9 +45,9 @@ function Account() {
 
 function Component() {
   return (
-    <PleaseSignIn>
+    <PrivateRoute>
       <Account />
-    </PleaseSignIn>
+    </PrivateRoute>
   );
 }
 

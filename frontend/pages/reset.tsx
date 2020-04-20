@@ -1,10 +1,10 @@
-import Reset from '../components/Reset';
+import Reset from '../components/Reset'
 
 const ResetPage = ({ query }) => (
-  <div>
+  <>
     <p>Reset your password</p>
     <Reset resetToken={query.resetToken} />
-  </div>
-);
+  </>
+)
 
-export default ResetPage;
+export default ResetPage

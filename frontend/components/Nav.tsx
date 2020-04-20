@@ -21,8 +21,8 @@ function Nav() {
           <Link href="/orders">
             <a href="/orders">Orders</a>
           </Link>
-          <Link href="/me">
-            <a href="/me">Account</a>
+          <Link href="/account">
+            <a href="/account">Account</a>
           </Link>
           <Signout />
           <button type="button" onClick={toggleCart}>

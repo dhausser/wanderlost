@@ -6,7 +6,6 @@ import Form from './styles/Form';
 import Error from './ErrorMessage';
 import useForm from '../lib/useForm';
 import { ALL_ITEMS_QUERY } from './Items';
-import { perPage } from '../config';
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {

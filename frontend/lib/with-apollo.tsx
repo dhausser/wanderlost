@@ -16,7 +16,6 @@ type WithApolloPageContext = {
   apolloClient: TApolloClient
 } & NextPageContext
 
-
 /**
  * Creates and provides the apolloContext
  * to a next.js PageTree. Use it by wrapping
@@ -201,7 +200,7 @@ export default function withApollo(
  * @param  {Object} [initialState={}]
  */
 function createApolloClient(initialState, ctx) {
-  const uri = process.env.NODE_ENV === "production" ? process.env.prodEndpoint : process.env.endpoint
+  const uri = process.env.endpoint
   const ssrMode = typeof window === 'undefined'
   const cache = new InMemoryCache({
     typePolicies: {

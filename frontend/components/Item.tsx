@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Title from './styles/Title';
 import ItemStyles from './styles/ItemStyles';
@@ -8,15 +7,14 @@ import DeleteItem from './DeleteItem';
 import AddToCart from './AddToCart';
 
 export default function Item({ item }) {
-  const { id } = item;
   return (
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}
       <Title>
         <Link
           href={{
-            pathname: '/item',
-            query: { id: item.id },
+            pathname: `/items/${item.id}`,
+            // query: { id: item.id },
           }}
         >
           <a>{item.title}</a>
@@ -39,7 +37,3 @@ export default function Item({ item }) {
     </ItemStyles>
   );
 }
-
-Item.propTypes = {
-  item: PropTypes.shape().isRequired,
-};

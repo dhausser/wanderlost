@@ -1,7 +1,7 @@
+require('dotenv').config()
 module.exports = {
   env: {
-    endpoint: 'http://localhost:4000/graphql',
-    prodEndpoint: 'https://ecommerce-prisma-apollo-prod.herokuapp.com/graphql',
+    endpoint: process.env.ENDPOINT,
     perPage: 4,
   },
   typescript: {

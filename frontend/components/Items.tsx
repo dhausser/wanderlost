@@ -21,11 +21,11 @@ export const ALL_ITEMS_QUERY = gql`
   }
 `;
 
-const Center = styled.div`
+export const Center = styled.div`
   text-align: center;
 `;
 
-const ItemsList = styled.div`
+export const ItemsList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 60px;
@@ -52,7 +52,7 @@ export default function Items({ page }) {
   return (
     <Center>
       <ItemsList>
-        {data.items.items.map((item) => (
+        {items.items.map((item) => (
           <Item key={item.id} item={item} />
         ))}
       </ItemsList>

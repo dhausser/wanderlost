@@ -40,16 +40,16 @@ function SingleItem({ id }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <Error error={error} />;
   if (!data.item) return <p>No Item Found for {id}</p>;
-  const { item } = data;
+
   return (
     <SingleItemStyles>
       <Head>
-        <title>Sick Fits | {item.title}</title>
+        <title>Wanderlost | {data.item.title}</title>
       </Head>
-      <img src={data.item.largeImage} alt={item.title} />
+      <img src={data.item.largeImage} alt={data.item.title} />
       <div className="details">
-        <h2>Viewing {item.title}</h2>
-        <p>{item.description}</p>
+        <h2>Viewing {data.item.title}</h2>
+        <p>{data.item.description}</p>
       </div>
     </SingleItemStyles>
   );

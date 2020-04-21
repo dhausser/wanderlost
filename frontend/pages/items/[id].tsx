@@ -9,9 +9,6 @@ export async function getStaticPaths() {
   const prisma = new PrismaClient()
   const items = await prisma.item.findMany()
 
-  const paths = items.map(item => `items/${item.id}`)
-
-  // return { paths, fallback: false }
   return {
     paths: items.map(item => ({
       params: {

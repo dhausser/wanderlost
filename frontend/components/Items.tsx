@@ -52,7 +52,7 @@ export default function Items({ page }) {
   return (
     <Center>
       <ItemsList>
-        {items.items.map((item) => (
+        {data.items.items.map((item) => (
           <Item key={item.id} item={item} />
         ))}
       </ItemsList>

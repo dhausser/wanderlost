@@ -1,26 +1,13 @@
 import { PrismaClient } from '@prisma/client'
-// import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
-// import Items from '../components/Items'
-import StaticItems from '../components/StaticItems'
-// import { PAGINATION_QUERY } from '../components/Pagination'
+import Items from '../components/Items'
 
 function IndexPage({ items }) {
   const router = useRouter()
   const { page } = router.query
-  // const { loading, error, data } = useQuery(PAGINATION_QUERY)
-  // if (loading) return 'Loading...';
-  // if (error) return error.message;
+
   return (
-    <StaticItems
-      items={items}
-      page={parseFloat(page as string) || 1}
-    // count={data.items.total}
-    />
-    // <Items
-    //   page={parseFloat(query.page as string) || 1}
-    //   count={data.items.total}
-    // />
+    <Items page={parseFloat(page as string) || 1} />
   )
 };
 

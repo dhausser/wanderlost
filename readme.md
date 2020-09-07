@@ -1,10 +1,9 @@
-# Wanderlost
+# Wanderlost: Ecommerce Next.js with Apollo Client
 
-Not all those who wander are lost:
+Built with:
 
-- React
+- Next.js
+- Apollo Client 3
+- Prisma 2
 - GraphQL
-- Apollo Client
-- Apollo Server
-- Prisma
-- Stripe Payments Intents API
+- TypeScript

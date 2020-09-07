@@ -32,7 +32,7 @@ export const resolvers = {
     async item(_: any, { id }: { id: string }, { prisma }: Context) {
       return prisma.item.findOne({ where: { id } })
     },
-    user(_: any, __: null, { req, prisma, user }: Context) {
+    user(_: any, __: null, { user }: Context) {
       if (user) {
         return user
       }
@@ -74,7 +74,8 @@ export const resolvers = {
       // first take a copy of the updates
       const updates = { ...args }
       // remove the ID from the updates
-      delete updates.id
+      // TODO: fix delete operand must be optional error
+      // delete updates.id
       // run the update method
       return prisma.item.update({
         data: updates,
@@ -150,11 +151,11 @@ export const resolvers = {
       const randomBytesPromiseified = promisify(randomBytes)
       const resetToken = (await randomBytesPromiseified(20)).toString('hex')
       const resetTokenExpiry = Date.now() + 3600000 // 1 hour from now
-      const res = await prisma.user.update({
+      await prisma.user.update({
         where: { email },
         data: { resetToken, resetTokenExpiry },
       })
-      const mailRes = await transport.sendMail({
+      await transport.sendMail({
         from: 'dave@bos.com',
         to: user.email,
         subject: 'Your Password Reset Token',

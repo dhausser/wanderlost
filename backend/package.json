@@ -1,5 +1,5 @@
 {
-  "name": "wanderlost-server",
+  "name": "wanderlost-backend",
   "private": true,
   "main": "dist/index.js",
   "scripts": {

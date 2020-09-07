@@ -1,5 +1,5 @@
-import Item from './Item';
-import Pagination from './Pagination';
+import Item from './Item'
+import Pagination from './Pagination'
 import { Center, ItemsList } from './Items'
 
 export default function Items({ items, page }) {
@@ -12,5 +12,5 @@ export default function Items({ items, page }) {
       </ItemsList>
       <Pagination page={page} />
     </Center>
-  );
+  )
 }

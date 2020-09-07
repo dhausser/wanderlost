@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import Title from './styles/Title';
-import ItemStyles from './styles/ItemStyles';
-import PriceTag from './styles/PriceTag';
-import formatMoney from '../lib/formatMoney';
-import DeleteItem from './DeleteItem';
-import AddToCart from './AddToCart';
+import Link from 'next/link'
+import Title from './styles/Title'
+import ItemStyles from './styles/ItemStyles'
+import PriceTag from './styles/PriceTag'
+import formatMoney from '../lib/formatMoney'
+import DeleteItem from './DeleteItem'
+import AddToCart from './AddToCart'
 
 export default function Item({ item }) {
   return (
@@ -35,5 +35,5 @@ export default function Item({ item }) {
         <DeleteItem id={item.id}>Delete this Item</DeleteItem>
       </div>
     </ItemStyles>
-  );
+  )
 }

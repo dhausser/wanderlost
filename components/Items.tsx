@@ -1,7 +1,7 @@
-import { useQuery, gql } from '@apollo/client';
-import styled from 'styled-components';
-import Item from './Item';
-import Pagination from './Pagination';
+import { useQuery, gql } from '@apollo/client'
+import styled from 'styled-components'
+import Item from './Item'
+import Pagination from './Pagination'
 
 const perPage = process.env.perPage
 
@@ -19,11 +19,11 @@ export const ALL_ITEMS_QUERY = gql`
       hasMore
     }
   }
-`;
+`
 
 export const Center = styled.div`
   text-align: center;
-`;
+`
 
 export const ItemsList = styled.div`
   display: grid;
@@ -35,18 +35,18 @@ export const ItemsList = styled.div`
   @media only screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
   }
-`;
+`
 
 export default function Items({ page }) {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
     variables: { offset: page * perPage - perPage },
-  });
+  })
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>
   }
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <p>Error: {error.message}</p>
   }
 
   return (
@@ -58,5 +58,5 @@ export default function Items({ page }) {
       </ItemsList>
       <Pagination page={page} />
     </Center>
-  );
+  )
 }

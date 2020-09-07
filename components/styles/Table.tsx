@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Table = styled.table`
   border-spacing: 0;
@@ -30,6 +30,6 @@ const Table = styled.table`
       background: ${(props) => props.theme.offWhite};
     }
   }
-`;
+`
 
-export default Table;
+export default Table

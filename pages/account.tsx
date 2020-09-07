@@ -1,7 +1,5 @@
 import Account from '../components/Account'
 
-const AccountPage = () => (
-  <Account />
-);
+const AccountPage = () => <Account />
 
 export default AccountPage

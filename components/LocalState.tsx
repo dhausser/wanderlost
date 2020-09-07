@@ -1,35 +1,39 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react'
 
-const LocalStateContext = createContext();
-const LocalStateProvider = LocalStateContext.Provider;
+const LocalStateContext = createContext()
+const LocalStateProvider = LocalStateContext.Provider
 
 function CartStateProvider({ children }) {
-  const [cartOpen, setCartOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false)
 
   function toggleCart() {
-    setCartOpen(!cartOpen);
+    setCartOpen(!cartOpen)
   }
 
   function closeCart() {
-    setCartOpen(false);
+    setCartOpen(false)
   }
 
   function openCart() {
-    setCartOpen(true);
+    setCartOpen(true)
   }
 
   return (
-    <LocalStateProvider value={{
-      cartOpen, toggleCart, openCart, closeCart,
-    }}
+    <LocalStateProvider
+      value={{
+        cartOpen,
+        toggleCart,
+        openCart,
+        closeCart,
+      }}
     >
       {children}
     </LocalStateProvider>
-  );
+  )
 }
 
 function useCart() {
-  return useContext(LocalStateContext);
+  return useContext(LocalStateContext)
 }
 
-export { CartStateProvider, LocalStateContext, useCart };
+export { CartStateProvider, LocalStateContext, useCart }

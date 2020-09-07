@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import { useUser } from './User';
-import { useCart } from './LocalState';
-import NavStyles from './styles/NavStyles';
-import Signout from './Signout';
-import CartCount from './CartCount';
+import Link from 'next/link'
+import { useUser } from './User'
+import { useCart } from './LocalState'
+import NavStyles from './styles/NavStyles'
+import Signout from './Signout'
+import CartCount from './CartCount'
 
 function Nav() {
-  const me = useUser();
-  const { toggleCart } = useCart();
+  const me = useUser()
+  const { toggleCart } = useCart()
   return (
     <NavStyles>
       <Link href="/items">
@@ -27,12 +27,7 @@ function Nav() {
           <Signout />
           <button type="button" onClick={toggleCart}>
             My Cart
-            <CartCount
-              count={me.cart.reduce(
-                (tally, cartItem) => tally + cartItem.quantity,
-                0,
-              )}
-            />
+            <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)} />
           </button>
         </>
       )}
@@ -42,7 +37,7 @@ function Nav() {
         </Link>
       )}
     </NavStyles>
-  );
+  )
 }
 
-export default Nav;
+export default Nav

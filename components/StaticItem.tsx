@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import Head from 'next/head';
+import styled from 'styled-components'
+import Head from 'next/head'
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -18,7 +18,7 @@ const SingleItemStyles = styled.div`
     margin: 3rem;
     font-size: 2rem;
   }
-`;
+`
 
 function StaticItem({ item }) {
   return (
@@ -32,7 +32,7 @@ function StaticItem({ item }) {
         <p>{item.description}</p>
       </div>
     </SingleItemStyles>
-  );
+  )
 }
 
-export default StaticItem;
+export default StaticItem

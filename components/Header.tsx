@@ -1,20 +1,20 @@
-import Link from 'next/link';
-import styled from 'styled-components';
-import Router from 'next/router';
-import NProgress from 'nprogress';
-import Nav from './Nav';
-import Cart from './Cart';
-import Search from './Search';
+import Link from 'next/link'
+import styled from 'styled-components'
+import Router from 'next/router'
+import NProgress from 'nprogress'
+import Nav from './Nav'
+import Cart from './Cart'
+import Search from './Search'
 
 Router.onRouteChangeStart = () => {
-  NProgress.start();
-};
+  NProgress.start()
+}
 Router.onRouteChangeComplete = () => {
-  NProgress.done();
-};
+  NProgress.done()
+}
 Router.onRouteChangeError = () => {
-  NProgress.done();
-};
+  NProgress.done()
+}
 
 const Logo = styled.h1`
   font-size: 4rem;
@@ -34,7 +34,7 @@ const Logo = styled.h1`
     margin: 0;
     text-align: center;
   }
-`;
+`
 
 const StyledHeader = styled.header`
   .bar {
@@ -53,7 +53,7 @@ const StyledHeader = styled.header`
     grid-template-columns: 1fr auto;
     border-bottom: 1px solid ${(props) => props.theme.lightgrey};
   }
-`;
+`
 
 const Header = () => (
   <StyledHeader>
@@ -70,6 +70,6 @@ const Header = () => (
     </div>
     <Cart />
   </StyledHeader>
-);
+)
 
-export default Header;
+export default Header

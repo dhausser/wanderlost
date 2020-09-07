@@ -1,10 +1,10 @@
-import { useMutation, gql } from '@apollo/client';
-import { useRouter } from 'next/router';
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
-import { ALL_ITEMS_QUERY } from './Items';
-import { PAGINATION_QUERY } from './Pagination';
+import { useMutation, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
+import useForm from '../lib/useForm'
+import Form from './styles/Form'
+import Error from './ErrorMessage'
+import { ALL_ITEMS_QUERY } from './Items'
+import { PAGINATION_QUERY } from './Pagination'
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -24,30 +24,27 @@ const CREATE_ITEM_MUTATION = gql`
       id
     }
   }
-`;
+`
 
 function CreateItem() {
-  const { inputs, handleChange } = useForm();
-  const router = useRouter();
+  const { inputs, handleChange } = useForm()
+  const router = useRouter()
 
   const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
     variables: inputs,
-    refetchQueries: [
-      { query: ALL_ITEMS_QUERY },
-      { query: PAGINATION_QUERY }
-    ]
-  });
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+  })
 
   return (
     <Form
       onSubmit={async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         console.log(e)
-        const res = await createItem();
+        const res = await createItem()
         router.push({
           pathname: '/item',
           query: { id: res.data.createItem.id },
-        });
+        })
       }}
     >
       <Error error={error} />
@@ -62,13 +59,7 @@ function CreateItem() {
             required
             onChange={handleChange}
           />
-          {inputs.image && (
-            <img
-              src={inputs.image}
-              width="200"
-              alt="Upload Preview"
-            />
-          )}
+          {inputs.image && <img src={inputs.image} width="200" alt="Upload Preview" />}
         </label>
 
         <label htmlFor="title">
@@ -111,8 +102,8 @@ function CreateItem() {
         <button type="submit">Submit</button>
       </fieldset>
     </Form>
-  );
+  )
 }
 
-export default CreateItem;
-export { CREATE_ITEM_MUTATION };
+export default CreateItem
+export { CREATE_ITEM_MUTATION }

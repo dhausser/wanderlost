@@ -1,10 +1,10 @@
-import { useUser } from './User';
-import Signin from './Signin';
+import { useUser } from './User'
+import Signin from './Signin'
 
 function PrivateRoute({ children }) {
-  const me = useUser();
-  if (!me) return <Signin />;
-  return children;
+  const me = useUser()
+  if (!me) return <Signin />
+  return children
 }
 
-export default PrivateRoute;
+export default PrivateRoute

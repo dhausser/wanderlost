@@ -1,45 +1,39 @@
-import { useMutation, gql } from '@apollo/client';
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
-import { CURRENT_USER_QUERY } from './User';
+import { useMutation, gql } from '@apollo/client'
+import useForm from '../lib/useForm'
+import Form from './styles/Form'
+import Error from './ErrorMessage'
+import { CURRENT_USER_QUERY } from './User'
 
 const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION(
-    $email: String!,
-    $name: String!,
-    $password: String!
-  ) {
+  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
       id
       email
       name
     }
   }
-`;
+`
 
 function Signup() {
   const { inputs, handleChange } = useForm({
     name: '',
     email: '',
     password: '',
-  });
+  })
   const [signup, { error, loading, data }] = useMutation(SIGNUP_MUTATION, {
     variables: inputs,
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
-  });
+  })
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
-        e.preventDefault();
-        await signup();
+        e.preventDefault()
+        await signup()
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
-        {data && data.signup && (
-          <p>Signed up with {data.signup.email} — Please Sign In now</p>
-        )}
+        {data && data.signup && <p>Signed up with {data.signup.email} — Please Sign In now</p>}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
         <label htmlFor="email">
@@ -54,7 +48,7 @@ function Signup() {
           />
         </label>
         <label htmlFor="name">
-                Name
+          Name
           <input
             type="text"
             name="name"
@@ -65,7 +59,7 @@ function Signup() {
           />
         </label>
         <label htmlFor="password">
-                Password
+          Password
           <input
             type="password"
             name="password"
@@ -79,8 +73,8 @@ function Signup() {
         <button type="submit">Sign Up!</button>
       </fieldset>
     </Form>
-  );
+  )
 }
 
-export default Signup;
-export { SIGNUP_MUTATION };
+export default Signup
+export { SIGNUP_MUTATION }

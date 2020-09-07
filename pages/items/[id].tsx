@@ -10,12 +10,12 @@ export async function getStaticPaths() {
   const items = await prisma.item.findMany()
 
   return {
-    paths: items.map(item => ({
+    paths: items.map((item) => ({
       params: {
-        id: item.id
-      }
+        id: item.id,
+      },
     })),
-    fallback: false
+    fallback: false,
   }
 }
 
@@ -28,15 +28,15 @@ export async function getStaticProps({ params }) {
       description: true,
       price: true,
       image: true,
-      largeImage: true
+      largeImage: true,
     },
-    where: { id: params.id }
+    where: { id: params.id },
   })
 
   return {
     props: {
-      item
-    }
+      item,
+    },
   }
 }
 

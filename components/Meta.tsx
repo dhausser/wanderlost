@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'next/head'
 
 const Meta = () => (
   <Head>
@@ -8,6 +8,6 @@ const Meta = () => (
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
     <title>Sick Fits!</title>
   </Head>
-);
+)
 
-export default Meta;
+export default Meta

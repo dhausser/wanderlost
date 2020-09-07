@@ -5,6 +5,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "NODE_ENV=test jest --watch"
   },
   "dependencies": {
@@ -46,6 +49,7 @@
     "babel-plugin-styled-components": "^1.11.1",
     "casual": "^1.6.2",
     "jest": "^26.4.2",
+    "prettier": "^2.1.1",
     "react-test-renderer": "^16.12.0",
     "typescript": "^4.0.2"
   },

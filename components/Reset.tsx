@@ -1,55 +1,43 @@
-import { useMutation, gql } from '@apollo/client';
-import PropTypes from 'prop-types';
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
-import { CURRENT_USER_QUERY } from './User';
+import { useMutation, gql } from '@apollo/client'
+import PropTypes from 'prop-types'
+import useForm from '../lib/useForm'
+import Form from './styles/Form'
+import Error from './ErrorMessage'
+import { CURRENT_USER_QUERY } from './User'
 
 const RESET_MUTATION = gql`
-  mutation RESET_MUTATION(
-    $resetToken: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    resetPassword(
-      resetToken: $resetToken
-      password: $password
-      confirmPassword: $confirmPassword
-    ) {
+  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
+    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       message
     }
   }
-`;
+`
 
 function Reset({ resetToken }) {
   const { inputs, handleChange, resetForm } = useForm({
     password: '',
     confirmPassword: '',
-  });
-  const [resetPassword, { error, loading, data }] = useMutation(
-    RESET_MUTATION,
-    {
-      variables: {
-        resetToken,
-        password: inputs.password,
-        confirmPassword: inputs.confirmPassword,
-      },
-      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  })
+  const [resetPassword, { error, loading, data }] = useMutation(RESET_MUTATION, {
+    variables: {
+      resetToken,
+      password: inputs.password,
+      confirmPassword: inputs.confirmPassword,
     },
-  );
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  })
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
-        e.preventDefault();
-        await resetPassword();
-        resetForm();
+        e.preventDefault()
+        await resetPassword()
+        resetForm()
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset your password</h2>
-        {data && data.resetPassword && data.resetPassword.email
-        && 'Password has been reset successfully'}
+        {data && data.resetPassword && data.resetPassword.email && 'Password has been reset successfully'}
         <Error error={error} />
         <label htmlFor="password">
           Password
@@ -77,11 +65,11 @@ function Reset({ resetToken }) {
         <button type="submit">Reset your password</button>
       </fieldset>
     </Form>
-  );
+  )
 }
 
 Reset.propTypes = {
   resetToken: PropTypes.string.isRequired,
-};
+}
 
-export default Reset;
+export default Reset

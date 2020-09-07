@@ -1,4 +1,4 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client'
 
 const CURRENT_USER_QUERY = gql`
   query {
@@ -20,14 +20,14 @@ const CURRENT_USER_QUERY = gql`
       }
     }
   }
-`;
+`
 
 function useUser() {
-  const { data } = useQuery(CURRENT_USER_QUERY);
+  const { data } = useQuery(CURRENT_USER_QUERY)
   if (data) {
-    return data.user;
+    return data.user
   }
-  return null;
+  return null
 }
 
-export { CURRENT_USER_QUERY, useUser };
+export { CURRENT_USER_QUERY, useUser }

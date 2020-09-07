@@ -6,10 +6,8 @@ function IndexPage({ items }) {
   const router = useRouter()
   const { page } = router.query
 
-  return (
-    <Items page={parseFloat(page as string) || 1} />
-  )
-};
+  return <Items page={parseFloat(page as string) || 1} />
+}
 
 export async function getStaticProps() {
   const prisma = new PrismaClient()
@@ -20,14 +18,14 @@ export async function getStaticProps() {
       description: true,
       price: true,
       image: true,
-      largeImage: true
-    }
+      largeImage: true,
+    },
   })
 
   return {
     props: {
-      items
-    }
+      items,
+    },
   }
 }
 

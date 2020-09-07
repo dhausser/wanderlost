@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const ErrorStyles = styled.div`
   padding: 2rem;
@@ -15,10 +15,10 @@ const ErrorStyles = styled.div`
   strong {
     margin-right: 1rem;
   }
-`;
+`
 
 const DisplayError = ({ error }) => {
-  if (!error || !error.message) return null;
+  if (!error || !error.message) return null
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
     return error.networkError.result.errors.map((err) => (
       <ErrorStyles key={err.message}>
@@ -27,7 +27,7 @@ const DisplayError = ({ error }) => {
           {err.message.replace('GraphQL error: ', '')}
         </p>
       </ErrorStyles>
-    ));
+    ))
   }
   return (
     <ErrorStyles>
@@ -36,15 +36,15 @@ const DisplayError = ({ error }) => {
         {error.message.replace('GraphQL error: ', '')}
       </p>
     </ErrorStyles>
-  );
-};
+  )
+}
 
 DisplayError.defaultProps = {
   error: {},
-};
+}
 
 DisplayError.propTypes = {
   error: PropTypes.shape(),
-};
+}
 
-export default DisplayError;
+export default DisplayError

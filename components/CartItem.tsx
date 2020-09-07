@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import formatMoney from '../lib/formatMoney';
-import RemoveFromCart from './RemoveFromCart';
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import formatMoney from '../lib/formatMoney'
+import RemoveFromCart from './RemoveFromCart'
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -16,7 +16,7 @@ const CartItemStyles = styled.li`
   p {
     margin: 0;
   }
-`;
+`
 
 const CartItem = ({ cartItem }) => {
   // first check if that item exists
@@ -26,7 +26,7 @@ const CartItem = ({ cartItem }) => {
         <p>This item has been removed</p>
         <RemoveFromCart id={cartItem.id} />
       </CartItemStyles>
-    );
+    )
   }
   return (
     <CartItemStyles>
@@ -43,14 +43,14 @@ const CartItem = ({ cartItem }) => {
       </div>
       <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
-  );
-};
+  )
+}
 
 CartItem.propTypes = {
   cartItem: PropTypes.shape({
     id: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
-};
+}
 
-export default CartItem;
+export default CartItem

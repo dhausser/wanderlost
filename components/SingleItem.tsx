@@ -1,7 +1,7 @@
-import { useQuery, gql } from '@apollo/client';
-import styled from 'styled-components';
-import Head from 'next/head';
-import Error from './ErrorMessage';
+import { useQuery, gql } from '@apollo/client'
+import styled from 'styled-components'
+import Head from 'next/head'
+import Error from './ErrorMessage'
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -20,7 +20,7 @@ const SingleItemStyles = styled.div`
     margin: 3rem;
     font-size: 2rem;
   }
-`;
+`
 
 const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -31,15 +31,15 @@ const SINGLE_ITEM_QUERY = gql`
       largeImage
     }
   }
-`;
+`
 
 function SingleItem({ id }) {
   const { data, loading, error } = useQuery(SINGLE_ITEM_QUERY, {
     variables: { id },
-  });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <Error error={error} />;
-  if (!data.item) return <p>No Item Found for {id}</p>;
+  })
+  if (loading) return <p>Loading...</p>
+  if (error) return <Error error={error} />
+  if (!data.item) return <p>No Item Found for {id}</p>
 
   return (
     <SingleItemStyles>
@@ -52,8 +52,8 @@ function SingleItem({ id }) {
         <p>{data.item.description}</p>
       </div>
     </SingleItemStyles>
-  );
+  )
 }
 
-export default SingleItem;
-export { SINGLE_ITEM_QUERY };
+export default SingleItem
+export { SINGLE_ITEM_QUERY }

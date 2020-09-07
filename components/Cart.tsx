@@ -1,22 +1,22 @@
-import { useCart } from './LocalState';
-import { useUser } from './User';
-import CartStyles from './styles/CartStyles';
-import Supreme from './styles/Supreme';
-import CloseButton from './styles/CloseButton';
-import CartItem from './CartItem';
-import calcTotalPrice from '../lib/calcTotalPrice';
-import formatMoney from '../lib/formatMoney';
-import Checkout from './Checkout';
+import { useCart } from './LocalState'
+import { useUser } from './User'
+import CartStyles from './styles/CartStyles'
+import Supreme from './styles/Supreme'
+import CloseButton from './styles/CloseButton'
+import CartItem from './CartItem'
+import calcTotalPrice from '../lib/calcTotalPrice'
+import formatMoney from '../lib/formatMoney'
+import Checkout from './Checkout'
 
 function Cart() {
-  let totalItems = 0;
-  const user = useUser();
-  const { cartOpen, toggleCart } = useCart();
-  if (!user) return null;
+  let totalItems = 0
+  const user = useUser()
+  const { cartOpen, toggleCart } = useCart()
+  if (!user) return null
 
   totalItems = user.cart.reduce((acc, current) => {
-    return acc = acc + current.quantity;
-  }, 0);
+    return (acc = acc + current.quantity)
+  }, 0)
 
   return (
     <CartStyles open={cartOpen}>
@@ -26,8 +26,7 @@ function Cart() {
         </CloseButton>
         <Supreme>{user.name}'s Cart</Supreme>
         <p>
-          You Have {totalItems} Item{totalItems === 1 ? '' : 's'} in
-          your cart.
+          You Have {totalItems} Item{totalItems === 1 ? '' : 's'} in your cart.
         </p>
       </header>
       <ul>
@@ -42,7 +41,7 @@ function Cart() {
         </footer>
       )}
     </CartStyles>
-  );
+  )
 }
 
-export default Cart;
+export default Cart

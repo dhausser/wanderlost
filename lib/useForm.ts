@@ -1,4 +1,13 @@
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
+
+type Inputs = Record<string, string>
+type Event = ChangeEvent<HTMLInputElement>
+type Form = {
+  inputs: Inputs
+  handleChange: (event: Event) => void
+  resetForm: () => void
+  clearForm: () => void
+}
 
 async function uploadFile({ value, inputs, setInputs }) {
   const data = new FormData()
@@ -17,7 +26,7 @@ async function uploadFile({ value, inputs, setInputs }) {
   })
 }
 
-export default function useForm(initial = {}) {
+export default function useForm(initial = {}): Form {
   const [inputs, setInputs] = useState(initial)
 
   function handleChange(e) {

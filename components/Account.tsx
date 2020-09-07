@@ -33,7 +33,7 @@ function Account() {
       }}
     >
       <fieldset disabled={loading}>
-        <FormItem inputs={inputs} onChange={handleChange} name="name" />
+        <FormItem label="" inputs={inputs} onChange={handleChange} name="name" />
         <button type="submit">Updat{loading ? 'ing' : 'e'}</button>
       </fieldset>
     </Form>

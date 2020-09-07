@@ -34,8 +34,8 @@ export interface Item {
   largeImage: string
   price: number
   user: any
-  createdAt: String
-  updatedAt: String
+  createdAt: string
+  updatedAt: string
 }
 
 export interface CartItem extends Item {

@@ -1,11 +1,6 @@
 {
   "name": "ecommerce-nextjs-apollo-client",
   "private": true,
-  "engines": {
-    "node": "12.x",
-    "npm": "6.x",
-    "yarn": "1.x"
-  },
   "scripts": {
     "dev": "next",
     "build": "next build",

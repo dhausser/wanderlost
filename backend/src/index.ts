@@ -12,7 +12,7 @@ import { TokenInterface } from './types'
 
 dotenv.config()
 const app = express()
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000
 const prisma = new PrismaClient()
 
 app.use(cookieParser())
@@ -50,6 +50,8 @@ const server = new ApolloServer({
     return { req, res, prisma, user: req.user }
   },
 })
+
+console.log('FRONTEND_URL', process.env.FRONTEND_URL)
 
 server.applyMiddleware({
   app,

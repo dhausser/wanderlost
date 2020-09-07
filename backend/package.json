@@ -1,9 +1,6 @@
 {
-  "name": "ecommerce-prisma-graphql-apollo-server",
+  "name": "wanderlost-server",
   "private": true,
-  "engines": {
-    "node": "13.x"
-  },
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config src/index",

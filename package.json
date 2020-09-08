@@ -51,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
     "apollo": "^2.30.3",
+    "babel-jest": "^26.3.0",
     "casual": "^1.6.2",
     "eslint": "^7.8.1",
     "eslint-plugin-react": "^7.20.6",
@@ -63,62 +64,34 @@
   },
   "prettier": "@prisma-labs/prettier-config",
   "jest": {
-    "setupFilesAfterEnv": [
-      "./jest.setup.js"
-    ]
+    "roots": [
+      "<rootDir>"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx",
+      "json"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>[/\\\\](node_modules|.next)[/\\\\]"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js",
+      "components(.*)$": "<rootDir>/components/$1"
+    }
   },
   "babel": {
-    "env": {
-      "development": {
-        "presets": [
-          "next/babel"
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "production": {
-        "presets": [
-          "next/babel"
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "test": {
-        "presets": [
-          [
-            "next/babel",
-            {
-              "preset-env": {
-                "modules": "commonjs"
-              }
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      }
-    }
+    "presets": [
+      "next/babel"
+    ]
   },
   "husky": {
     "hooks": {

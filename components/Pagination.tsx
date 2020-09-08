@@ -13,7 +13,7 @@ const PAGINATION_QUERY = gql`
 `
 
 function Pagination({ page }) {
-  const perPage = process.env.perPage
+  const perPage = 4
   const { error, loading, data } = useQuery(PAGINATION_QUERY)
   if (loading) return <p>Loading...</p>
   if (error) return <Error error={error} />

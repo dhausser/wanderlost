@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Item from './Item'
 import Pagination from './Pagination'
 
-const perPage = process.env.perPage
+const perPage = 4
 
 export const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
-import PropTypes from 'prop-types'
 import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
@@ -101,7 +100,7 @@ function UserPermission({ user }) {
     <>
       {error && (
         <tr>
-          <td colSpan="8">
+          <td colSpan={8}>
             <Error error={error} />
           </td>
         </tr>
@@ -130,15 +129,6 @@ function UserPermission({ user }) {
       </tr>
     </>
   )
-}
-
-UserPermission.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    id: PropTypes.string,
-    permission: PropTypes.array,
-  }).isRequired,
 }
 
 export default Permissions

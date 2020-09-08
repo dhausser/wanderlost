@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import { useQuery, gql } from '@apollo/client'
-import { formatDistance } from 'date-fns'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
 import OrderItemStyles from './styles/OrderItemStyles'
@@ -47,12 +46,7 @@ function OrderList() {
                 query: { id: order.id },
               }}
             >
-              <a
-                href={{
-                  pathname: '/order',
-                  query: { id: order.id },
-                }}
-              >
+              <a href="/order/[id]">
                 <div className="order-meta">
                   <p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
                   <p>{order.items.length} Products</p>

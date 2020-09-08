@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import useForm from '../lib/useForm'
@@ -29,10 +28,8 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `
 
-function UpdateItem() {
+function UpdateItem({ id }) {
   const router = useRouter()
-  const { id } = router.query
-
   const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
     variables: { id },
   })
@@ -46,9 +43,11 @@ function UpdateItem() {
 
   const [updateItem, { loading: updating, error }] = useMutation(UPDATE_ITEM_MUTATION, {
     variables: { id, ...inputs },
-    refetchQueries: {
-      query: ALL_ITEMS_QUERY,
-    },
+    refetchQueries: [
+      {
+        query: ALL_ITEMS_QUERY,
+      },
+    ],
   })
 
   if (loading) return <p>Loading...</p>
@@ -101,17 +100,13 @@ function UpdateItem() {
             placeholder="Enter A Description"
             required
             value={inputs.description}
-            onChange={handleChange}
+            onChange={() => handleChange}
           />
         </label>
         <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
       </fieldset>
     </Form>
   )
-}
-
-UpdateItem.propTypes = {
-  id: PropTypes.string.isRequired,
 }
 
 export default UpdateItem

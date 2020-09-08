@@ -1,9 +1,10 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 type Inputs = Record<string, string>
 type Event = ChangeEvent<HTMLInputElement>
 type Form = {
   inputs: Inputs
+  setInputs: Dispatch<SetStateAction<Inputs>>
   handleChange: (event: Event) => void
   resetForm: () => void
   clearForm: () => void
@@ -29,7 +30,7 @@ async function uploadFile({ value, inputs, setInputs }) {
 export default function useForm(initial = {}): Form {
   const [inputs, setInputs] = useState(initial)
 
-  function handleChange(e) {
+  function handleChange(e: { target: { files?: any; name?: any; type?: any; value?: any } }) {
     const { name, type } = e.target
     let { value } = e.target
     if (type === 'number') {

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import formatMoney from '../lib/formatMoney'
 import RemoveFromCart from './RemoveFromCart'
 
@@ -44,13 +43,6 @@ const CartItem = ({ cartItem }) => {
       <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
   )
-}
-
-CartItem.propTypes = {
-  cartItem: PropTypes.shape({
-    id: PropTypes.string,
-    quantity: PropTypes.number,
-  }).isRequired,
 }
 
 export default CartItem

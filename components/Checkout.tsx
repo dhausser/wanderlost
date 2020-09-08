@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import NProgress from 'nprogress'
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+import { loadStripe, StripeError } from '@stripe/stripe-js'
 import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -42,7 +42,7 @@ function Checkout() {
 
 function useCheckout() {
   const stripe = useStripe()
-  const [error, setError] = useState()
+  const [error, setError] = useState<StripeError>()
   const elements = useElements()
   const { closeCart } = useCart()
   const router = useRouter()
@@ -73,7 +73,7 @@ function useCheckout() {
     }
 
     // 5. Send it to the server and charge it
-    const order = await checkout({
+    const order: any = await checkout({
       variables: {
         token: paymentMethod.id,
       },
@@ -109,7 +109,7 @@ function CheckoutForm() {
   const { handleSubmit, error } = useCheckout()
   return (
     <CheckoutFormStyles onSubmit={handleSubmit}>
-      {error && <p>{error.message}</p>}
+      {error !== undefined ? <p>{error !== undefined ? error.message : ''}</p> : ''}
       <CardElement options={{ style }} />
       <SickButton type="submit">Pay</SickButton>
     </CheckoutFormStyles>

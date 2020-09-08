@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 import { useMutation, gql } from '@apollo/client'
-import PropTypes from 'prop-types'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
@@ -37,15 +36,6 @@ function DeleteItem({ id, children }) {
       {children}
     </button>
   )
-}
-
-DeleteItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  children: PropTypes.node,
-}
-
-DeleteItem.defaultProps = {
-  children: [],
 }
 
 export default DeleteItem

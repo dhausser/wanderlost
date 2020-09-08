@@ -96,7 +96,7 @@ function CreateItem() {
             placeholder="Enter A Description"
             required
             value={inputs.description}
-            onChange={handleChange}
+            onChange={() => handleChange}
           />
         </label>
         <button type="submit">Submit</button>

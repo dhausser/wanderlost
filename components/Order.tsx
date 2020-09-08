@@ -1,7 +1,4 @@
-import PropTypes from 'prop-types'
-import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
-import { format } from 'date-fns'
 import Head from 'next/head'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
@@ -29,9 +26,7 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `
 
-function Order() {
-  const router = useRouter()
-  const { id } = router.query
+function Order({ id }) {
   const { loading, error, data } = useQuery(SINGLE_ORDER_QUERY, {
     variables: { id },
   })
@@ -84,10 +79,6 @@ function Order() {
       </div>
     </OrderStyles>
   )
-}
-
-Order.propTypes = {
-  id: PropTypes.string.isRequired,
 }
 
 export default Order

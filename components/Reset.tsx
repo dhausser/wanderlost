@@ -1,5 +1,4 @@
 import { useMutation, gql } from '@apollo/client'
-import PropTypes from 'prop-types'
 import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
@@ -66,10 +65,6 @@ function Reset({ resetToken }) {
       </fieldset>
     </Form>
   )
-}
-
-Reset.propTypes = {
-  resetToken: PropTypes.string.isRequired,
 }
 
 export default Reset

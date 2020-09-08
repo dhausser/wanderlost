@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import SingleItem from '../components/StaticItem'
+import SingleItem from '../components/SingleItem'
 
 const Item = () => {
   const { query } = useRouter()

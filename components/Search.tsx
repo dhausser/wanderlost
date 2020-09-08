@@ -62,7 +62,9 @@ function Autocomplete() {
                     {item.title}
                   </DropDownItem>
                 ))}
-                {!items.length && !loading && <DropDownItem>Nothing Found {inputValue}</DropDownItem>}
+                {!items.length && !loading && (
+                  <DropDownItem highlighted={false}>Nothing Found {inputValue}</DropDownItem>
+                )}
               </DropDown>
             )}
           </div>

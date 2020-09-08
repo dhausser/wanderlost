@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from 'react'
 
-const LocalStateContext = createContext()
+const LocalStateContext = createContext({})
 const LocalStateProvider = LocalStateContext.Provider
 
 function CartStateProvider({ children }) {
@@ -32,7 +32,7 @@ function CartStateProvider({ children }) {
   )
 }
 
-function useCart() {
+function useCart(): any {
   return useContext(LocalStateContext)
 }
 

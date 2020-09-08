@@ -1,10 +1,16 @@
+import { useRouter } from 'next/router'
 import Reset from '../components/Reset'
 
-const ResetPage = ({ query }) => (
-  <>
-    <p>Reset your password</p>
-    <Reset resetToken={query.resetToken} />
-  </>
-)
+const ResetPage = () => {
+  const router = useRouter()
+  const { resetToken } = router.query
+
+  return (
+    <>
+      <p>Reset your password</p>
+      <Reset resetToken={resetToken} />
+    </>
+  )
+}
 
 export default ResetPage

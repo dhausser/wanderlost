@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import Nav from './Nav'
 import Cart from './Cart'
@@ -48,14 +49,16 @@ const StyledHeader = styled.header`
 const Header = () => {
   const router = useRouter()
 
-  router.events.on('routeChangeStart', () => {
-    NProgress.start()
-  })
-  router.events.on('routeChangeComplete', () => {
-    NProgress.done()
-  })
-  router.events.on('RouteChangeError', () => {
-    NProgress.done()
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      NProgress.start()
+    })
+    router.events.on('routeChangeComplete', () => {
+      NProgress.done()
+    })
+    router.events.on('routeChangeError', () => {
+      NProgress.done()
+    })
   })
 
   return (

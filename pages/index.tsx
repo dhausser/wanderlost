@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import { useRouter } from 'next/router'
-import Items from '../components/Items'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import { initializeApollo } from '../apollo/client'
+import Items, { ALL_ITEMS_QUERY } from '../components/Items'
 
-function IndexPage({ items }) {
+function IndexPage() {
   const router = useRouter()
   const { page } = router.query
 
@@ -10,21 +11,15 @@ function IndexPage({ items }) {
 }
 
 export async function getStaticProps() {
-  const prisma = new PrismaClient()
-  const items = await prisma.item.findMany({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      price: true,
-      image: true,
-      largeImage: true,
-    },
+  const apolloClient: ApolloClient<NormalizedCacheObject | null> = initializeApollo()
+
+  await apolloClient.query({
+    query: ALL_ITEMS_QUERY,
   })
 
   return {
     props: {
-      items,
+      initialApolloState: apolloClient.cache.extract(),
     },
   }
 }

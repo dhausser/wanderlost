@@ -13,6 +13,7 @@ const REQUEST_RESET_MUTATION = gql`
 
 function RequestReset() {
   const { inputs, handleChange, clearForm } = useForm({ email: '' })
+  console.log(inputs)
   const [reset, { loading, error, called }] = useMutation(REQUEST_RESET_MUTATION, {
     variables: {
       email: inputs.email,

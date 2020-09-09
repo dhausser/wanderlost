@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import sgMail from '@sendgrid/mail'
 import { randomBytes } from 'crypto'
 import { promisify } from 'util'
-import { transport, makeANiceEmail } from './mail'
 import { hasPermission } from './utils'
 import Stripe from 'stripe'
 
@@ -174,14 +174,34 @@ export const resolvers = {
         where: { email },
         data: { resetToken, resetTokenExpiry },
       })
-      await transport.sendMail({
-        from: 'dave@bos.com',
+      const makeANiceEmail = (text: string) => `
+        <div classname="email" style="
+          border: 1px solid black;
+          padding: 20px;
+          font-family: sans-serif;
+          line-height: 2;
+          font-size: 20px;
+        ">
+          <h2>Hello there</>
+          <p>${text}</p>
+
+          <p>😘, Davy Hausser</p>
+        </div?
+      `
+      console.log(user.email)
+      const msg = {
         to: user.email,
+        from: 'davy.hausser@icloud.com',
         subject: 'Your Password Reset Token',
-        html: makeANiceEmail(`Your Password Reset Token is here!
-      \n\n
-      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
-      })
+        text: 'and easy to do anywhere, even with Node.js',
+        html: `<strong>${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}</strong>`,
+        // html: makeANiceEmail(`Your Password Reset Token is here!
+        // \n\n
+        // <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+      }
+      console.log(msg)
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+      sgMail.send(msg)
       return { message: 'Thanks!' }
     },
     async resetPassword(

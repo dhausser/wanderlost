@@ -77,6 +77,10 @@ export const typeDefs = gql`
     name: String!
   }
 
+  type SuccessMessage {
+    message: String!
+  }
+
   type Query {
     allItems(searchTerm: String): [Item]!
     items(offset: Int, limit: Int): ItemConnection!
@@ -94,7 +98,7 @@ export const typeDefs = gql`
     signup(email: String!, password: String!, name: String!): User!
     signin(email: String!, password: String!): User
     signout: String
-    requestReset(email: String!): String
+    requestReset(email: String!): SuccessMessage!
     resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
     updatePermissions(permissions: [Permission], userId: ID!): User
     addToCart(id: ID!): CartItem

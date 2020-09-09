@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client'
-import StaticItem from '../../components/StaticItem'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import { initializeApollo } from '../../apollo/client'
+import SingleItem, { SINGLE_ITEM_QUERY } from '../../components/SingleItem'
 
-function Item({ item }) {
-  return <StaticItem item={item} />
+function Item({ id }) {
+  return <SingleItem id={id} />
 }
 
 export async function getStaticPaths() {
@@ -20,22 +22,17 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const prisma = new PrismaClient()
-  const item = await prisma.item.findOne({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      price: true,
-      image: true,
-      largeImage: true,
-    },
-    where: { id: params.id },
+  const apolloClient: ApolloClient<NormalizedCacheObject | null> = initializeApollo()
+
+  await apolloClient.query({
+    query: SINGLE_ITEM_QUERY,
+    variables: { id: params.id },
   })
 
   return {
     props: {
-      item,
+      id: params.id,
+      initialApolloState: apolloClient.cache.extract(),
     },
   }
 }

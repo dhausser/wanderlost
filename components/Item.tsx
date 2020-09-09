@@ -11,12 +11,7 @@ export default function Item({ item }) {
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}
       <Title>
-        <Link
-          href={{
-            pathname: `/item/${item.id}`,
-            // query: { id: item.id },
-          }}
-        >
+        <Link href="/item/[id]" as={`/item/${item.id}`}>
           <a>{item.title}</a>
         </Link>
       </Title>

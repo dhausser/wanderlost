@@ -25,7 +25,7 @@ function Autocomplete() {
   return (
     <SearchStyles>
       <Downshift
-        onChange={(item) => router.push('item/[id]', `/item/${item.id}`)}
+        onChange={(item) => router.push('/item/[id]', `/item/${item.id}`)}
         itemToString={(item) => (item === null ? '' : item.title)}
       >
         {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (

@@ -15,6 +15,25 @@ import { Context, UserInput, ItemInput, Pagination, CartItem } from './types'
 
 export const resolvers = {
   Query: {
+    async allItems(_parent: any, args: { searchTerm: string }, { prisma }: Context) {
+      const allItems = await prisma.item.findMany({
+        where: {
+          OR: [
+            {
+              title: {
+                contains: args.searchTerm,
+              },
+            },
+            {
+              description: {
+                contains: args.searchTerm,
+              },
+            },
+          ],
+        },
+      })
+      return Array.isArray(allItems) ? allItems : []
+    },
     async items(_: any, { offset = 0, limit = 4 }: Pagination, { prisma }: Context) {
       const allItems = await prisma.item.findMany()
       allItems.reverse()

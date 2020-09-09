@@ -1,13 +1,13 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import Downshift, { resetIdCounter } from 'downshift'
 import { useRouter } from 'next/router'
 import { useLazyQuery, gql } from '@apollo/client'
+
 import debounce from 'lodash.debounce'
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
 
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEM_QUERY($searchTerm: String!) {
-    items(where: { OR: [{ title_contains: $searchTerm }, { description: $searchTerm }] }) {
+    allItems(searchTerm: $searchTerm) {
       id
       image
       title
@@ -27,7 +27,7 @@ function routeToItem(item) {
 
 function Autocomplete() {
   const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY)
-  const items = data ? data.items : []
+  const items = data ? data.allItems : []
   const findItemsButChill = debounce(findItems, 350)
   resetIdCounter()
   return (
@@ -46,6 +46,7 @@ function Autocomplete() {
                   findItemsButChill({
                     variables: { searchTerm: e.target.value },
                   })
+                  console.log(data)
                 },
               })}
             />

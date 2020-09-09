@@ -1,6 +1,11 @@
 import { gql } from '@apollo/client'
 
 export const typeDefs = gql`
+  input ItemsInput {
+    title: String
+    description: String
+  }
+
   enum Permission {
     ADMIN
     ITEMCREATE
@@ -73,6 +78,7 @@ export const typeDefs = gql`
   }
 
   type Query {
+    allItems(searchTerm: String): [Item]!
     items(offset: Int, limit: Int): ItemConnection!
     item(id: ID!): Item
     user: User

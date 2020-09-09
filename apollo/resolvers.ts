@@ -148,13 +148,17 @@ export const resolvers = {
       if (!valid) {
         throw new Error('Invalid Password!')
       }
+      // TODO: Figure out how cookies works on serverless api routes
+
       // 3. generate the JWT Token
-      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+      // const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+
       // 4. Set the cookie with the token
-      res.cookie('token', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365,
-      })
+      // res.cookie('token', token, {
+      //   httpOnly: true,
+      //   maxAge: 1000 * 60 * 60 * 24 * 365,
+      // })
+
       // 5. Return the user
       return user
     },
@@ -188,7 +192,8 @@ export const resolvers = {
           <p>😘, Davy Hausser</p>
         </div?
       `
-      console.log(user.email)
+
+      // TODO: make a nice email with functional link
       const msg = {
         to: user.email,
         from: 'davy.hausser@icloud.com',

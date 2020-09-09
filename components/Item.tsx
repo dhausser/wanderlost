@@ -13,7 +13,7 @@ export default function Item({ item }) {
       <Title>
         <Link
           href={{
-            pathname: `/items/${item.id}`,
+            pathname: `/item/${item.id}`,
             // query: { id: item.id },
           }}
         >

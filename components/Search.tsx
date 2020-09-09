@@ -4,6 +4,7 @@ import { useLazyQuery, gql } from '@apollo/client'
 
 import debounce from 'lodash.debounce'
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
+import { Item } from '../apollo/types'
 
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEM_QUERY($searchTerm: String!) {
@@ -15,24 +16,18 @@ const SEARCH_ITEMS_QUERY = gql`
   }
 `
 
-function routeToItem(item) {
-  const router = useRouter()
-  router.push({
-    pathname: '/item',
-    query: {
-      id: item.id,
-    },
-  })
-}
-
 function Autocomplete() {
+  const router = useRouter()
   const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY)
   const items = data ? data.allItems : []
   const findItemsButChill = debounce(findItems, 350)
   resetIdCounter()
   return (
     <SearchStyles>
-      <Downshift onChange={routeToItem} itemToString={(item) => (item === null ? '' : item.title)}>
+      <Downshift
+        onChange={(item) => router.push('item/[id]', `/item/${item.id}`)}
+        itemToString={(item) => (item === null ? '' : item.title)}
+      >
         {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
           <div>
             <input
@@ -46,14 +41,13 @@ function Autocomplete() {
                   findItemsButChill({
                     variables: { searchTerm: e.target.value },
                   })
-                  console.log(data)
                 },
               })}
             />
 
             {isOpen && (
               <DropDown>
-                {items.map((item, index) => (
+                {items.map((item: Item, index: number) => (
                   <DropDownItem
                     {...getItemProps({ item })}
                     key={item.id}

@@ -44,12 +44,7 @@ export interface CartItem extends Item {
 }
 
 export interface Context {
-  req: {
-    userId: string | undefined
-    headers: {
-      authorization: string | undefined
-    }
-  }
+  req: any
   res: any
   user: any
   // headers: any

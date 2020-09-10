@@ -1,14 +1,24 @@
 import { ApolloServer } from 'apollo-server-micro'
-import { createContext } from '../../apollo/context'
 import { schema } from '../../apollo/schema'
+
+import { PrismaClient } from '@prisma/client'
+import { NextApiRequest, NextApiResponse } from 'next'
+
+const prisma = new PrismaClient()
+
+export interface Context {
+  req: NextApiRequest
+  res: NextApiResponse
+  prisma: PrismaClient
+}
 
 const apolloServer = new ApolloServer({
   schema,
-  context: (ctx) => {
-    // console.log(ctx.req)
-    // console.log(ctx.res)
-    return createContext(ctx)
-  },
+  context: ({ req, res }) => ({
+    req,
+    res,
+    prisma,
+  }),
 })
 
 export const config = {

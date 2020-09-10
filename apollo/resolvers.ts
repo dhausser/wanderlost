@@ -137,7 +137,7 @@ export const resolvers = {
       })
       return user
     },
-    async signin(_: any, { email, password }: UserInput, { res, prisma }: Context) {
+    async signin(_: any, { email, password }: UserInput, { prisma }: Context) {
       // 1. check if there is a user with that email
       const user = await prisma.user.findOne({ where: { email } })
       if (!user) {

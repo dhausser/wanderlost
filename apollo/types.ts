@@ -51,8 +51,12 @@ export interface Context {
     }
   }
   res: any
-  prisma: PrismaClient
   user: any
+  // headers: any
+  // functionName: any
+  // event: any
+  // context: any
+  prisma: PrismaClient
 }
 
 export interface TokenInterface {

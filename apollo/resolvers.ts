@@ -137,7 +137,7 @@ export const resolvers = {
       })
       return user
     },
-    async signin(_: any, { email, password }: UserInput, { prisma }: Context) {
+    async signin(_: any, { email, password }: UserInput, { res, prisma }: Context) {
       // 1. check if there is a user with that email
       const user = await prisma.user.findOne({ where: { email } })
       if (!user) {
@@ -148,16 +148,15 @@ export const resolvers = {
       if (!valid) {
         throw new Error('Invalid Password!')
       }
-      // TODO: Figure out how cookies works on serverless api routes
 
       // 3. generate the JWT Token
-      // const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
 
       // 4. Set the cookie with the token
-      // res.cookie('token', token, {
-      //   httpOnly: true,
-      //   maxAge: 1000 * 60 * 60 * 24 * 365,
-      // })
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365,
+      })
 
       // 5. Return the user
       return user

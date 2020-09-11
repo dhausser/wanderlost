@@ -47,10 +47,6 @@ export interface Context {
   req: any
   res: any
   user: any
-  // headers: any
-  // functionName: any
-  // event: any
-  // context: any
   prisma: PrismaClient
 }
 

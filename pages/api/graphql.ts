@@ -4,6 +4,7 @@ import { schema } from '../../apollo/schema'
 import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// TODO: This block is duplicated in ./context.ts
 const prisma = new PrismaClient()
 
 export interface Context {

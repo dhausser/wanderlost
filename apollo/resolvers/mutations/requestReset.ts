@@ -41,7 +41,6 @@ export async function requestReset(_: any, { email }: { email: string }, { prism
     // \n\n
     // <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
   }
-  console.log(msg)
   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
   sgMail.send(msg)
   return { message: 'Thanks!' }

@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import { serialize } from 'cookie'
 
 interface Options {
@@ -20,9 +21,16 @@ const cookie = (res, name, value, options: Options) => {
 }
 
 /**
- * Adds `cookie` function on `res.cookie` to set cookies for response
+ * Adds `cookie` function on `res.cookie` to set cookies for response and parse the userId from the request cookies
  */
 const cookies = (handler) => (req, res) => {
+  const { token } = req.cookies
+  if (token) {
+    const { userId } = jwt.verify(token, process.env.APP_SECRET)
+    // put the userId onto the req for future requests to access
+    req.userId = userId
+  }
+
   res.cookie = (name, value, options) => cookie(res, name, value, options)
 
   return handler(req, res)

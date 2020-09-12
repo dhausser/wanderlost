@@ -29,7 +29,6 @@ function Signin() {
       onSubmit={async (e) => {
         e.preventDefault()
         const { data } = await signin()
-        console.log(data.signin)
         resetForm()
       }}
     >

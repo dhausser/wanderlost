@@ -39,7 +39,6 @@ function CreateItem() {
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
-        console.log(e)
         const res = await createItem()
         router.push({
           pathname: '/item',

@@ -5,28 +5,17 @@ import { randomBytes } from 'crypto'
 import { promisify } from 'util'
 import Stripe from 'stripe'
 import { hasPermission } from '../utils'
-import { Context, UserInput, ItemInput, Pagination, CartItem } from '../types'
+import { Context, UserInput, ItemInput, CartItem } from '../types'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2020-08-27',
   typescript: true,
 })
 
+import { createItem } from './mutations/createItem'
+
 export const Mutation = {
-  async createItem(_: any, args: ItemInput, { prisma, user }: Context) {
-    if (!user) {
-      throw new Error('You must be logged in to do that!')
-    }
-    const item = await prisma.item.create({
-      data: {
-        ...args,
-        user: {
-          connect: { id: user.id },
-        },
-      },
-    })
-    return item
-  },
+  createItem,
   async updateItem(_: any, args: ItemInput, { prisma }: Context) {
     // first take a copy of the updates
     const updates = { ...args }

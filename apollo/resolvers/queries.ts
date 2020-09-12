@@ -1,4 +1,4 @@
-import { Context, UserInput, ItemInput, Pagination, CartItem } from '../types'
+import { Context, Pagination } from '../types'
 
 export const Query = {
   async allItems(_parent: any, args: { searchTerm: string }, { prisma }: Context) {

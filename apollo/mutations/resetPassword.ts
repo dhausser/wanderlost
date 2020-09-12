@@ -1,16 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Context } from '../../types'
 
-export async function resetPassword(
-  _: any,
-  {
-    password,
-    confirmPassword,
-    resetToken,
-  }: { password: string; confirmPassword: string; resetToken: string },
-  { res, prisma }: Context
-) {
+export async function resetPassword(_: any, { password, confirmPassword, resetToken }, { res, prisma }) {
   // 1. check if the passwords match
   if (password !== confirmPassword) {
     throw new Error("Yo Passwords don't match!")

@@ -1,6 +1,4 @@
-import { Context, ItemInput } from '../../types'
-
-export async function createItem(_: any, args: ItemInput, { req, prisma }: Context) {
+export async function createItem(_, args, { req, prisma }) {
   if (!req.userId) {
     throw new Error('You must be logged in to do that!')
   }

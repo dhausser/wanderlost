@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Context, UserInput } from '../../types'
 
-export async function signin(_: any, { email, password }: UserInput, { res, prisma }: Context) {
+export async function signin(_: any, { email, password }, { res, prisma }) {
   // 1. check if there is a user with that email
   const user = await prisma.user.findOne({ where: { email } })
   if (!user) {

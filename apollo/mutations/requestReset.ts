@@ -1,9 +1,8 @@
 import sgMail from '@sendgrid/mail'
 import { promisify } from 'util'
 import { randomBytes } from 'crypto'
-import { Context } from '../../types'
 
-export async function requestReset(_: any, { email }: { email: string }, { prisma }: Context) {
+export async function requestReset(_, { email }, { prisma }) {
   const user = await prisma.user.findOne({ where: { email } })
   if (!user) {
     throw new Error(`No user found for email: ${email}'`)

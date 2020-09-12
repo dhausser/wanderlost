@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { Context, UserInput } from '../../types'
 
-export async function signup(_: any, { email, password, name }: UserInput, { res, prisma }: Context) {
+export async function signup(_, { email, password, name }, { res, prisma }) {
   const user = await prisma.user.create({
     data: {
       email: email.toLocaleLowerCase(),

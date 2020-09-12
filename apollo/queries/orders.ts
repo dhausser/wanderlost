@@ -1,6 +1,4 @@
-import { Context } from '../../types'
-
-export async function orders(_: any, __: null, { req, prisma }: Context) {
+export async function orders(_, __, { req, prisma }) {
   const orders = await prisma.order.findMany({
     where: { userId: req.userId },
     include: { items: true },

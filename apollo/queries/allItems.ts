@@ -1,17 +1,15 @@
-import { Context } from '../../types'
-
-export async function allItems(_parent: any, args: { searchTerm: string }, { prisma }: Context) {
+export async function allItems(_parent, { searchTerm }, { prisma }) {
   const allItems = await prisma.item.findMany({
     where: {
       OR: [
         {
           title: {
-            contains: args.searchTerm,
+            contains: searchTerm,
           },
         },
         {
           description: {
-            contains: args.searchTerm,
+            contains: searchTerm,
           },
         },
       ],

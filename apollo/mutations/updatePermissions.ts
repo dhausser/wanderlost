@@ -1,11 +1,6 @@
-import { hasPermission } from '../../utils'
-import { Context } from '../../types'
+import { hasPermission } from '../utils'
 
-export async function updatePermissions(
-  _: any,
-  { permissions }: { permissions: any },
-  { req, prisma }: Context
-) {
+export async function updatePermissions(_, { permissions }, { req, prisma }) {
   // 1. Check if they are logged in
   if (!req.userId) {
     throw new Error('You must be logged in!')

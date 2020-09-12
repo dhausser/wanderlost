@@ -1,6 +1,4 @@
-import { Context } from '../../types'
-
-export async function addToCart(_: any, { id }: { id: string }, { req, prisma }: Context) {
+export async function addToCart(_, { id }, { req, prisma }) {
   if (!req.userId) {
     throw new Error('You must be signed in')
   }

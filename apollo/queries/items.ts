@@ -1,6 +1,4 @@
-import { Context, Pagination } from '../../types'
-
-export async function items(_: any, { offset = 0, limit = 4 }: Pagination, { prisma }: Context) {
+export async function items(_, { offset = 0, limit = 4 }, { prisma }) {
   const allItems = await prisma.item.findMany()
   allItems.reverse()
 

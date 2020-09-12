@@ -1,6 +1,4 @@
-import { Context } from '../../types'
-
-export function user(_: any, __: null, { req, prisma }: Context) {
+export function user(_, __, { req, prisma }) {
   if (!req.userId) {
     return null
   }

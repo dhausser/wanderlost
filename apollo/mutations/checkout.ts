@@ -1,12 +1,11 @@
 import Stripe from 'stripe'
-import { Context } from '../../types'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2020-08-27',
   typescript: true,
 })
 
-export async function checkout(_: any, { token }: { token: string }, { req, prisma }: Context) {
+export async function checkout(_, { token }, { req, prisma }) {
   if (!req.userId) throw new Error('You must be signed in to complete this order.')
   const user = await prisma.user.findOne({
     where: { id: req.userId },

@@ -1,6 +1,4 @@
-import { Context, ItemInput } from '../../types'
-
-export async function updateItem(_: any, args: ItemInput, { prisma }: Context) {
+export async function updateItem(_, args, { prisma }) {
   // first take a copy of the updates
   const updates = { ...args }
   // remove the ID from the updates

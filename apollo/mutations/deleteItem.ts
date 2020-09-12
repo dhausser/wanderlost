@@ -1,6 +1,4 @@
-import { Context } from '../../types'
-
-export async function deleteItem(_: any, { id }: { id: string }, { req, prisma }: Context) {
+export async function deleteItem(_, { id }, { req, prisma }) {
   // 1. find the item
   const item = await prisma.item.findOne({
     where: { id },

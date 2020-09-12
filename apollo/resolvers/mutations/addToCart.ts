@@ -1,12 +1,12 @@
 import { Context } from '../../types'
 
-export async function addToCart(_: any, { id }: { id: string }, { user, prisma }: Context) {
-  if (!user) {
+export async function addToCart(_: any, { id }: { id: string }, { req, prisma }: Context) {
+  if (!req.userId) {
     throw new Error('You must be signed in')
   }
   const [existingCartItem] = await prisma.cartItem.findMany({
     where: {
-      userId: user.id,
+      userId: req.userId,
       itemId: id,
     },
   })
@@ -19,7 +19,7 @@ export async function addToCart(_: any, { id }: { id: string }, { user, prisma }
   return await prisma.cartItem.create({
     data: {
       user: {
-        connect: { id: user.id },
+        connect: { id: req.userId },
       },
       item: {
         connect: { id },

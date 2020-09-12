@@ -24,7 +24,7 @@ function Cart() {
         <CloseButton onClick={toggleCart} title="close">
           &times;
         </CloseButton>
-        <Supreme>{user.name}&aposs Cart</Supreme>
+        <Supreme>{`${user.name}'s Cart`}</Supreme>
         <p>
           You Have {totalItems} Item{totalItems === 1 ? '' : 's'} in your cart.
         </p>

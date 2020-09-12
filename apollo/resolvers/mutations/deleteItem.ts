@@ -1,14 +1,18 @@
 import { Context } from '../../types'
 
-export async function deleteItem(_: any, { id }: { id: string }, { prisma, user }: Context) {
-  const where = { id }
+export async function deleteItem(_: any, { id }: { id: string }, { req, prisma }: Context) {
   // 1. find the item
-  const item = await prisma.item.findOne({ where })
+  const item = await prisma.item.findOne({
+    where: { id },
+  })
   if (!item) {
     throw new Error('Item does not exist')
   }
   // 2. Check if they own that item, or have the permissions
-  const ownsItem = item.userId === user.id
+  const ownsItem = item.userId === req.userId
+  const user = await prisma.user.findOne({
+    where: { id: req.userId },
+  })
   const hasPermissions = user.permissions.some((permission: string) =>
     ['ADMIN', 'ITEMDELETE'].includes(permission)
   )
@@ -18,5 +22,5 @@ export async function deleteItem(_: any, { id }: { id: string }, { prisma, user 
   }
 
   // 3. Delete it!
-  return prisma.item.delete({ where })
+  return prisma.item.delete({ where: { id } })
 }

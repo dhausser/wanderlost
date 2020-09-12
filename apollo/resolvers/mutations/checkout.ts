@@ -1,15 +1,19 @@
 import Stripe from 'stripe'
-import { Context, CartItem } from '../../types'
+import { Context } from '../../types'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2020-08-27',
   typescript: true,
 })
 
-export async function checkout(_: any, { token }: { token: string }, { user, prisma }: Context) {
-  if (!user) throw new Error('You must be signed in to complete this order.')
+export async function checkout(_: any, { token }: { token: string }, { req, prisma }: Context) {
+  if (!req.userId) throw new Error('You must be signed in to complete this order.')
+  const user = await prisma.user.findOne({
+    where: { id: req.userId },
+    include: { cart: true },
+  })
   const amount = user.cart.reduce(
-    (tally: number, cartItem: CartItem) => tally + cartItem.item.price * cartItem.quantity,
+    (tally: number, cartItem: any) => tally + cartItem.item.price * cartItem.quantity,
     0
   )
   const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
@@ -18,7 +22,7 @@ export async function checkout(_: any, { token }: { token: string }, { user, pri
     confirm: true,
     payment_method: token,
   })
-  const orderItems = user.cart.map((cartItem: CartItem) => {
+  const orderItems = user.cart.map((cartItem: any) => {
     const { title, description, price, image, largeImage } = cartItem.item
     const orderItem = {
       title,
@@ -41,14 +45,14 @@ export async function checkout(_: any, { token }: { token: string }, { user, pri
     include: { items: true },
   })
 
-  /** TODO: Delete Many */
-  // const cartItemIds = user.cart.map((cartItem: CartItem) => cartItem.id);
-  // await prisma.cartItem.deleteMany({
-  //   where: {
-  //     id: cartItemIds,
-  //   },
-  // });
-  user.cart.forEach(async ({ id }: { id: string }) => prisma.cartItem.delete({ where: { id } }))
+  const cartItemIds = user.cart.map((cartItem: any) => cartItem.id)
+  await prisma.cartItem.deleteMany({
+    where: {
+      id: {
+        in: cartItemIds,
+      },
+    },
+  })
 
   return order
 }

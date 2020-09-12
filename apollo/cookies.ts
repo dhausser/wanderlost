@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { serialize } from 'cookie'
+import { NextApiResponse } from 'next'
 
 interface Options {
-  expires: Date
-  maxAge: number
+  expires?: Date
+  maxAge?: number
 }
 
 interface TokenInterface {
@@ -13,7 +14,7 @@ interface TokenInterface {
 /**
  * This sets `cookie` on `res` object
  */
-const cookie = (res, name, value, options: Options) => {
+const setCookie = (res: NextApiResponse, name: string, value: unknown, options: Options = {}) => {
   const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if ('maxAge' in options) {
@@ -29,6 +30,7 @@ const cookie = (res, name, value, options: Options) => {
  */
 const decodeIncomingRequestCookies = (req) => {
   const { token } = req.cookies
+  console.log(token)
   if (token) {
     const decoded = jwt.verify(token, process.env.APP_SECRET)
     // put the userId onto the req for future requests to access
@@ -42,9 +44,16 @@ const decodeIncomingRequestCookies = (req) => {
 const cookies = (handler) => (req, res) => {
   decodeIncomingRequestCookies(req)
 
-  res.cookie = (name, value, options) => cookie(res, name, value, options)
+  res.cookie = (name, value, options) => setCookie(res, name, value, options)
 
   return handler(req, res)
 }
 
-export { cookies }
+/**
+ * Clear Cookies to signout
+ */
+const clearCookies = (req, res) => {
+  res.setHeader('Set-Cookie', 'token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+}
+
+export { cookies, clearCookies }

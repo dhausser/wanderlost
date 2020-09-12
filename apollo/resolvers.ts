@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken'
 import sgMail from '@sendgrid/mail'
 import { randomBytes } from 'crypto'
 import { promisify } from 'util'
-import { hasPermission } from './utils'
 import Stripe from 'stripe'
+import { cookie } from './cookies'
+import { hasPermission } from './utils'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2020-08-27',
@@ -153,10 +154,22 @@ export const resolvers = {
       const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
 
       // 4. Set the cookie with the token
-      res.cookie('token', token, {
+      // res.cookie('token', token, {
+      //   httpOnly: true,
+      //   maxAge: 1000 * 60 * 60 * 24 * 365,
+      // })
+      // res.end(res.getHeader('Set-Cookie'))
+
+      const name = 'token'
+      const value = token
+      const options = {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365,
-      })
+      }
+
+      cookie(res, name, value, options)
+
+      // res.cookie = (name, value, options) => cookie(res, name, value, options)
 
       // 5. Return the user
       return user

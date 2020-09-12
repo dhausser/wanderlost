@@ -1,9 +1,14 @@
 import { serialize } from 'cookie'
 
+interface Options {
+  expires: Date
+  maxAge: number
+}
+
 /**
  * This sets `cookie` on `res` object
  */
-const cookie = (res, name, value, options = {}) => {
+const cookie = (res, name, value, options: Options) => {
   const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if ('maxAge' in options) {
@@ -23,4 +28,4 @@ const cookies = (handler) => (req, res) => {
   return handler(req, res)
 }
 
-export default cookies
+export { cookies }

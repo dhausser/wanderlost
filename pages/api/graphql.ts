@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { schema } from '../../apollo/schema'
+import { cookies } from '../../apollo/cookies'
 
 import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -28,4 +29,6 @@ export const config = {
   },
 }
 
-export default apolloServer.createHandler({ path: '/api/graphql' })
+const handler = apolloServer.createHandler({ path: '/api/graphql' })
+
+export default cookies(handler)

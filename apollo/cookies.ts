@@ -6,6 +6,10 @@ interface Options {
   maxAge: number
 }
 
+interface TokenInterface {
+  userId: string
+}
+
 /**
  * This sets `cookie` on `res` object
  */
@@ -21,15 +25,22 @@ const cookie = (res, name, value, options: Options) => {
 }
 
 /**
- * Adds `cookie` function on `res.cookie` to set cookies for response and parse the userId from the request cookies
+ * Decode the userId from the request cookies JWT token
  */
-const cookies = (handler) => (req, res) => {
+const decodeIncomingRequestCookies = (req) => {
   const { token } = req.cookies
   if (token) {
-    const { userId } = jwt.verify(token, process.env.APP_SECRET)
+    const decoded = jwt.verify(token, process.env.APP_SECRET)
     // put the userId onto the req for future requests to access
-    req.userId = userId
+    req.userId = (decoded as TokenInterface).userId
   }
+}
+
+/**
+ * Adds `cookie` function on `res.cookie` to set cookies for response
+ */
+const cookies = (handler) => (req, res) => {
+  decodeIncomingRequestCookies(req)
 
   res.cookie = (name, value, options) => cookie(res, name, value, options)
 

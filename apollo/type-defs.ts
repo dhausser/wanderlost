@@ -97,7 +97,7 @@ export const typeDefs = gql`
     deleteItem(id: ID!): Item
     signup(email: String!, password: String!, name: String!): User!
     signin(email: String!, password: String!): User
-    signout: String
+    signout: SuccessMessage!
     requestReset(email: String!): SuccessMessage!
     resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
     updatePermissions(permissions: [Permission], userId: ID!): User

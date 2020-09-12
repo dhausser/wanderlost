@@ -28,7 +28,8 @@ function Signin() {
       method="post"
       onSubmit={async (e) => {
         e.preventDefault()
-        await signin()
+        const { data } = await signin()
+        console.log(data.signin)
         resetForm()
       }}
     >

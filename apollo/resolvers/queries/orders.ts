@@ -5,6 +5,5 @@ export async function orders(_: any, __: null, { req, prisma }: Context) {
     where: { userId: req.userId },
     include: { items: true },
   })
-  console.log(orders)
   return Array.isArray(orders) ? orders : []
 }

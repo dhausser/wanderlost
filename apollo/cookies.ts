@@ -30,7 +30,6 @@ const setCookie = (res: NextApiResponse, name: string, value: unknown, options: 
  */
 const decodeIncomingRequestCookies = (req) => {
   const { token } = req.cookies
-  console.log(token)
   if (token) {
     const decoded = jwt.verify(token, process.env.APP_SECRET)
     // put the userId onto the req for future requests to access

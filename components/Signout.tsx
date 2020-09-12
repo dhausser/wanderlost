@@ -14,14 +14,7 @@ function Signout() {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
   return (
-    <button
-      type="button"
-      onClick={async () => {
-        console.log('signing out!')
-        const { data } = await signout()
-        console.log(data.signout.message)
-      }}
-    >
+    <button type="button" onClick={async () => signout()}>
       Sign Out
     </button>
   )

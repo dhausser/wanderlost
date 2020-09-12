@@ -1,7 +1,7 @@
 import { Context } from '../../types'
-import { clearCookies } from '../../cookies'
+import { setCookie } from '../../cookies'
 
 export function signout(_: any, __: any, { res }: Context) {
-  clearCookies(res)
+  setCookie(res, 'token', '', {})
   return { message: 'Goodbye!' }
 }

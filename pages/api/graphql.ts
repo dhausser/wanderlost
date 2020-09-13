@@ -1,9 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { ApolloServer } from 'apollo-server-micro'
-import { schema } from '../../apollo/wanderlost-schema'
+import { schema } from '../../apollo/schema'
 import { cookies } from '../../apollo/cookies'
-
-console.log({ schema })
 
 const prisma = new PrismaClient()
 

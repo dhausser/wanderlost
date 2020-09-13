@@ -1,3 +1,7 @@
 export async function item(_, { id }, { prisma }) {
-  return prisma.item.findOne({ where: { id } })
+  const item = await prisma.item.findOne({ where: { id } })
+  if (!item) {
+    throw new Error(`No item found for id: ${id}`)
+  }
+  return item
 }

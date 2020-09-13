@@ -17,7 +17,7 @@ export const Query = objectType({
       args: {
         searchTerm: stringArg(),
       },
-      resolve: item,
+      resolve: allItems,
     })
 
     t.field('items', {
@@ -35,7 +35,7 @@ export const Query = objectType({
       args: {
         id: idArg({ required: true }),
       },
-      resolve: allItems,
+      resolve: item,
     })
 
     t.field('user', {

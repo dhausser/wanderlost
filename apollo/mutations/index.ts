@@ -68,7 +68,10 @@ export const Mutation = objectType({
       resolve: signin,
     })
 
-    t.field('signout', { type: 'SuccessMessage', resolve: signout })
+    t.field('signout', {
+      type: 'SuccessMessage',
+      resolve: signout,
+    })
 
     t.field('requestReset', {
       type: 'SuccessMessage',

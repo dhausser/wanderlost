@@ -16,6 +16,7 @@ type Item {
   price: Int!
   title: String!
   user: User!
+  userId: String!
 }
 
 type ItemConnection {

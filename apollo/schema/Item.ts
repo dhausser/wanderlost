@@ -1,4 +1,7 @@
 import { extendType, objectType, inputObjectType, stringArg, intArg, idArg } from '@nexus/schema'
+import { allItems } from './queries/allItems'
+import { items } from './queries/items'
+import { item } from './queries/item'
 
 export const Item = objectType({
   name: 'Item',
@@ -9,7 +12,20 @@ export const Item = objectType({
     t.string('image', { nullable: true })
     t.string('largeImage', { nullable: true })
     t.int('price')
-    t.field('user', { type: 'User' })
+    t.string('userId')
+    t.field('user', {
+      type: 'User',
+      async resolve(root, _args, ctx) {
+        const user = await ctx.prisma.user.findOne({
+          where: { id: root.userId },
+          include: { cart: true },
+        })
+        if (!user) {
+          throw new Error(`No item found for id: ${root.id}`)
+        }
+        return user
+      },
+    })
   },
 })
 
@@ -90,8 +106,11 @@ export const ItemQuery = extendType({
       args: {
         id: idArg({ required: true }),
       },
-      resolve(_root, args, ctx) {
-        return ctx.prisma.item.findOne({ where: { id: args.id } })
+      resolve: async (_root, args, ctx) => {
+        return ctx.prisma.item.findOne({
+          where: { id: args.id },
+          include: { user: true },
+        })
       },
     })
   },

@@ -5,8 +5,6 @@ import * as Item from './Item'
 import * as Order from './Order'
 import * as User from './User'
 
-console.log({ Item, Order, User })
-
 export const schema = makeSchema({
   types: [Item, Order, User],
   typegenAutoConfig: {

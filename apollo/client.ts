@@ -7,7 +7,7 @@ function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('@apollo/client/link/schema')
     const { schema } = require('./schema')
-    const { createContext } = require('./Context')
+    const { createContext } = require('./context')
     return new SchemaLink({ schema, context: createContext() })
   }
   const { HttpLink } = require('@apollo/client/link/http')

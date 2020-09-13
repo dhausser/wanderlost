@@ -34,7 +34,7 @@ export const schema = makeSchema({
     contextType: 'ctx.Context',
     sources: [
       {
-        source: path.join(process.cwd(), 'apollo', 'context.ts'),
+        source: path.join(process.cwd(), 'apollo', 'Context.ts'),
         alias: 'ctx',
       },
     ],

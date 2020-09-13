@@ -1,5 +1,3 @@
-import { Pagination } from './types'
-
 const hasPermission = (user: any, permissionsNeeded: any) => {
   const matchedPermissions = user.permissions.filter((permissionTheyHave: any) =>
     permissionsNeeded.includes(permissionTheyHave)
@@ -13,6 +11,9 @@ const hasPermission = (user: any, permissionsNeeded: any) => {
   }
 }
 
+/**
+ * TODO: Cleanup
+ */
 // const paginatedResults = ({
 //   after: cursor,
 //   pageSize = 20,

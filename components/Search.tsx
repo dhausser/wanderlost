@@ -1,10 +1,9 @@
 import Downshift, { resetIdCounter } from 'downshift'
 import { useRouter } from 'next/router'
 import { useLazyQuery, gql } from '@apollo/client'
-
+import { Item } from '@prisma/client'
 import debounce from 'lodash.debounce'
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
-import { Item } from '../apollo/types'
 
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEM_QUERY($searchTerm: String!) {

@@ -1,15 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 
+interface Request extends NextApiRequest {
+  userId: string
+}
+
+interface Response extends NextApiResponse {
+  cookie: any
+}
+
 const prisma = new PrismaClient()
 
 export interface Context {
-  prisma: PrismaClient
-}
-
-export interface Context {
-  req: NextApiRequest
-  res: NextApiResponse
+  req: Request
+  res: Response
   prisma: PrismaClient
 }
 

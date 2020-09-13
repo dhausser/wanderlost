@@ -21,13 +21,10 @@ export const schema = makeSchema({
     contextType: 'ctx.Context',
     sources: [
       {
-        source: path.join(process.cwd(), 'apollo', 'Context.ts'),
+        source: path.join(process.cwd(), 'apollo', 'context.ts'),
         alias: 'ctx',
       },
     ],
-    // sources: [{ source: '.prisma/client', alias: 'PrismaClient' }],
-    // contextType: '{ prisma: PrismaClient.PrismaClient }',
-    // sources: [{ source: '.prisma/client', alias: 'PrismaClient' }],
   },
   outputs: {
     schema: path.join(process.cwd(), 'schema.graphql'),

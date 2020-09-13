@@ -1,10 +1,56 @@
 import { extendType, objectType, inputObjectType, stringArg, intArg, idArg } from '@nexus/schema'
 
+export const Item = objectType({
+  name: 'Item',
+  definition(t) {
+    t.id('id')
+    t.string('title')
+    t.string('description')
+    t.string('image', { nullable: true })
+    t.string('largeImage', { nullable: true })
+    t.int('price')
+    t.field('user', { type: 'User' })
+  },
+})
+
+export const ItemConnection = objectType({
+  name: 'ItemConnection',
+  definition(t) {
+    t.field('items', {
+      type: Item,
+      list: [false],
+    })
+    t.int('total')
+    t.boolean('hasMore')
+  },
+})
+
+export const CartItem = objectType({
+  name: 'CartItem',
+  definition(t) {
+    t.id('id')
+    t.int('quantity')
+    t.field('item', {
+      type: Item,
+      nullable: true,
+    })
+    t.field('user', { type: 'User' })
+  },
+})
+
+export const ItemsInput = inputObjectType({
+  name: 'ItemsInput',
+  definition(t) {
+    t.string('title')
+    t.string('description')
+  },
+})
+
 export const Query = extendType({
   type: 'Query',
   definition(t) {
     t.field('allItems', {
-      type: 'Item',
+      type: Item,
       list: [false],
       args: {
         searchTerm: stringArg(),
@@ -52,7 +98,7 @@ export const Query = extendType({
     })
 
     t.field('item', {
-      type: 'Item',
+      type: Item,
       nullable: true,
       args: {
         id: idArg({ required: true }),
@@ -64,48 +110,80 @@ export const Query = extendType({
   },
 })
 
-export const Item = objectType({
-  name: 'Item',
+export const Mutation = extendType({
+  type: 'Mutation',
   definition(t) {
-    t.id('id')
-    t.string('title')
-    t.string('description')
-    t.string('image', { nullable: true })
-    t.string('largeImage', { nullable: true })
-    t.int('price')
-    t.field('user', { type: 'User' })
-  },
-})
-
-export const ItemConnection = objectType({
-  name: 'ItemConnection',
-  definition(t) {
-    t.field('items', {
-      type: 'Item',
-      list: [false],
+    t.field('createItem', {
+      type: Item,
+      args: {
+        title: stringArg({ required: true }),
+        description: stringArg({ required: true }),
+        price: intArg({ required: true }),
+        image: stringArg(),
+        largeImage: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        if (!ctx.req.userId) {
+          throw new Error('You must be logged in to do that!')
+        }
+        const item = await ctx.prisma.item.create({
+          data: {
+            ...args,
+            user: {
+              connect: { id: ctx.req.userId },
+            },
+          },
+        })
+        return item
+      },
     })
-    t.int('total')
-    t.boolean('hasMore')
-  },
-})
 
-export const CartItem = objectType({
-  name: 'CartItem',
-  definition(t) {
-    t.id('id')
-    t.int('quantity')
-    t.field('item', {
-      type: 'Item',
+    t.field('updateItem', {
+      type: Item,
+      args: {
+        id: idArg({ required: true }),
+        title: stringArg(),
+        description: stringArg(),
+        price: intArg(),
+      },
+      resolve(_, args, ctx) {
+        return ctx.prisma.item.update({
+          data: { ...args },
+          where: { id: args.id },
+        })
+      },
+    })
+
+    t.field('deleteItem', {
+      type: Item,
       nullable: true,
-    })
-    t.field('user', { type: 'User' })
-  },
-})
+      args: {
+        id: idArg({ required: true }),
+      },
+      async resolve(_, args, ctx) {
+        // 1. find the item
+        const item = await ctx.prisma.item.findOne({
+          where: { id: args.id },
+        })
+        if (!item) {
+          throw new Error('Item does not exist')
+        }
+        // 2. Check if they own that item, or have the permissions
+        const ownsItem = item.userId === ctx.req.userId
+        const user = await ctx.prisma.user.findOne({
+          where: { id: ctx.req.userId },
+        })
+        const hasPermissions = user.permissions.some((permission: string) =>
+          ['ADMIN', 'ITEMDELETE'].includes(permission)
+        )
 
-export const ItemsInput = inputObjectType({
-  name: 'ItemsInput',
-  definition(t) {
-    t.string('title')
-    t.string('description')
+        if (!ownsItem && !hasPermissions) {
+          throw new Error("You don't have permission to do that!")
+        }
+
+        // 3. Delete it!
+        return ctx.prisma.item.delete({ where: { id: args.id } })
+      },
+    })
   },
 })

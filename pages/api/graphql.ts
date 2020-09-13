@@ -1,18 +1,11 @@
+import { PrismaClient } from '@prisma/client'
 import { ApolloServer } from 'apollo-server-micro'
-import { schema } from '../../apollo/schema'
+import { schema } from '../../apollo/wanderlost-schema'
 import { cookies } from '../../apollo/cookies'
 
-import { PrismaClient } from '@prisma/client'
-import { NextApiRequest, NextApiResponse } from 'next'
+console.log({ schema })
 
-// TODO: This block is duplicated in ./context.ts
 const prisma = new PrismaClient()
-
-export interface Context {
-  req: NextApiRequest
-  res: NextApiResponse
-  prisma: PrismaClient
-}
 
 const apolloServer = new ApolloServer({
   schema,

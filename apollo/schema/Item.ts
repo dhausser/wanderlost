@@ -25,19 +25,6 @@ export const ItemConnection = objectType({
   },
 })
 
-export const CartItem = objectType({
-  name: 'CartItem',
-  definition(t) {
-    t.id('id')
-    t.int('quantity')
-    t.field('item', {
-      type: Item,
-      nullable: true,
-    })
-    t.field('user', { type: 'User' })
-  },
-})
-
 export const ItemsInput = inputObjectType({
   name: 'ItemsInput',
   definition(t) {
@@ -46,7 +33,7 @@ export const ItemsInput = inputObjectType({
   },
 })
 
-export const Query = extendType({
+export const ItemQuery = extendType({
   type: 'Query',
   definition(t) {
     t.field('allItems', {
@@ -110,7 +97,7 @@ export const Query = extendType({
   },
 })
 
-export const Mutation = extendType({
+export const ItemMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('createItem', {

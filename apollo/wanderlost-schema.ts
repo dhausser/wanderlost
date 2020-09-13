@@ -2,6 +2,8 @@ import { makeSchema } from '@nexus/schema'
 import path from 'path'
 import * as types from './schema'
 
+console.log('TYPES', types)
+
 export const schema = makeSchema({
   types,
   // Query,
@@ -32,3 +34,5 @@ export const schema = makeSchema({
   },
   prettierConfig: path.join(process.cwd(), 'package.json'),
 })
+
+console.log('SCHEMA', schema)

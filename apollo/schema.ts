@@ -1,6 +1,5 @@
 import { makeSchema } from '@nexus/schema'
 import path from 'path'
-
 import { Query } from './queries'
 import { Mutation } from './mutations'
 import {
@@ -32,8 +31,16 @@ export const schema = makeSchema({
     Permission,
   ],
   typegenAutoConfig: {
-    contextType: '{ prisma: PrismaClient.PrismaClient }',
-    sources: [{ source: '.prisma/client', alias: 'PrismaClient' }],
+    contextType: 'ctx.Context',
+    sources: [
+      {
+        source: path.join(process.cwd(), 'apollo', 'context.ts'),
+        alias: 'ctx',
+      },
+    ],
+    // sources: [{ source: '.prisma/client', alias: 'PrismaClient' }],
+    // contextType: '{ prisma: PrismaClient.PrismaClient }',
+    // sources: [{ source: '.prisma/client', alias: 'PrismaClient' }],
   },
   outputs: {
     schema: path.join(process.cwd(), 'schema.graphql'),

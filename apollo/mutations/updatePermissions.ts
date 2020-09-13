@@ -1,22 +1,22 @@
 import { hasPermission } from '../utils'
 
-export async function updatePermissions(_, { permissions }, { req, prisma }) {
+export async function updatePermissions(_, { permissions }, ctx) {
   // 1. Check if they are logged in
-  if (!req.userId) {
+  if (!ctx.req.userId) {
     throw new Error('You must be logged in!')
   }
   // 3. Check if they have permissions to do this
-  const user = await prisma.user.findOne({
-    where: { id: req.userId },
+  const user = await ctx.prisma.user.findOne({
+    where: { id: ctx.req.userId },
   })
   hasPermission(user, ['ADMIN', 'PERMISSIONUPDATE'])
   // 4. Update the permissions
-  return prisma.user.update({
+  return ctx.prisma.user.update({
     data: {
       permissions: { set: permissions },
     },
     where: {
-      id: req.userId,
+      id: ctx.req.userId,
     },
   })
 }

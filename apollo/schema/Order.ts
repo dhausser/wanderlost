@@ -14,6 +14,17 @@ export const OrderItem = objectType({
     t.field('user', {
       type: 'User',
       nullable: true,
+      async resolve(root, _args, ctx) {
+        const user = await ctx.prisma.orderItem
+          .findOne({
+            where: { id: root.id },
+          })
+          .user()
+        if (!user) {
+          throw new Error(`No user found for id: ${root.id}`)
+        }
+        return user
+      },
     })
   },
 })
@@ -24,7 +35,20 @@ export const Order = objectType({
     t.id('id')
     t.list.field('items', { type: OrderItem })
     t.int('total')
-    t.field('user', { type: 'User' })
+    t.field('user', {
+      type: 'User',
+      async resolve(root, _args, ctx) {
+        const user = await ctx.prisma.order
+          .findOne({
+            where: { id: root.id },
+          })
+          .user()
+        if (!user) {
+          throw new Error(`No user found for id: ${root.id}`)
+        }
+        return user
+      },
+    })
     t.string('charge')
     t.string('createdAt')
     t.string('updatedAt')
@@ -40,7 +64,20 @@ export const CartItem = objectType({
       type: 'Item',
       nullable: true,
     })
-    t.field('user', { type: 'User' })
+    t.field('user', {
+      type: 'User',
+      async resolve(root, _args, ctx) {
+        const user = await ctx.prisma.cartItem
+          .findOne({
+            where: { id: root.id },
+          })
+          .user()
+        if (!user) {
+          throw new Error(`No user found for id: ${root.id}`)
+        }
+        return user
+      },
+    })
   },
 })
 

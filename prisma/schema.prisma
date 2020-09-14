@@ -25,8 +25,8 @@ model Item {
   id          String   @default(cuid()) @id
   title       String
   description String
-  image       String
-  largeImage  String
+  image       String?
+  largeImage  String?
   price       Int
   user        User     @relation(fields: [userId], references: [id])
   userId      String

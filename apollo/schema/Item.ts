@@ -16,10 +16,11 @@ export const Item = objectType({
     t.field('user', {
       type: 'User',
       async resolve(root, _args, ctx) {
-        const user = await ctx.prisma.user.findOne({
-          where: { id: root.userId },
-          include: { cart: true },
-        })
+        const user = await ctx.prisma.item
+          .findOne({
+            where: { id: root.id },
+          })
+          .user()
         if (!user) {
           throw new Error(`No item found for id: ${root.id}`)
         }

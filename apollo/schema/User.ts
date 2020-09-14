@@ -20,11 +20,37 @@ export const User = objectType({
       list: [false],
       nullable: true,
     })
-    t.list.field('cart', { type: 'CartItem' })
+    t.list.field('cart', {
+      type: 'CartItem',
+      async resolve(root, _args, ctx) {
+        const cart = await ctx.prisma.user
+          .findOne({
+            where: { id: root.id },
+            include: { cart: true },
+          })
+          .cart()
+        if (!cart) {
+          throw new Error(`No cart found for user with id: ${root.id}`)
+        }
+        return cart
+      },
+    })
     t.field('orders', {
       type: 'OrderItem',
       list: [false],
       nullable: true,
+      async resolve(root, _args, ctx) {
+        const orders = await ctx.prisma.user
+          .findOne({
+            where: { id: root.id },
+            include: { OrderItem: true },
+          })
+          .OrderItem()
+        if (!orders) {
+          throw new Error(`No orders found for user with id: ${root.id}`)
+        }
+        return orders
+      },
     })
   },
 })

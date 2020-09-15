@@ -50,8 +50,12 @@ export const Order = objectType({
       },
     })
     t.string('charge')
-    t.date('createdAt')
-    t.date('updatedAt')
+    t.field('createdAt', {
+      type: 'Date',
+    })
+    t.field('updatedAt', {
+      type: 'Date',
+    })
   },
 })
 

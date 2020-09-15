@@ -11,7 +11,7 @@
     "test": "NODE_ENV=test jest --watch",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
-    "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json pages/api"
+    "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json pages/api/graphql"
   },
   "dependencies": {
     "@apollo/client": "^3.1.5",
@@ -66,6 +66,7 @@
     "lint-staged": ">=10",
     "prettier": "^2.1.1",
     "react-test-renderer": "^16.12.0",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   },
   "prettier": "@prisma-labs/prettier-config",

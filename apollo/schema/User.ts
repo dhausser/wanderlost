@@ -26,7 +26,6 @@ export const User = objectType({
         const cart = await ctx.prisma.user
           .findOne({
             where: { id: root.id },
-            include: { cart: true },
           })
           .cart()
         if (!cart) {
@@ -43,7 +42,6 @@ export const User = objectType({
         const orders = await ctx.prisma.user
           .findOne({
             where: { id: root.id },
-            include: { OrderItem: true },
           })
           .OrderItem()
         if (!orders) {
@@ -161,7 +159,6 @@ export const UserMutation = extendType({
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 365,
         })
-        // res.end(res.getHeader('Set-Cookie'))
 
         // 5. Return the user
         return user

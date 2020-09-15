@@ -1,4 +1,4 @@
-import { hasPermission } from '../utils'
+import { hasPermission } from '../../utils'
 
 export async function updatePermissions(_, args, ctx) {
   // 1. Check if they are logged in

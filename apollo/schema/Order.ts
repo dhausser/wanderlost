@@ -50,8 +50,8 @@ export const Order = objectType({
       },
     })
     t.string('charge')
-    t.string('createdAt')
-    t.string('updatedAt')
+    t.date('createdAt')
+    t.date('updatedAt')
   },
 })
 

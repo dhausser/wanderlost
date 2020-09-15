@@ -1,12 +1,17 @@
-import { makeSchema, asNexusMethod } from '@nexus/schema'
-import { GraphQLDate } from 'graphql-iso-date'
+import { makeSchema, decorateType, asNexusMethod } from '@nexus/schema'
+// import { GraphQLDate } from 'graphql-iso-date'
+import { GraphQLDate } from 'graphql-scalars'
 import path from 'path'
 
 import * as Item from './Item'
 import * as Order from './Order'
 import * as User from './User'
 
-export const GQLDate = asNexusMethod(GraphQLDate, 'date')
+export const GQLDate = decorateType(GraphQLDate, {
+  rootTyping: 'Date',
+  asNexusMethod: 'date',
+})
+// export const GQLDate = asNexusMethod(GraphQLDate, 'date')
 
 export const schema = makeSchema({
   types: [Item, Order, User, GraphQLDate],

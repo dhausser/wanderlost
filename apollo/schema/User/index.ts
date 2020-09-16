@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import sgMail from '@sendgrid/mail'
 import { promisify } from 'util'
 import { randomBytes } from 'crypto'
-import { setCookie } from '../cookies'
+import { setCookie, hasPermission } from './utils'
 
 export const User = objectType({
   name: 'User',
@@ -298,16 +298,3 @@ export const UserMutation = extendType({
     })
   },
 })
-
-const hasPermission = (user: any, permissionsNeeded: any) => {
-  const matchedPermissions = user.permissions.filter((permissionTheyHave: any) =>
-    permissionsNeeded.includes(permissionTheyHave)
-  )
-  if (!matchedPermissions.length) {
-    throw new Error(`You do not have sufficient permissions
-      : ${permissionsNeeded}
-      You Have:
-      ${user.permissions}
-      `)
-  }
-}

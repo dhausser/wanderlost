@@ -21,7 +21,6 @@ export async function signin(_: any, { email, password }, { res, prisma }) {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 365,
   })
-  // res.end(res.getHeader('Set-Cookie'))
 
   // 5. Return the user
   return user

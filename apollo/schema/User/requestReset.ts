@@ -14,20 +14,6 @@ export async function requestReset(_, { email }, { prisma }) {
     where: { email },
     data: { resetToken, resetTokenExpiry },
   })
-  const makeANiceEmail = (text: string) => `
-    <div classname="email" style="
-      border: 1px solid black;
-      padding: 20px;
-      font-family: sans-serif;
-      line-height: 2;
-      font-size: 20px;
-    ">
-      <h2>Hello there</>
-      <p>${text}</p>
-
-      <p>😘, Davy Hausser</p>
-    </div?
-  `
 
   // TODO: make a nice email with functional link
   const msg = {
@@ -35,12 +21,26 @@ export async function requestReset(_, { email }, { prisma }) {
     from: 'davy.hausser@icloud.com',
     subject: 'Your Password Reset Token',
     text: 'and easy to do anywhere, even with Node.js',
-    html: `<strong>${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}</strong>`,
-    // html: makeANiceEmail(`Your Password Reset Token is here!
-    // \n\n
-    // <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+    html: makeANiceEmail(`Your Password Reset Token is here!
+    \n\n
+    <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
   }
   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
   sgMail.send(msg)
   return { message: 'Thanks!' }
 }
+
+const makeANiceEmail = (text: string) => `
+<div classname="email" style="
+  border: 1px solid black;
+  padding: 20px;
+  font-family: sans-serif;
+  line-height: 2;
+  font-size: 20px;
+">
+  <h2>Hello there</>
+  <p>${text}</p>
+
+  <p>😘, Davy Hausser</p>
+</div?
+`

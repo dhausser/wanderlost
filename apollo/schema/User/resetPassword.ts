@@ -6,7 +6,9 @@ export async function resetPassword(_: any, { password, confirmPassword, resetTo
   if (password !== confirmPassword) {
     throw new Error("Yo Passwords don't match!")
   }
+  //** TODO **//
   // 2. check if its a legit reset token
+
   // 3. Check if its expired
   const [user] = await prisma.user.findMany({
     where: { resetToken },

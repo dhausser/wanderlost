@@ -1,7 +1,4 @@
 import { extendType, objectType, inputObjectType, stringArg, intArg, idArg } from '@nexus/schema'
-import { allItems } from './queries/allItems'
-import { items } from './queries/items'
-import { item } from './queries/item'
 
 export const Item = objectType({
   name: 'Item',

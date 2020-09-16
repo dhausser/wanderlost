@@ -1,12 +1,12 @@
 import { objectType, stringArg, intArg, idArg } from '@nexus/schema'
 
-import { item } from './item'
-import { items } from './items'
-import { allItems } from './allItems'
-import { user } from './user'
-import { users } from './users'
-import { order } from './order'
-import { orders } from './orders'
+import { item } from './Item/item'
+import { items } from './Item/items'
+import { allItems } from './Item/allItems'
+import { user } from './User/user'
+import { users } from './User/users'
+import { order } from './Order/order'
+import { orders } from './Order/orders'
 
 export const Query = objectType({
   name: 'Query',

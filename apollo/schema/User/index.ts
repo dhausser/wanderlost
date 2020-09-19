@@ -115,7 +115,6 @@ export const UserMutation = extendType({
         name: stringArg({ required: true }),
       },
       async resolve(_root, args, ctx) {
-        console.log(args)
         const user = await ctx.prisma.user.create({
           data: {
             email: args.email.toLocaleLowerCase(),

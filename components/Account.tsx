@@ -7,7 +7,7 @@ import FormItem from './FormItem'
 
 const UPDATE_USER_MUTATION = gql`
   mutation UPDATE_USER_MUTATION($name: String!, $id: ID!) {
-    updateUser(id: $id, data: { name: $name }) {
+    updateUser(id: $id, name: $name) {
       id
       name
     }

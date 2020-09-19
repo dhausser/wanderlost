@@ -296,5 +296,24 @@ export const UserMutation = extendType({
         })
       },
     })
+
+    t.field('updateUser', {
+      type: 'User',
+      args: {
+        id: idArg({ required: true }),
+        name: stringArg({ required: true }),
+      },
+      async resolve(_, args, ctx) {
+        if (!ctx.req.userId) {
+          throw new Error('You must be logged in!')
+        }
+        return ctx.prisma.user.update({
+          where: { id: args.id },
+          data: {
+            name: args.name,
+          },
+        })
+      },
+    })
   },
 })

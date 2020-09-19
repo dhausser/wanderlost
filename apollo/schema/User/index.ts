@@ -115,10 +115,11 @@ export const UserMutation = extendType({
         name: stringArg({ required: true }),
       },
       async resolve(_root, args, ctx) {
+        console.log(args)
         const user = await ctx.prisma.user.create({
           data: {
             email: args.email.toLocaleLowerCase(),
-            name,
+            name: args.name,
             password: await bcrypt.hash(args.password, 10),
             permissions: { set: ['USER', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE'] },
           },

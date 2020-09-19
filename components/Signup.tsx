@@ -24,11 +24,13 @@ function Signup() {
     variables: inputs,
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
+
   return (
     <Form
       method="post"
       onSubmit={async (e) => {
         e.preventDefault()
+        console.log({ email: inputs.email, name: inputs.name, password: inputs.password })
         await signup()
       }}
     >

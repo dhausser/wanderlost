@@ -61,7 +61,7 @@ function UpdateItem({ id }) {
         e.preventDefault()
         await updateItem()
         router.push({
-          pathname: '/item',
+          pathname: '/item/[id]',
           query: { id },
         })
       }}

@@ -2,7 +2,7 @@ import { useMutation, gql } from '@apollo/client'
 import { CURRENT_USER_QUERY } from './User'
 
 const ADD_TO_CART_MUTATION = gql`
-  mutation addToCart($id: ID!) {
+  mutation ADD_TO_CART_MUTATION($id: ID!) {
     addToCart(id: $id) {
       id
       quantity

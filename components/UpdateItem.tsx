@@ -5,17 +5,7 @@ import Form from './styles/Form'
 import Error from './ErrorMessage'
 import useForm from '../lib/useForm'
 import { ALL_ITEMS_QUERY } from './Items'
-
-const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    item(id: $id) {
-      id
-      title
-      description
-      price
-    }
-  }
-`
+import { SINGLE_ITEM_QUERY } from './SingleItem'
 
 const UPDATE_ITEM_MUTATION = gql`
   mutation UPDATE_ITEM_MUTATION($id: ID!, $title: String, $description: String, $price: Int) {

@@ -1,9 +1,7 @@
 import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components'
 import Item from './Item'
-import Pagination from './Pagination'
-
-const perPage = 4
+import Pagination, { perPage } from './Pagination'
 
 export const ALL_ITEMS_QUERY = gql`
   query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {

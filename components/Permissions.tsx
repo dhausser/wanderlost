@@ -18,7 +18,7 @@ const UPDATE_PERMISSIONS_MUTATION = gql`
 `
 
 const ALL_USERS_QUERY = gql`
-  query {
+  query ALL_USERS_QUERY {
     users {
       id
       name

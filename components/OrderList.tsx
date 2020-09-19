@@ -6,7 +6,7 @@ import Error from './ErrorMessage'
 import OrderItemStyles from './styles/OrderItemStyles'
 
 export const USER_ORDERS_QUERY = gql`
-  query {
+  query USER_ORDERS_QUERY {
     orders {
       id
       total

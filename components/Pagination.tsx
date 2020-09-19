@@ -4,6 +4,8 @@ import Link from 'next/link'
 import PaginationStyles from './styles/PaginationStyles'
 import Error from './ErrorMessage'
 
+const perPage = 4
+
 const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
     items {
@@ -13,7 +15,6 @@ const PAGINATION_QUERY = gql`
 `
 
 function Pagination({ page }) {
-  const perPage = 4
   const { error, loading, data } = useQuery(PAGINATION_QUERY)
   if (loading) return <p>Loading...</p>
   if (error) return <Error error={error} />
@@ -58,4 +59,4 @@ function Pagination({ page }) {
 }
 
 export default Pagination
-export { PAGINATION_QUERY }
+export { PAGINATION_QUERY, perPage }

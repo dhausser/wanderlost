@@ -1,41 +1,25 @@
-import { PrismaClient } from '@prisma/client'
-import StaticItem from '../../components/StaticItem'
+import { GetServerSideProps } from 'next'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import { initializeApollo } from '../../apollo/client'
+import SingleItem, { SINGLE_ITEM_QUERY } from '../../components/SingleItem'
 
 function Item({ item }) {
-  return <StaticItem item={item} />
+  return <SingleItem item={item} />
 }
 
-export async function getStaticPaths() {
-  const prisma = new PrismaClient()
-  const items = await prisma.item.findMany()
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apolloClient: ApolloClient<NormalizedCacheObject> = initializeApollo()
 
-  return {
-    paths: items.map((item) => ({
-      params: {
-        id: item.id,
-      },
-    })),
-    fallback: false,
-  }
-}
-
-export async function getStaticProps({ params }) {
-  const prisma = new PrismaClient()
-  const item = await prisma.item.findOne({
-    where: { id: params.id },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      image: true,
-      largeImage: true,
-      price: true,
+  const { data } = await apolloClient.query({
+    query: SINGLE_ITEM_QUERY,
+    variables: {
+      id: context.params?.id,
     },
   })
 
   return {
     props: {
-      item,
+      item: data.item,
     },
   }
 }

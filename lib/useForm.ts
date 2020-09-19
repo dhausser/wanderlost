@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 type Inputs = Record<string, string>
-type Event = ChangeEvent<HTMLInputElement>
+type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 type Form = {
   inputs: Inputs
   setInputs: Dispatch<SetStateAction<Inputs>>

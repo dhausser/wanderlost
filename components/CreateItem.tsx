@@ -39,11 +39,9 @@ function CreateItem() {
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
+        console.log(inputs)
         const res = await createItem()
-        router.push({
-          pathname: '/item',
-          query: { id: res.data.createItem.id },
-        })
+        router.push('/item/[id]', `/item/${res.data.createItem.id}`)
       }}
     >
       <Error error={error} />
@@ -95,7 +93,7 @@ function CreateItem() {
             placeholder="Enter A Description"
             required
             value={inputs.description}
-            onChange={() => handleChange}
+            onChange={handleChange}
           />
         </label>
         <button type="submit">Submit</button>

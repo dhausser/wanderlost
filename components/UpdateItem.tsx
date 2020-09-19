@@ -60,10 +60,7 @@ function UpdateItem({ id }) {
       onSubmit={async (e) => {
         e.preventDefault()
         await updateItem()
-        router.push({
-          pathname: '/item/[id]',
-          query: { id },
-        })
+        router.push('/item/[id]', `/item/${id}`)
       }}
     >
       <Error error={error} />
@@ -100,7 +97,7 @@ function UpdateItem({ id }) {
             placeholder="Enter A Description"
             required
             value={inputs.description}
-            onChange={() => handleChange}
+            onChange={handleChange}
           />
         </label>
         <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>

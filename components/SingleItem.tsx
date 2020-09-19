@@ -26,6 +26,7 @@ const SINGLE_ITEM_QUERY = gql`
     item(id: $id) {
       id
       title
+      price
       description
       largeImage
     }

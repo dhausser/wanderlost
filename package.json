@@ -22,6 +22,7 @@
     "apollo-server-micro": "^2.17.0",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.4.1",
+    "date-fns": "^2.16.1",
     "downshift": "^6.0.6",
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",

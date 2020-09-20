@@ -1,8 +1,10 @@
 import { useQuery, gql } from '@apollo/client'
+import { format } from 'date-fns'
 import Head from 'next/head'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
 import OrderStyles from './styles/OrderStyles'
+import { GetOrder, GetOrderVariables } from './__generated__/GetOrder'
 
 const SINGLE_ORDER_QUERY = gql`
   query GetOrder($id: ID!) {
@@ -27,7 +29,7 @@ const SINGLE_ORDER_QUERY = gql`
 `
 
 function Order({ id }) {
-  const { loading, error, data } = useQuery(SINGLE_ORDER_QUERY, {
+  const { loading, error, data } = useQuery<GetOrder, GetOrderVariables>(SINGLE_ORDER_QUERY, {
     variables: { id },
   })
   if (error) return <Error error={error} />
@@ -50,9 +52,9 @@ function Order({ id }) {
         <span>Date</span>
         <span>
           {order.createdAt}
-          {/* {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
+          {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
             awareOfUnicodeTokens: true,
-          })} */}
+          })}
         </span>
       </p>
       <p>
@@ -68,7 +70,7 @@ function Order({ id }) {
           <div className="order-item" key={item.id}>
             <img src={item.image} alt={item.title} />
             <div className="item-details">
-              <h2>{item.name}</h2>
+              <h2>{item.title}</h2>
               <p>Qty: {item.quantity}</p>
               <p>Each: {formatMoney(item.price)}</p>
               <p>SubTotal: {formatMoney(item.price * item.quantity)}</p>

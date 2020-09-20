@@ -9,7 +9,7 @@ import SickButton from './styles/SickButton'
 import { CURRENT_USER_QUERY } from './User'
 import { useCart } from './LocalState'
 import { USER_ORDERS_QUERY } from './OrderList'
-import { Checkout, CheckoutVariables } from './__generated__/Checkout'
+import { Checkout as CheckoutTypes, CheckoutVariables } from './__generated__/Checkout'
 
 const stripeLoad = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA')
 
@@ -48,7 +48,7 @@ function useCheckout() {
   const { closeCart } = useCart()
   const router = useRouter()
 
-  const [checkout] = useMutation<Checkout, CheckoutVariables>(CREATE_ORDER_MUTATION, {
+  const [checkout] = useMutation<CheckoutTypes, CheckoutVariables>(CREATE_ORDER_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_ORDERS_QUERY }],
   })
 

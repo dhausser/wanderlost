@@ -37,7 +37,8 @@ function CreateItem() {
       variables: {
         title: inputs.title,
         description: inputs.description,
-        price: inputs.price,
+        // TODO: correct type to number instead of string in useForm hook
+        price: Number(inputs.price),
         image: inputs.image,
         largeImage: inputs.largeImage,
       },

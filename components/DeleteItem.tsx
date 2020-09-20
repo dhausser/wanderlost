@@ -1,8 +1,9 @@
-/* eslint-disable no-alert */
 import { useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
+import { DeleteItem, DeleteItemVariables } from './__generated__/DeleteItem'
+
 const DELETE_ITEM_MUTATION = gql`
   mutation DeleteItem($id: ID!) {
     deleteItem(id: $id) {
@@ -12,7 +13,7 @@ const DELETE_ITEM_MUTATION = gql`
 `
 
 function DeleteItem({ id, children }) {
-  const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, {
+  const [deleteItem, { error }] = useMutation<DeleteItem, DeleteItemVariables>(DELETE_ITEM_MUTATION, {
     variables: { id },
     refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
   })
@@ -25,7 +26,6 @@ function DeleteItem({ id, children }) {
     <button
       type="button"
       onClick={() => {
-        // eslint-disable-next-line no-restricted-globals
         if (confirm('Are you sure you want to delete this?')) {
           deleteItem().catch((err) => {
             alert(err.message)

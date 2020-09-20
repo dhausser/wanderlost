@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { CreateItemVariables } from '../components/__generated__/CreateItem'
 
-type Inputs = CreateItemVariables
+type Inputs = Record<string, string>
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 interface Form {
   inputs: Inputs
@@ -29,8 +28,7 @@ async function uploadFile({ value, inputs, setInputs }) {
   })
 }
 
-// TODO: default argument to match typescript type: (initial = {})
-export default function useForm(initial): Form {
+export default function useForm(initial = {}): Form {
   const [inputs, setInputs] = useState(initial)
 
   function handleChange(e: { target: { files?: any; name?: any; type?: any; value?: any } }) {

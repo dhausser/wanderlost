@@ -4,6 +4,7 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import PrivateRoute from './PrivateRoute'
 import FormItem from './FormItem'
+import { UpdateUser, UpdateUserVariables } from './__generated__/UpdateUser'
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($name: String!, $id: ID!) {
@@ -19,7 +20,7 @@ function Account() {
   const { inputs, handleChange } = useForm({
     name: me.name,
   })
-  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
+  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(UPDATE_USER_MUTATION, {
     variables: {
       id: me.id,
       name: inputs.name,

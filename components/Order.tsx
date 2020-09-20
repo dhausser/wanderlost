@@ -52,9 +52,7 @@ function Order({ id }) {
         <span>Date</span>
         <span>
           {order.createdAt}
-          {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a', {
-            awareOfUnicodeTokens: true,
-          })}
+          {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a')}
         </span>
       </p>
       <p>

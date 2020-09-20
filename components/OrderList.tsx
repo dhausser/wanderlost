@@ -1,9 +1,11 @@
 import Link from 'next/link'
-import styled from 'styled-components'
 import { useQuery, gql } from '@apollo/client'
+import { formatDistance } from 'date-fns'
+import styled from 'styled-components'
 import formatMoney from '../lib/formatMoney'
 import Error from './ErrorMessage'
 import OrderItemStyles from './styles/OrderItemStyles'
+import { GetUserOrders } from './__generated__/GetUserOrders'
 
 export const USER_ORDERS_QUERY = gql`
   query GetUserOrders {
@@ -30,7 +32,7 @@ const OrderUl = styled.ul`
 `
 
 function OrderList() {
-  const { loading, error, data } = useQuery(USER_ORDERS_QUERY)
+  const { loading, error, data } = useQuery<GetUserOrders>(USER_ORDERS_QUERY)
   if (error) return <Error error={error} />
   if (loading) return <p>Loading...</p>
   const { orders } = data
@@ -51,7 +53,7 @@ function OrderList() {
                   <p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
                   <p>{order.items.length} Products</p>
                   <p>{order.createdAt}</p>
-                  {/* <p>{formatDistance(new Date(order.createdAt), new Date())}</p> */}
+                  <p>{formatDistance(new Date(order.createdAt), new Date())}</p>
                   <p>{formatMoney(order.total)}</p>
                 </div>
                 <div className="images">

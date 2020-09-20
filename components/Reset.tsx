@@ -3,8 +3,9 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
+import { ResetPassword, ResetPasswordVariables } from './__generated__/ResetPassword'
 
-const RESET_MUTATION = gql`
+const RESET_PASSWORD_MUTATION = gql`
   mutation ResetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
     resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       email
@@ -19,14 +20,17 @@ function Reset({ resetToken }) {
     password: '',
     confirmPassword: '',
   })
-  const [resetPassword, { error, loading, data }] = useMutation(RESET_MUTATION, {
-    variables: {
-      resetToken,
-      password: inputs.password,
-      confirmPassword: inputs.confirmPassword,
-    },
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
-  })
+  const [resetPassword, { error, loading, data }] = useMutation<ResetPassword, ResetPasswordVariables>(
+    RESET_PASSWORD_MUTATION,
+    {
+      variables: {
+        resetToken,
+        password: inputs.password,
+        confirmPassword: inputs.confirmPassword,
+      },
+      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    }
+  )
   return (
     <Form
       method="post"

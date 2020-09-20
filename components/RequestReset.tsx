@@ -2,6 +2,7 @@ import { useMutation, gql } from '@apollo/client'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import useForm from '../lib/useForm'
+import { RequestReset, RequestResetVariables } from './__generated__/RequestReset'
 
 const REQUEST_RESET_MUTATION = gql`
   mutation RequestReset($email: String!) {
@@ -13,11 +14,14 @@ const REQUEST_RESET_MUTATION = gql`
 
 function RequestReset() {
   const { inputs, handleChange, clearForm } = useForm({ email: '' })
-  const [reset, { loading, error, called }] = useMutation(REQUEST_RESET_MUTATION, {
-    variables: {
-      email: inputs.email,
-    },
-  })
+  const [reset, { loading, error, called }] = useMutation<RequestReset, RequestResetVariables>(
+    REQUEST_RESET_MUTATION,
+    {
+      variables: {
+        email: inputs.email,
+      },
+    }
+  )
   return (
     <Form
       method="post"

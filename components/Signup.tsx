@@ -3,7 +3,7 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
-import { Signup, SignupVariables } from './__generated__/Signup'
+import { Signup as SignupTypes, SignupVariables } from './__generated__/Signup'
 
 const SIGNUP_MUTATION = gql`
   mutation Signup($email: String!, $name: String!, $password: String!) {
@@ -21,7 +21,7 @@ function Signup() {
     name: '',
     password: '',
   })
-  const [signup, { error, loading, data }] = useMutation<Signup, SignupVariables>(SIGNUP_MUTATION, {
+  const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(SIGNUP_MUTATION, {
     variables: {
       email: inputs.email,
       name: inputs.name,

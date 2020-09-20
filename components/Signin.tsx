@@ -3,7 +3,7 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
-import { Signin, SigninVariables } from './__generated__/Signin'
+import { Signin as SigninTypes, SigninVariables } from './__generated__/Signin'
 
 const SIGNIN_MUTATION = gql`
   mutation Signin($email: String!, $password: String!) {
@@ -20,7 +20,7 @@ function Signin() {
     email: '',
     password: '',
   })
-  const [signin, { loading, error }] = useMutation<Signin, SigninVariables>(SIGNIN_MUTATION, {
+  const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
     variables: {
       email: inputs.email,
       password: inputs.password,

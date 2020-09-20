@@ -1,6 +1,6 @@
 import { useMutation, gql } from '@apollo/client'
 import { CURRENT_USER_QUERY } from './User'
-import { Signout } from './__generated__/Signout'
+import { Signout as SignoutTypes } from './__generated__/Signout'
 
 const SIGN_OUT_MUTATION = gql`
   mutation Signout {
@@ -11,7 +11,7 @@ const SIGN_OUT_MUTATION = gql`
 `
 
 function Signout() {
-  const [signout, { data }] = useMutation<Signout>(SIGN_OUT_MUTATION, {
+  const [signout, { data }] = useMutation<SignoutTypes>(SIGN_OUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
   return (

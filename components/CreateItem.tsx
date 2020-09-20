@@ -5,7 +5,7 @@ import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
-import { CreateItem, CreateItemVariables } from './__generated__/CreateItem'
+import { CreateItem as CreateItemTypes, CreateItemVariables } from './__generated__/CreateItem'
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CreateItem(
@@ -31,7 +31,7 @@ function CreateItem() {
   const { inputs, handleChange } = useForm()
   const router = useRouter()
 
-  const [createItem, { loading, error }] = useMutation<CreateItem, CreateItemVariables>(
+  const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
     CREATE_ITEM_MUTATION,
     {
       variables: {

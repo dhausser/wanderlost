@@ -1,7 +1,10 @@
 import { useMutation, gql } from '@apollo/client'
 import styled from 'styled-components'
 import { CURRENT_USER_QUERY } from './User'
-import { RemoveFromCart, RemoveFromCartVariables } from './__generated__/RemoveFromCart'
+import {
+  RemoveFromCart as RemoveFromCartTypes,
+  RemoveFromCartVariables,
+} from './__generated__/RemoveFromCart'
 
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation RemoveFromCart($id: ID!) {
@@ -44,7 +47,7 @@ function updateCart(cache, payload) {
 }
 
 function RemoveFromCart({ id }) {
-  const [removeFromCart, { loading }] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
+  const [removeFromCart, { loading }] = useMutation<RemoveFromCartTypes, RemoveFromCartVariables>(
     REMOVE_FROM_CART_MUTATION,
     {
       variables: { id },

@@ -5,7 +5,7 @@ import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 
 const RESET_MUTATION = gql`
-  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
+  mutation ResetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
     resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       email
       name

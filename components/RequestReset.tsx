@@ -4,7 +4,7 @@ import Error from './ErrorMessage'
 import useForm from '../lib/useForm'
 
 const REQUEST_RESET_MUTATION = gql`
-  mutation REQUEST_RESET_MUTATION($email: String!) {
+  mutation RequestReset($email: String!) {
     requestReset(email: $email) {
       message
     }

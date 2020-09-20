@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce'
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
 
 const SEARCH_ITEMS_QUERY = gql`
-  query SEARCH_ITEM_QUERY($searchTerm: String!) {
+  query SearchItems($searchTerm: String!) {
     allItems(searchTerm: $searchTerm) {
       id
       image

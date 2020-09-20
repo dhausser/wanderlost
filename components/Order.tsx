@@ -5,7 +5,7 @@ import Error from './ErrorMessage'
 import OrderStyles from './styles/OrderStyles'
 
 const SINGLE_ORDER_QUERY = gql`
-  query SINGLE_ORDER_QUERY($id: ID!) {
+  query GetSingleOrder($id: ID!) {
     order(id: $id) {
       id
       charge

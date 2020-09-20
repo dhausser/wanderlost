@@ -7,7 +7,7 @@ import SickButton from './styles/SickButton'
 const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
-  mutation UPDATE_PERMISSIONS_MUTATION($permissions: [Permission], $userId: ID!) {
+  mutation UpdatePermissions($permissions: [Permission], $userId: ID!) {
     updatePermissions(permissions: $permissions, userId: $userId) {
       id
       permissions
@@ -18,7 +18,7 @@ const UPDATE_PERMISSIONS_MUTATION = gql`
 `
 
 const ALL_USERS_QUERY = gql`
-  query ALL_USERS_QUERY {
+  query GetUsers {
     users {
       id
       name

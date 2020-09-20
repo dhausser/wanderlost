@@ -7,7 +7,7 @@ import Error from './ErrorMessage'
 const perPage = 4
 
 const PAGINATION_QUERY = gql`
-  query PAGINATION_QUERY {
+  query GetPagination {
     items {
       total
     }

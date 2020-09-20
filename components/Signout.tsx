@@ -2,7 +2,7 @@ import { useMutation, gql } from '@apollo/client'
 import { CURRENT_USER_QUERY } from './User'
 
 const SIGN_OUT_MUTATION = gql`
-  mutation SIGN_OUT_MUTATION {
+  mutation Signout {
     signout {
       message
     }

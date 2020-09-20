@@ -4,7 +4,7 @@ import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
 const DELETE_ITEM_MUTATION = gql`
-  mutation DELETE_ITEM_MUTATION($id: ID!) {
+  mutation DeleteItem($id: ID!) {
     deleteItem(id: $id) {
       id
     }

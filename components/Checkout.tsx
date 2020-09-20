@@ -13,7 +13,7 @@ import { USER_ORDERS_QUERY } from './OrderList'
 const stripeLoad = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA')
 
 const CREATE_ORDER_MUTATION = gql`
-  mutation CREATE_ORDER_MUTATION($token: String!) {
+  mutation Checkout($token: String!) {
     checkout(token: $token) {
       id
       charge

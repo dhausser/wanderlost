@@ -5,7 +5,7 @@ import Pagination, { perPage } from './Pagination'
 
 export const ALL_ITEMS_QUERY = gql`
   # query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {
-  query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = 4) {
+  query GetItems($offset: Int = 0, $limit: Int = 4) {
     items(offset: $offset, limit: $limit) {
       items {
         id

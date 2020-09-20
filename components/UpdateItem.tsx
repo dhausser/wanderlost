@@ -8,7 +8,7 @@ import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 
 const UPDATE_ITEM_MUTATION = gql`
-  mutation UPDATE_ITEM_MUTATION($id: ID!, $title: String, $description: String, $price: Int) {
+  mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
     updateItem(id: $id, title: $title, description: $description, price: $price) {
       id
       title

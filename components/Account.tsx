@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute'
 import FormItem from './FormItem'
 
 const UPDATE_USER_MUTATION = gql`
-  mutation UPDATE_USER_MUTATION($name: String!, $id: ID!) {
+  mutation UpdateUser($name: String!, $id: ID!) {
     updateUser(id: $id, name: $name) {
       id
       name

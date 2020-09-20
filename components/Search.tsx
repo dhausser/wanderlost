@@ -1,9 +1,9 @@
 import Downshift, { resetIdCounter } from 'downshift'
 import { useRouter } from 'next/router'
 import { useLazyQuery, gql } from '@apollo/client'
-import { Item } from '@prisma/client'
 import debounce from 'lodash.debounce'
 import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown'
+import { SearchItems } from './__generated__/SearchItems'
 
 const SEARCH_ITEMS_QUERY = gql`
   query SearchItems($searchTerm: String!) {
@@ -17,7 +17,7 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function Autocomplete() {
   const router = useRouter()
-  const [findItems, { loading, data }] = useLazyQuery(SEARCH_ITEMS_QUERY)
+  const [findItems, { loading, data }] = useLazyQuery<SearchItems>(SEARCH_ITEMS_QUERY)
   const items = data ? data.allItems : []
   const findItemsButChill = debounce(findItems, 350)
   resetIdCounter()
@@ -46,7 +46,7 @@ function Autocomplete() {
 
             {isOpen && (
               <DropDown>
-                {items.map((item: Item, index: number) => (
+                {items.map((item, index) => (
                   <DropDownItem
                     {...getItemProps({ item })}
                     key={item.id}

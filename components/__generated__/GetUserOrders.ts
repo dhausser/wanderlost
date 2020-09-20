@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: USER_ORDERS_QUERY
+// GraphQL query operation: GetUserOrders
 // ====================================================
 
-export interface USER_ORDERS_QUERY_orders_items {
+export interface GetUserOrders_orders_items {
   __typename: 'OrderItem'
   id: string
   title: string
@@ -17,14 +17,14 @@ export interface USER_ORDERS_QUERY_orders_items {
   image: string
 }
 
-export interface USER_ORDERS_QUERY_orders {
+export interface GetUserOrders_orders {
   __typename: 'Order'
   id: string
   total: number
   createdAt: any
-  items: USER_ORDERS_QUERY_orders_items[]
+  items: GetUserOrders_orders_items[]
 }
 
-export interface USER_ORDERS_QUERY {
-  orders: (USER_ORDERS_QUERY_orders | null)[]
+export interface GetUserOrders {
+  orders: (GetUserOrders_orders | null)[]
 }

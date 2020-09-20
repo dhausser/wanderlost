@@ -3,23 +3,20 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { Permission } from './../../__generated__/globalTypes'
+
 // ====================================================
-// GraphQL mutation operation: SIGNUP_MUTATION
+// GraphQL query operation: GetUsers
 // ====================================================
 
-export interface SIGNUP_MUTATION_signup {
+export interface GetUsers_users {
   __typename: 'User'
   id: string
-  email: string
   name: string
+  email: string
+  permissions: (Permission | null)[] | null
 }
 
-export interface SIGNUP_MUTATION {
-  signup: SIGNUP_MUTATION_signup
-}
-
-export interface SIGNUP_MUTATIONVariables {
-  email: string
-  name: string
-  password: string
+export interface GetUsers {
+  users: (GetUsers_users | null)[] | null
 }

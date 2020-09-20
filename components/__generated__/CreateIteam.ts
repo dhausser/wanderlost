@@ -4,19 +4,19 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: CREATE_ITEM_MUTATION
+// GraphQL mutation operation: CreateIteam
 // ====================================================
 
-export interface CREATE_ITEM_MUTATION_createItem {
+export interface CreateIteam_createItem {
   __typename: 'Item'
   id: string
 }
 
-export interface CREATE_ITEM_MUTATION {
-  createItem: CREATE_ITEM_MUTATION_createItem
+export interface CreateIteam {
+  createItem: CreateIteam_createItem
 }
 
-export interface CREATE_ITEM_MUTATIONVariables {
+export interface CreateIteamVariables {
   title: string
   description: string
   price: number

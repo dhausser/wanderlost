@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ALL_ITEMS_QUERY
+// GraphQL query operation: GetItems
 // ====================================================
 
-export interface ALL_ITEMS_QUERY_items_items {
+export interface GetItems_items_items {
   __typename: 'Item'
   id: string
   title: string
@@ -17,17 +17,17 @@ export interface ALL_ITEMS_QUERY_items_items {
   largeImage: string | null
 }
 
-export interface ALL_ITEMS_QUERY_items {
+export interface GetItems_items {
   __typename: 'ItemConnection'
-  items: (ALL_ITEMS_QUERY_items_items | null)[]
+  items: (GetItems_items_items | null)[]
   hasMore: boolean
 }
 
-export interface ALL_ITEMS_QUERY {
-  items: ALL_ITEMS_QUERY_items
+export interface GetItems {
+  items: GetItems_items
 }
 
-export interface ALL_ITEMS_QUERYVariables {
+export interface GetItemsVariables {
   offset?: number | null
   limit?: number | null
 }

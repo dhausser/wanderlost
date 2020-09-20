@@ -4,19 +4,19 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ADD_TO_CART_MUTATION
+// GraphQL mutation operation: AddToCart
 // ====================================================
 
-export interface ADD_TO_CART_MUTATION_addToCart {
+export interface AddToCart_addToCart {
   __typename: 'CartItem'
   id: string
   quantity: number
 }
 
-export interface ADD_TO_CART_MUTATION {
-  addToCart: ADD_TO_CART_MUTATION_addToCart | null
+export interface AddToCart {
+  addToCart: AddToCart_addToCart | null
 }
 
-export interface ADD_TO_CART_MUTATIONVariables {
+export interface AddToCartVariables {
   id: string
 }

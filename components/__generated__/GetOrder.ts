@@ -4,15 +4,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SINGLE_ORDER_QUERY
+// GraphQL query operation: GetOrder
 // ====================================================
 
-export interface SINGLE_ORDER_QUERY_order_user {
+export interface GetOrder_order_user {
   __typename: 'User'
   id: string
 }
 
-export interface SINGLE_ORDER_QUERY_order_items {
+export interface GetOrder_order_items {
   __typename: 'OrderItem'
   id: string
   title: string
@@ -22,20 +22,20 @@ export interface SINGLE_ORDER_QUERY_order_items {
   quantity: number
 }
 
-export interface SINGLE_ORDER_QUERY_order {
+export interface GetOrder_order {
   __typename: 'Order'
   id: string
   charge: string
   total: number
   createdAt: any
-  user: SINGLE_ORDER_QUERY_order_user
-  items: SINGLE_ORDER_QUERY_order_items[]
+  user: GetOrder_order_user
+  items: GetOrder_order_items[]
 }
 
-export interface SINGLE_ORDER_QUERY {
-  order: SINGLE_ORDER_QUERY_order | null
+export interface GetOrder {
+  order: GetOrder_order | null
 }
 
-export interface SINGLE_ORDER_QUERYVariables {
+export interface GetOrderVariables {
   id: string
 }

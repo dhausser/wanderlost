@@ -4,20 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: UPDATE_USER_MUTATION
+// GraphQL mutation operation: Signup
 // ====================================================
 
-export interface UPDATE_USER_MUTATION_updateUser {
+export interface Signup_signup {
   __typename: 'User'
   id: string
+  email: string
   name: string
 }
 
-export interface UPDATE_USER_MUTATION {
-  updateUser: UPDATE_USER_MUTATION_updateUser
+export interface Signup {
+  signup: Signup_signup
 }
 
-export interface UPDATE_USER_MUTATIONVariables {
+export interface SignupVariables {
+  email: string
   name: string
-  id: string
+  password: string
 }

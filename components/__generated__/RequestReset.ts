@@ -4,18 +4,18 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: REQUEST_RESET_MUTATION
+// GraphQL mutation operation: RequestReset
 // ====================================================
 
-export interface REQUEST_RESET_MUTATION_requestReset {
+export interface RequestReset_requestReset {
   __typename: 'SuccessMessage'
   message: string
 }
 
-export interface REQUEST_RESET_MUTATION {
-  requestReset: REQUEST_RESET_MUTATION_requestReset
+export interface RequestReset {
+  requestReset: RequestReset_requestReset
 }
 
-export interface REQUEST_RESET_MUTATIONVariables {
+export interface RequestResetVariables {
   email: string
 }

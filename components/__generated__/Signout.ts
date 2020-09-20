@@ -4,14 +4,14 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SIGN_OUT_MUTATION
+// GraphQL mutation operation: Signout
 // ====================================================
 
-export interface SIGN_OUT_MUTATION_signout {
+export interface Signout_signout {
   __typename: 'SuccessMessage'
   message: string
 }
 
-export interface SIGN_OUT_MUTATION {
-  signout: SIGN_OUT_MUTATION_signout
+export interface Signout {
+  signout: Signout_signout
 }

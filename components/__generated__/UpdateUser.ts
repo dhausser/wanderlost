@@ -4,18 +4,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DELETE_ITEM_MUTATION
+// GraphQL mutation operation: UpdateUser
 // ====================================================
 
-export interface DELETE_ITEM_MUTATION_deleteItem {
-  __typename: 'Item'
+export interface UpdateUser_updateUser {
+  __typename: 'User'
   id: string
+  name: string
 }
 
-export interface DELETE_ITEM_MUTATION {
-  deleteItem: DELETE_ITEM_MUTATION_deleteItem | null
+export interface UpdateUser {
+  updateUser: UpdateUser_updateUser
 }
 
-export interface DELETE_ITEM_MUTATIONVariables {
+export interface UpdateUserVariables {
+  name: string
   id: string
 }

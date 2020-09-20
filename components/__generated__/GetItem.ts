@@ -4,20 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SEARCH_ITEM_QUERY
+// GraphQL query operation: GetItem
 // ====================================================
 
-export interface SEARCH_ITEM_QUERY_allItems {
+export interface GetItem_item {
   __typename: 'Item'
   id: string
-  image: string | null
   title: string
+  price: number
+  description: string
+  largeImage: string | null
 }
 
-export interface SEARCH_ITEM_QUERY {
-  allItems: (SEARCH_ITEM_QUERY_allItems | null)[]
+export interface GetItem {
+  item: GetItem_item | null
 }
 
-export interface SEARCH_ITEM_QUERYVariables {
-  searchTerm: string
+export interface GetItemVariables {
+  id: string
 }

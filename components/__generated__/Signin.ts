@@ -4,21 +4,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SIGNIN_MUTATION
+// GraphQL mutation operation: Signin
 // ====================================================
 
-export interface SIGNIN_MUTATION_signin {
+export interface Signin_signin {
   __typename: 'User'
   id: string
   email: string
   name: string
 }
 
-export interface SIGNIN_MUTATION {
-  signin: SIGNIN_MUTATION_signin | null
+export interface Signin {
+  signin: Signin_signin | null
 }
 
-export interface SIGNIN_MUTATIONVariables {
+export interface SigninVariables {
   email: string
   password: string
 }

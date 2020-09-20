@@ -6,10 +6,10 @@
 import { Permission } from './../../__generated__/globalTypes'
 
 // ====================================================
-// GraphQL query operation: CURRENT_USER_QUERY
+// GraphQL query operation: GetCurrentUser
 // ====================================================
 
-export interface CURRENT_USER_QUERY_user_cart_item {
+export interface GetCurrentUser_user_cart_item {
   __typename: 'Item'
   id: string
   price: number
@@ -18,22 +18,22 @@ export interface CURRENT_USER_QUERY_user_cart_item {
   description: string
 }
 
-export interface CURRENT_USER_QUERY_user_cart {
+export interface GetCurrentUser_user_cart {
   __typename: 'CartItem'
   id: string
   quantity: number
-  item: CURRENT_USER_QUERY_user_cart_item | null
+  item: GetCurrentUser_user_cart_item | null
 }
 
-export interface CURRENT_USER_QUERY_user {
+export interface GetCurrentUser_user {
   __typename: 'User'
   id: string
   email: string
   name: string
   permissions: (Permission | null)[] | null
-  cart: CURRENT_USER_QUERY_user_cart[]
+  cart: GetCurrentUser_user_cart[]
 }
 
-export interface CURRENT_USER_QUERY {
-  user: CURRENT_USER_QUERY_user | null
+export interface GetCurrentUser {
+  user: GetCurrentUser_user | null
 }

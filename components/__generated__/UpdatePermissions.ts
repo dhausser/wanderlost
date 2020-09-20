@@ -6,17 +6,22 @@
 import { Permission } from './../../__generated__/globalTypes'
 
 // ====================================================
-// GraphQL query operation: ALL_USERS_QUERY
+// GraphQL mutation operation: UpdatePermissions
 // ====================================================
 
-export interface ALL_USERS_QUERY_users {
+export interface UpdatePermissions_updatePermissions {
   __typename: 'User'
   id: string
+  permissions: (Permission | null)[] | null
   name: string
   email: string
-  permissions: (Permission | null)[] | null
 }
 
-export interface ALL_USERS_QUERY {
-  users: (ALL_USERS_QUERY_users | null)[] | null
+export interface UpdatePermissions {
+  updatePermissions: UpdatePermissions_updatePermissions | null
+}
+
+export interface UpdatePermissionsVariables {
+  permissions?: (Permission | null)[] | null
+  userId: string
 }

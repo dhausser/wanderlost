@@ -4,21 +4,24 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SINGLE_ITEM_QUERY
+// GraphQL mutation operation: UpdateItem
 // ====================================================
 
-export interface SINGLE_ITEM_QUERY_item {
+export interface UpdateItem_updateItem {
   __typename: 'Item'
   id: string
   title: string
   description: string
-  largeImage: string | null
+  price: number
 }
 
-export interface SINGLE_ITEM_QUERY {
-  item: SINGLE_ITEM_QUERY_item | null
+export interface UpdateItem {
+  updateItem: UpdateItem_updateItem
 }
 
-export interface SINGLE_ITEM_QUERYVariables {
+export interface UpdateItemVariables {
   id: string
+  title?: string | null
+  description?: string | null
+  price?: number | null
 }

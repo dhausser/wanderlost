@@ -4,21 +4,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: RESET_MUTATION
+// GraphQL mutation operation: ResetPassword
 // ====================================================
 
-export interface RESET_MUTATION_resetPassword {
+export interface ResetPassword_resetPassword {
   __typename: 'User'
   email: string
   name: string
   password: string
 }
 
-export interface RESET_MUTATION {
-  resetPassword: RESET_MUTATION_resetPassword
+export interface ResetPassword {
+  resetPassword: ResetPassword_resetPassword
 }
 
-export interface RESET_MUTATIONVariables {
+export interface ResetPasswordVariables {
   resetToken: string
   password: string
   confirmPassword: string

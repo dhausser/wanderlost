@@ -4,18 +4,18 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: REMOVE_FROM_CART_MUTATION
+// GraphQL mutation operation: RemoveFromCart
 // ====================================================
 
-export interface REMOVE_FROM_CART_MUTATION_deleteCartItem {
+export interface RemoveFromCart_deleteCartItem {
   __typename: 'CartItem'
   id: string
 }
 
-export interface REMOVE_FROM_CART_MUTATION {
-  deleteCartItem: REMOVE_FROM_CART_MUTATION_deleteCartItem | null
+export interface RemoveFromCart {
+  deleteCartItem: RemoveFromCart_deleteCartItem | null
 }
 
-export interface REMOVE_FROM_CART_MUTATIONVariables {
+export interface RemoveFromCartVariables {
   id: string
 }

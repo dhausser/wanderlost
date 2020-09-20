@@ -3,6 +3,7 @@ import { useQuery, useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
+import { GetUsers } from './__generated__/GetUsers'
 
 const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
 
@@ -29,7 +30,7 @@ const ALL_USERS_QUERY = gql`
 `
 
 const Permissions = () => {
-  const { loading, error, data } = useQuery(ALL_USERS_QUERY)
+  const { loading, error, data } = useQuery<GetUsers>(ALL_USERS_QUERY)
   if (loading) return <p>Loading...</p>
   return (
     <div>

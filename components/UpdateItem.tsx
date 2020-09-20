@@ -6,6 +6,8 @@ import Error from './ErrorMessage'
 import useForm from '../lib/useForm'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
+import { GetItem, GetItemVariables } from './__generated__/GetItem'
+import { UpdateItem, UpdateItemVariables } from './__generated__/UpdateItem'
 
 const UPDATE_ITEM_MUTATION = gql`
   mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
@@ -20,25 +22,33 @@ const UPDATE_ITEM_MUTATION = gql`
 
 function UpdateItem({ id }) {
   const router = useRouter()
-  const { data, loading } = useQuery(SINGLE_ITEM_QUERY, {
+  const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
     variables: { id },
   })
   const { inputs, setInputs, handleChange } = useForm(data?.item)
 
   useEffect(() => {
     if (data?.item) {
-      setInputs(data.item)
+      setInputs({
+        title: data.item.title,
+        description: data.item.description,
+        // TODO: proper type number for price in useForm hook
+        price: String(data.item.price),
+      })
     }
   }, [data])
 
-  const [updateItem, { loading: updating, error }] = useMutation(UPDATE_ITEM_MUTATION, {
-    variables: { id, ...inputs },
-    refetchQueries: [
-      {
-        query: ALL_ITEMS_QUERY,
-      },
-    ],
-  })
+  const [updateItem, { loading: updating, error }] = useMutation<UpdateItem, UpdateItemVariables>(
+    UPDATE_ITEM_MUTATION,
+    {
+      variables: { id, ...inputs },
+      refetchQueries: [
+        {
+          query: ALL_ITEMS_QUERY,
+        },
+      ],
+    }
+  )
 
   if (loading) return <p>Loading...</p>
   if (!data || !data.item) {

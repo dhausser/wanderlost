@@ -1,4 +1,5 @@
 import { useQuery, gql } from '@apollo/client'
+import { GetCurrentUser } from './__generated__/GetCurrentUser'
 
 const CURRENT_USER_QUERY = gql`
   query GetCurrentUser {
@@ -23,7 +24,7 @@ const CURRENT_USER_QUERY = gql`
 `
 
 function useUser() {
-  const { data } = useQuery(CURRENT_USER_QUERY)
+  const { data } = useQuery<GetCurrentUser>(CURRENT_USER_QUERY)
   if (data) {
     return data.user
   }

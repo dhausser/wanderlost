@@ -3,6 +3,7 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
+import { Signup, SignupVariables } from './__generated__/Signup'
 
 const SIGNUP_MUTATION = gql`
   mutation Signup($email: String!, $name: String!, $password: String!) {
@@ -16,12 +17,16 @@ const SIGNUP_MUTATION = gql`
 
 function Signup() {
   const { inputs, handleChange } = useForm({
-    name: '',
     email: '',
+    name: '',
     password: '',
   })
-  const [signup, { error, loading, data }] = useMutation(SIGNUP_MUTATION, {
-    variables: inputs,
+  const [signup, { error, loading, data }] = useMutation<Signup, SignupVariables>(SIGNUP_MUTATION, {
+    variables: {
+      email: inputs.email,
+      name: inputs.name,
+      password: inputs.password,
+    },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
 

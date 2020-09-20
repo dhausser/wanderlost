@@ -18,7 +18,6 @@ const CartItemStyles = styled.li`
 `
 
 const CartItem = ({ cartItem }) => {
-  // first check if that item exists
   if (!cartItem.item) {
     return (
       <CartItemStyles>

@@ -1,8 +1,9 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { CreateItemVariables } from '../components/__generated__/CreateItem'
 
-type Inputs = Record<string, string>
+type Inputs = CreateItemVariables
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-type Form = {
+interface Form {
   inputs: Inputs
   setInputs: Dispatch<SetStateAction<Inputs>>
   handleChange: (event: Event) => void
@@ -13,6 +14,7 @@ type Form = {
 async function uploadFile({ value, inputs, setInputs }) {
   const data = new FormData()
   data.append('file', value)
+  // TODO: configure upload present for wanderlost instead of sickfits
   data.append('upload_preset', 'sickfits')
 
   const res = await fetch('https://api.cloudinary.com/v1_1/davyhausser/image/upload', {
@@ -27,7 +29,8 @@ async function uploadFile({ value, inputs, setInputs }) {
   })
 }
 
-export default function useForm(initial = {}): Form {
+// TODO: default argument to match typescript type: (initial = {})
+export default function useForm(initial): Form {
   const [inputs, setInputs] = useState(initial)
 
   function handleChange(e: { target: { files?: any; name?: any; type?: any; value?: any } }) {

@@ -5,9 +5,10 @@ import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
+import { CreateItem, CreateItemVariables } from './__generated__/CreateItem'
 
 const CREATE_ITEM_MUTATION = gql`
-  mutation CreateIteam(
+  mutation CreateItem(
     $title: String!
     $description: String!
     $price: Int!
@@ -30,10 +31,19 @@ function CreateItem() {
   const { inputs, handleChange } = useForm()
   const router = useRouter()
 
-  const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
-    variables: inputs,
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
-  })
+  const [createItem, { loading, error }] = useMutation<CreateItem, CreateItemVariables>(
+    CREATE_ITEM_MUTATION,
+    {
+      variables: {
+        title: inputs.title,
+        description: inputs.description,
+        price: inputs.price,
+        image: inputs.image,
+        largeImage: inputs.largeImage,
+      },
+      refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+    }
+  )
 
   return (
     <Form

@@ -1,6 +1,7 @@
-import { useApolloClient, useMutation, gql } from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import styled from 'styled-components'
 import { CURRENT_USER_QUERY } from './User'
+import { RemoveFromCart, RemoveFromCartVariables } from './__generated__/RemoveFromCart'
 
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation RemoveFromCart($id: ID!) {
@@ -43,23 +44,23 @@ function updateCart(cache, payload) {
 }
 
 function RemoveFromCart({ id }) {
-  // const client = useApolloClient();
-  const [removeFromCart, { loading }] = useMutation(REMOVE_FROM_CART_MUTATION, {
-    variables: { id },
-    update: updateCart,
-    optimisticResponse: {
-      __typename: 'Mutation',
-      deleteCartItem: {
-        __typename: 'CartItem',
-        id,
+  const [removeFromCart, { loading }] = useMutation<RemoveFromCart, RemoveFromCartVariables>(
+    REMOVE_FROM_CART_MUTATION,
+    {
+      variables: { id },
+      update: updateCart,
+      optimisticResponse: {
+        deleteCartItem: {
+          __typename: 'CartItem',
+          id,
+        },
       },
-    },
-  })
+    }
+  )
   return (
     <BigButton
       disabled={loading}
       onClick={() => {
-        // eslint-disable-next-line no-alert
         removeFromCart().catch((err) => alert(err.message))
       }}
       title="Delete Item"

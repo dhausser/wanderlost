@@ -67,19 +67,22 @@ export const CartItem = objectType({
     t.field('item', {
       type: 'Item',
       nullable: true,
+      resolve(root, _args, ctx) {
+        return ctx.prisma.cartItem
+          .findOne({
+            where: { id: root.id },
+          })
+          .item()
+      },
     })
     t.field('user', {
       type: 'User',
-      async resolve(root, _args, ctx) {
-        const user = await ctx.prisma.cartItem
+      resolve(root, _args, ctx) {
+        return ctx.prisma.cartItem
           .findOne({
             where: { id: root.id },
           })
           .user()
-        if (!user) {
-          throw new Error(`No user found for id: ${root.id}`)
-        }
-        return user
       },
     })
   },
@@ -94,24 +97,22 @@ export const OrderQuery = extendType({
       args: {
         id: idArg({ required: true }),
       },
-      async resolve(_, args, ctx) {
-        const order = await ctx.prisma.order.findOne({
+      resolve(_, args, ctx) {
+        return ctx.prisma.order.findOne({
           where: { id: args.id },
           include: { user: true, items: true },
         })
-        return order
       },
     })
 
     t.field('orders', {
       type: Order,
       list: [false],
-      async resolve(_root, _args, ctx) {
-        const orders = await ctx.prisma.order.findMany({
+      resolve(_root, _args, ctx) {
+        return ctx.prisma.order.findMany({
           where: { userId: ctx.req.userId },
           include: { items: true },
         })
-        return Array.isArray(orders) ? orders : []
       },
     })
   },

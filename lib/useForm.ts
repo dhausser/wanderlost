@@ -1,8 +1,7 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { CreateItemVariables } from '../components/__generated__/CreateItem'
 
-// type Inputs = Record<string, string | number>
-type Inputs = CreateItemVariables
+// TODO: strict type safety for inputs
+type Inputs = Record<string, any>
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 interface Form {
   inputs: Inputs

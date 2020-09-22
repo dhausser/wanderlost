@@ -180,18 +180,27 @@ export const OrderMutation = extendType({
         if (!ctx.req.userId) throw new Error('You must be signed in to complete this order.')
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
-          include: { cart: true },
+          include: {
+            cart: {
+              include: {
+                item: true,
+              },
+            },
+          },
         })
+
         const amount = user.cart.reduce(
           (tally: number, cartItem: any) => tally + cartItem.item.price * cartItem.quantity,
           0
         )
+
         const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
           amount,
           currency: 'USD',
           confirm: true,
           payment_method: args.token,
         })
+
         const orderItems = user.cart.map((cartItem: any) => {
           const { title, description, price, image, largeImage } = cartItem.item
           const orderItem = {
@@ -205,6 +214,7 @@ export const OrderMutation = extendType({
           }
           return orderItem
         })
+
         const order = await ctx.prisma.order.create({
           data: {
             total: paymentIntent.amount,
@@ -216,6 +226,7 @@ export const OrderMutation = extendType({
         })
 
         const cartItemIds = user.cart.map((cartItem: any) => cartItem.id)
+
         await ctx.prisma.cartItem.deleteMany({
           where: {
             id: {

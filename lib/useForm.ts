@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { CreateItemVariables } from '../components/__generated__/CreateItem'
 
-type Inputs = Record<string, string>
+// type Inputs = Record<string, string | number>
+type Inputs = CreateItemVariables
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 interface Form {
   inputs: Inputs
@@ -10,6 +12,7 @@ interface Form {
   clearForm: () => void
 }
 
+// TODO: upgrade to cloudinary v2 SDK
 async function uploadFile({ value, inputs, setInputs }) {
   const data = new FormData()
   data.append('file', value)
@@ -28,7 +31,7 @@ async function uploadFile({ value, inputs, setInputs }) {
   })
 }
 
-export default function useForm(initial = {}): Form {
+export default function useForm(initial): Form {
   const [inputs, setInputs] = useState(initial)
 
   function handleChange(e: { target: { files?: any; name?: any; type?: any; value?: any } }) {

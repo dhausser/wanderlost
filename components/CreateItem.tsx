@@ -28,7 +28,7 @@ const CREATE_ITEM_MUTATION = gql`
 `
 
 function CreateItem() {
-  const { inputs, handleChange } = useForm()
+  const { inputs, handleChange } = useForm({})
   const router = useRouter()
 
   const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
@@ -37,8 +37,7 @@ function CreateItem() {
       variables: {
         title: inputs.title,
         description: inputs.description,
-        // TODO: correct type to number instead of string in useForm hook
-        price: Number(inputs.price),
+        price: inputs.price,
         image: inputs.image,
         largeImage: inputs.largeImage,
       },

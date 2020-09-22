@@ -32,8 +32,7 @@ function UpdateItem({ id }) {
       setInputs({
         title: data.item.title,
         description: data.item.description,
-        // TODO: proper type number for price in useForm hook
-        price: String(data.item.price),
+        price: data.item.price,
       })
     }
   }, [data])
@@ -60,7 +59,8 @@ function UpdateItem({ id }) {
       onSubmit={async (e) => {
         e.preventDefault()
         await updateItem()
-        router.push('/item/[id]', `/item/${id}`)
+        router.push('/')
+        // router.push('/item/[id]', `/item/${id}`)
       }}
     >
       <Error error={error} />
@@ -73,7 +73,7 @@ function UpdateItem({ id }) {
             name="title"
             placeholder="Title"
             required
-            value={inputs.title}
+            value={inputs?.title}
             onChange={handleChange}
           />
         </label>
@@ -85,7 +85,7 @@ function UpdateItem({ id }) {
             name="price"
             placeholder="Price"
             required
-            value={inputs.price}
+            value={inputs?.price}
             onChange={handleChange}
           />
         </label>
@@ -96,7 +96,7 @@ function UpdateItem({ id }) {
             name="description"
             placeholder="Enter A Description"
             required
-            value={inputs.description}
+            value={inputs?.description}
             onChange={handleChange}
           />
         </label>

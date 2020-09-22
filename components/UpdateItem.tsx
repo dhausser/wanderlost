@@ -59,8 +59,7 @@ function UpdateItem({ id }) {
       onSubmit={async (e) => {
         e.preventDefault()
         await updateItem()
-        router.push('/')
-        // router.push('/item/[id]', `/item/${id}`)
+        router.push('/item/[id]', `/item/${id}`)
       }}
     >
       <Error error={error} />

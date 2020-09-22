@@ -17,7 +17,7 @@ function AddToCart({ id }) {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
   return (
-    <button type="button" disabled={loading} onClick={() => addToCart}>
+    <button type="button" disabled={loading} onClick={async () => addToCart()}>
       Add{loading && 'ing'} To Cart 🛒
     </button>
   )

@@ -4,6 +4,10 @@ import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
 import { DeleteItem as DeleteItemTypes, DeleteItemVariables } from './__generated__/DeleteItem'
 
+interface Props extends DeleteItemVariables {
+  children: React.FC
+}
+
 const DELETE_ITEM_MUTATION = gql`
   mutation DeleteItem($id: ID!) {
     deleteItem(id: $id) {
@@ -12,7 +16,7 @@ const DELETE_ITEM_MUTATION = gql`
   }
 `
 
-function DeleteItem({ id, children }) {
+function DeleteItem({ id, children }: Props) {
   const [deleteItem, { error }] = useMutation<DeleteItemTypes, DeleteItemVariables>(DELETE_ITEM_MUTATION, {
     variables: { id },
     refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],

@@ -5,7 +5,6 @@ import Form from './styles/Form'
 import PrivateRoute from './PrivateRoute'
 import FormItem from './FormItem'
 import { UpdateUser, UpdateUserVariables } from './__generated__/UpdateUser'
-import { User } from '@prisma/client'
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($name: String!, $id: ID!) {

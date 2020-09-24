@@ -5,6 +5,7 @@ import Form from './styles/Form'
 import PrivateRoute from './PrivateRoute'
 import FormItem from './FormItem'
 import { UpdateUser, UpdateUserVariables } from './__generated__/UpdateUser'
+import { User } from '@prisma/client'
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($name: String!, $id: ID!) {
@@ -18,19 +19,21 @@ const UPDATE_USER_MUTATION = gql`
 function Account() {
   const me = useUser()
   const { inputs, handleChange } = useForm({
-    name: me.name,
+    name: me?.name,
   })
-  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(UPDATE_USER_MUTATION, {
-    variables: {
-      id: me.id,
-      name: inputs.name,
-    },
-  })
+  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(UPDATE_USER_MUTATION)
   return (
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
-        await updateUser()
+        if (me) {
+          await updateUser({
+            variables: {
+              id: me.id,
+              name: inputs.name,
+            },
+          })
+        }
       }}
     >
       <fieldset disabled={loading}>

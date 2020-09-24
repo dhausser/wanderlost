@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { ApolloError } from '@apollo/client'
 
 interface Props {
-  error: ApolloError | undefined
+  error: ApolloError | undefined | null
 }
 
 const ErrorStyles = styled.div`

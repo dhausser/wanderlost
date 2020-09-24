@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
-import { GetUsers } from './__generated__/GetUsers'
+import { GetUsers, GetUsers_users } from './__generated__/GetUsers'
+import { Permission } from '../__generated__/globalTypes'
 
-const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
+const possiblePermissions: Array<typeof Permission> = Permission
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
   mutation UpdatePermissions($permissions: [Permission], $userId: ID!) {
@@ -31,7 +32,7 @@ const ALL_USERS_QUERY = gql`
 
 const Permissions = () => {
   const { loading, error, data } = useQuery<GetUsers>(ALL_USERS_QUERY)
-  if (loading) return <p>Loading...</p>
+  if (loading || !data || !data.users) return <p>Loading...</p>
   return (
     <div>
       <Error error={error} />
@@ -54,7 +55,7 @@ const Permissions = () => {
           </thead>
           <tbody>
             {data.users.map((user) => (
-              <UserPermission user={user} key={user.id} />
+              <UserPermission user={user!} key={user?.id} />
             ))}
           </tbody>
         </Table>
@@ -63,7 +64,7 @@ const Permissions = () => {
   )
 }
 
-function UserPermission({ user }) {
+function UserPermission({ user }: { user: GetUsers_users }) {
   const [permissions, setPermissions] = useState(user.permissions)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -82,10 +83,10 @@ function UserPermission({ user }) {
     update()
   }, [permissions])
 
-  function handlePermissionChange(e) {
+  function handlePermissionChange(e: any) {
     const checkbox = e.target
     // take a copy of the current permission
-    let updatedPermissions = [...permissions]
+    let updatedPermissions = [...permissions!]
     // figure if we need to remove or add this permission
     if (checkbox.checked) {
       // add it in!
@@ -115,7 +116,7 @@ function UserPermission({ user }) {
               <input
                 id={`${user.id}-permission-${permission}`}
                 type="checkbox"
-                checked={permissions.includes(permission)}
+                checked={permissions!.includes(permission)}
                 value={permission}
                 onChange={handlePermissionChange}
               />

@@ -32,9 +32,8 @@ function Order({ id }: GetOrderVariables) {
   const { loading, error, data } = useQuery<GetOrder, GetOrderVariables>(SINGLE_ORDER_QUERY, {
     variables: { id },
   })
-  if (loading || !data) return <p>Loading...</p>
+  if (loading || !data || !data.order) return <p>Loading...</p>
   if (error) return <Error error={error} />
-  if (!data.order) return null
   const { order } = data
   return (
     <OrderStyles>

@@ -4,8 +4,11 @@ import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
 import { GetUsers, GetUsers_users } from './__generated__/GetUsers'
+import { UpdatePermissions, UpdatePermissionsVariables } from './__generated__/UpdatePermissions'
+import { Permission } from '../__generated__/globalTypes'
 
-const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
+// const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
+const possiblePermissions = Permission
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
   mutation UpdatePermissions($permissions: [Permission], $userId: ID!) {
@@ -42,8 +45,8 @@ const Permissions = () => {
             <tr>
               <th>Name</th>
               <th>Email</th>
-              {possiblePermissions.map((permission) => (
-                <th key={permission}>{permission}</th>
+              {Object.entries(possiblePermissions).map((permission) => (
+                <th key={String(permission)}>{permission}</th>
               ))}
               <th>
                 <span role="img" aria-label="finger-pointing-down">
@@ -67,9 +70,12 @@ function UserPermission({ user }: { user: GetUsers_users }) {
   const [permissions, setPermissions] = useState(user.permissions)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [updatePermissions] = useMutation(UPDATE_PERMISSIONS_MUTATION, {
-    variables: { permissions, userId: user.id },
-  })
+  const [updatePermissions] = useMutation<UpdatePermissions, UpdatePermissionsVariables>(
+    UPDATE_PERMISSIONS_MUTATION,
+    {
+      variables: { permissions, userId: user.id },
+    }
+  )
   useEffect(() => {
     async function update() {
       try {
@@ -109,13 +115,13 @@ function UserPermission({ user }: { user: GetUsers_users }) {
       <tr>
         <td>{user.name}</td>
         <td>{user.email}</td>
-        {possiblePermissions.map((permission) => (
-          <td key={permission}>
+        {Object.entries(possiblePermissions).map((permission) => (
+          <td key={String(permission)}>
             <label htmlFor={`${user.id}-permission-${permission}`}>
               <input
                 id={`${user.id}-permission-${permission}`}
                 type="checkbox"
-                checked={permissions!.includes(permission)}
+                checked={Object.entries(permissions!).includes(permission)}
                 value={permission}
                 onChange={handlePermissionChange}
               />

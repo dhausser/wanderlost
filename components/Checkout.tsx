@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import NProgress from 'nprogress'
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
-import { loadStripe, StripeError } from '@stripe/stripe-js'
+import { loadStripe, StripeError, StripeCardElement } from '@stripe/stripe-js'
 import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -54,7 +54,7 @@ function useCheckout() {
 
   // manually call the mutation once we have the stripe token
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // 1. Stop the form from submitting
     event.preventDefault()
 
@@ -62,13 +62,16 @@ function useCheckout() {
     NProgress.start()
 
     // 3. Create the payment method
+    if (!stripe) {
+      return null
+    }
     const { error: paymentError, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
+      card: elements?.getElement(CardElement) as StripeCardElement,
     })
 
     // 4. Handle any errors
-    if (paymentError) {
+    if (paymentError || !paymentMethod) {
       NProgress.done()
       return setError(error)
     }
@@ -109,7 +112,7 @@ const CheckoutFormStyles = styled.form`
 function CheckoutForm() {
   const { handleSubmit, error } = useCheckout()
   return (
-    <CheckoutFormStyles onSubmit={handleSubmit}>
+    <CheckoutFormStyles onSubmit={(e) => handleSubmit(e)}>
       {error !== undefined ? <p>{error !== undefined ? error.message : ''}</p> : ''}
       <CardElement options={{ style }} />
       <SickButton type="submit">Pay</SickButton>

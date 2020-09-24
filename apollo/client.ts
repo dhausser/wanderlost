@@ -21,7 +21,19 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: createIsomorphLink(),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        User: {
+          fields: {
+            cart: {
+              merge(_existing = [], incoming: any[]) {
+                return [...incoming]
+              },
+            },
+          },
+        },
+      },
+    }),
   })
 }
 

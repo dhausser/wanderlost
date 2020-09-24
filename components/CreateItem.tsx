@@ -49,9 +49,8 @@ function CreateItem() {
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
-        console.log(inputs)
         const res = await createItem()
-        router.push('/item/[id]', `/item/${res.data.createItem.id}`)
+        router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
       }}
     >
       <Error error={error} />

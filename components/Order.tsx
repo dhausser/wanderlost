@@ -28,12 +28,13 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `
 
-function Order({ id }) {
+function Order({ id }: GetOrderVariables) {
   const { loading, error, data } = useQuery<GetOrder, GetOrderVariables>(SINGLE_ORDER_QUERY, {
     variables: { id },
   })
+  if (loading || !data) return <p>Loading...</p>
   if (error) return <Error error={error} />
-  if (loading) return <p>Loading...</p>
+  if (!data.order) return null
   const { order } = data
   return (
     <OrderStyles>

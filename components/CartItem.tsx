@@ -1,14 +1,10 @@
-import { CartItem as CardItemType } from '@prisma/client'
 import styled from 'styled-components'
 import formatMoney from '../lib/formatMoney'
 import RemoveFromCart from './RemoveFromCart'
-import { GetItem_item } from './__generated__/GetItem'
+import { GetCurrentUser_user_cart } from './__generated__/GetCurrentUser'
 
-interface CartItem extends CardItemType {
-  item: GetItem_item
-}
 interface Props {
-  cartItem: CartItem
+  cartItem: GetCurrentUser_user_cart
 }
 
 const CartItemStyles = styled.li`

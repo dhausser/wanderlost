@@ -1,9 +1,13 @@
 import { createContext, useState, useContext } from 'react'
 
+interface Props {
+  children: React.FunctionComponent
+}
+
 const LocalStateContext = createContext({})
 const LocalStateProvider = LocalStateContext.Provider
 
-function CartStateProvider({ children }) {
+function CartStateProvider({ children }: Props) {
   const [cartOpen, setCartOpen] = useState(false)
 
   function toggleCart() {

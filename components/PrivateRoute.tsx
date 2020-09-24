@@ -2,7 +2,7 @@ import { useUser } from './User'
 import Signin from './Signin'
 
 interface Props {
-  children: React.FunctionComponent
+  children: JSX.Element
 }
 
 function PrivateRoute({ children }: Props) {

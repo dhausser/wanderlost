@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from 'react'
 
 interface Props {
-  children: React.FunctionComponent
+  children: JSX.Element
 }
 
 const LocalStateContext = createContext({})

@@ -1,12 +1,11 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
 import { GetUsers, GetUsers_users } from './__generated__/GetUsers'
-import { Permission } from '../__generated__/globalTypes'
 
-const possiblePermissions: Array<typeof Permission> = Permission
+const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
   mutation UpdatePermissions($permissions: [Permission], $userId: ID!) {

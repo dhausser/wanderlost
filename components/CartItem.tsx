@@ -1,6 +1,15 @@
+import { CartItem as CardItemType } from '@prisma/client'
 import styled from 'styled-components'
 import formatMoney from '../lib/formatMoney'
 import RemoveFromCart from './RemoveFromCart'
+import { GetItem_item } from './__generated__/GetItem'
+
+interface CartItem extends CardItemType {
+  item: GetItem_item
+}
+interface Props {
+  cartItem: CartItem
+}
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
@@ -17,7 +26,7 @@ const CartItemStyles = styled.li`
   }
 `
 
-const CartItem = ({ cartItem }) => {
+const CartItem = ({ cartItem }: Props) => {
   if (!cartItem.item) {
     return (
       <CartItemStyles>
@@ -28,7 +37,7 @@ const CartItem = ({ cartItem }) => {
   }
   return (
     <CartItemStyles>
-      <img width="100" src={cartItem.item.image} alt={cartItem.item.title} />
+      <img width="100" src={cartItem.item.image as string} alt={cartItem.item.title} />
       <div className="cart-item-details">
         <h3>{cartItem.item.title}</h3>
         <p>

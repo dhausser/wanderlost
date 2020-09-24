@@ -13,6 +13,7 @@ export interface GetItem_item {
   title: string
   price: number
   description: string
+  image: string | null
   largeImage: string | null
 }
 

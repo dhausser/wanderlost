@@ -1,6 +1,10 @@
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import styled from 'styled-components'
 
+interface Props {
+  count: number
+}
+
 const AnimationStyles = styled.span`
   position: relative;
   .count {
@@ -38,7 +42,7 @@ const Dot = styled.div`
   font-variant-numeric: tabular-nums;
 `
 
-const CartCount = ({ count }) => (
+const CartCount = ({ count }: Props) => (
   <AnimationStyles>
     <TransitionGroup>
       <CSSTransition

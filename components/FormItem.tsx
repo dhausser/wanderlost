@@ -1,8 +1,11 @@
+import { ChangeEvent } from 'react'
+
 const capitalize = (word = '') => word[0].toUpperCase() + word.slice(1)
 
 interface Props {
   label: string
   name: string
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
   inputs: Record<string, string | number | readonly string[] | undefined>
 }
 

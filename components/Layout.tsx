@@ -2,6 +2,10 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import Header from './Header'
 import Meta from './Meta'
 
+interface Props {
+  children: React.FC
+}
+
 const theme = {
   red: '#FF0000',
   black: '#393939',
@@ -50,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-function Page({ children }) {
+function Page({ children }: Props) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

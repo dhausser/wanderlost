@@ -1,6 +1,12 @@
 const capitalize = (word = '') => word[0].toUpperCase() + word.slice(1)
 
-export default function FormItem({ label, name, inputs, ...props }) {
+interface Props {
+  label: string
+  name: string
+  inputs: Record<string, string | number | readonly string[] | undefined>
+}
+
+export default function FormItem({ label, name, inputs, ...props }: Props) {
   return (
     <label htmlFor={name}>
       {label || capitalize(name)}

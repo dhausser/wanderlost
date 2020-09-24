@@ -1,4 +1,12 @@
 import styled from 'styled-components'
+import { ApolloError, ServerError } from '@apollo/client'
+
+interface Props {
+  error: {
+    message: string
+    networkError: ServerError
+  }
+}
 
 const ErrorStyles = styled.div`
   padding: 2rem;
@@ -15,10 +23,10 @@ const ErrorStyles = styled.div`
   }
 `
 
-const DisplayError = ({ error }) => {
+const DisplayError = ({ error }: Props) => {
   if (!error || !error.message) return null
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
-    return error.networkError.result.errors.map((err) => (
+    return error.networkError.result.errors.map((err: ApolloError) => (
       <ErrorStyles key={err.message}>
         <p data-test="graphql-error">
           <strong>Shoot!</strong>

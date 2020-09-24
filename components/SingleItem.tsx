@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import styled from 'styled-components'
 import Head from 'next/head'
+import { GetItem } from './__generated__/GetItem'
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -34,13 +35,14 @@ const SINGLE_ITEM_QUERY = gql`
   }
 `
 
-function SingleItem({ item }) {
+function SingleItem({ item }: GetItem) {
+  if (!item) return null
   return (
     <SingleItemStyles>
       <Head>
         <title>Wanderlost | {item.title}</title>
       </Head>
-      <img src={item.largeImage} alt={item.title} />
+      <img src={item.largeImage as string} alt={item.title} />
       <div className="details">
         <h2>Viewing {item.title}</h2>
         <p>{item.description}</p>

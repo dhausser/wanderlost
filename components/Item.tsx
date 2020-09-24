@@ -5,8 +5,10 @@ import PriceTag from './styles/PriceTag'
 import formatMoney from '../lib/formatMoney'
 import DeleteItem from './DeleteItem'
 import AddToCart from './AddToCart'
+import { GetItem } from './__generated__/GetItem'
 
-export default function Item({ item }) {
+export default function Item({ item }: GetItem) {
+  if (!item) return null
   return (
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}

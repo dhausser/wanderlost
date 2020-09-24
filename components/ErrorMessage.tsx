@@ -1,11 +1,8 @@
 import styled from 'styled-components'
-import { ApolloError, ServerError } from '@apollo/client'
+import { ApolloError } from '@apollo/client'
 
 interface Props {
-  error: {
-    message: string
-    networkError: ServerError
-  }
+  error: ApolloError
 }
 
 const ErrorStyles = styled.div`

@@ -5,7 +5,7 @@ import { PAGINATION_QUERY } from './Pagination'
 import { DeleteItem as DeleteItemTypes, DeleteItemVariables } from './__generated__/DeleteItem'
 
 interface Props extends DeleteItemVariables {
-  children: React.FC
+  children: string
 }
 
 const DELETE_ITEM_MUTATION = gql`

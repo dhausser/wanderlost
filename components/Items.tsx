@@ -2,6 +2,11 @@ import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components'
 import Item from './Item'
 import Pagination, { perPage } from './Pagination'
+import { GetItems_items_items } from './__generated__/GetItems'
+
+interface Props {
+  page: number
+}
 
 export const ALL_ITEMS_QUERY = gql`
   # TODO: fix query variable
@@ -37,7 +42,7 @@ export const ItemsList = styled.div`
   }
 `
 
-export default function Items({ page }) {
+export default function Items({ page }: Props) {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
     variables: { offset: page * perPage - perPage },
   })
@@ -52,7 +57,7 @@ export default function Items({ page }) {
   return (
     <Center>
       <ItemsList>
-        {data.items.items.map((item) => (
+        {data.items.items.map((item: GetItems_items_items) => (
           <Item key={item.id} item={item} />
         ))}
       </ItemsList>

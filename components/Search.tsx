@@ -54,16 +54,23 @@ function Autocomplete() {
 
             {isOpen && (
               <DropDown>
-                {items.map((item, index) => (
-                  <DropDownItem
-                    {...getItemProps({ item })}
-                    key={item.id}
-                    highlighted={index === highlightedIndex}
-                  >
-                    <img width="50" src={item.image} alt={item.title} />
-                    {item.title}
-                  </DropDownItem>
-                ))}
+                {items.map((item, index) => {
+                  if (!item) return null
+                  return (
+                    <DropDownItem
+                      {...getItemProps({ item })}
+                      key={item.id}
+                      highlighted={index === highlightedIndex}
+                    >
+                      <img
+                        width="50"
+                        src={item.image as string}
+                        alt={item.title}
+                      />
+                      {item.title}
+                    </DropDownItem>
+                  )
+                })}
                 {!items.length && !loading && (
                   <DropDownItem highlighted={false}>
                     Nothing Found {inputValue}

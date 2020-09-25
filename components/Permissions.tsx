@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import Table from './styles/Table'
@@ -88,7 +88,7 @@ function UserPermission({ user }: { user: GetUsers_users }) {
     update()
   }, [permissions])
 
-  function handlePermissionChange(e: any) {
+  function handlePermissionChange(e: ChangeEvent<HTMLInputElement>) {
     const checkbox = e.target
     // take a copy of the current permission
     if (!permissions) return null
@@ -96,7 +96,7 @@ function UserPermission({ user }: { user: GetUsers_users }) {
     // figure if we need to remove or add this permission
     if (checkbox.checked) {
       // add it in!
-      updatedPermissions.push(checkbox.value)
+      updatedPermissions.push(checkbox.value as Permission)
     } else {
       updatedPermissions = updatedPermissions.filter((permission) => permission !== checkbox.value)
     }
@@ -133,7 +133,12 @@ function UserPermission({ user }: { user: GetUsers_users }) {
           )
         })}
         <td>
-          <SickButton type="button" disabled={loading} onClick={handlePermissionChange}>
+          <SickButton
+            type="button"
+            disabled={loading}
+            onClick={handlePermissionChange}
+            // handlePermissionChange as (e: ChangeEvent<HTMLInputElement>) => null | undefined
+          >
             Updat{loading ? 'ing' : 'e'}
           </SickButton>
         </td>

@@ -28,12 +28,15 @@ const BigButton = styled.button`
 
 // This gets called as soon as we get a response back
 // from the server after a mutation has been performed
-function updateCart(cache: ApolloCache<RemoveFromCartTypes>, payload: any) {
+function updateCart(
+  cache: ApolloCache<RemoveFromCartTypes>,
+  payload: { data: RemoveFromCartTypes }
+) {
   // 1. first read the cache
   const data = cache.readQuery<GetCurrentUser>({ query: CURRENT_USER_QUERY })
   if (!data?.user) return null
   // 2. remove that item from the cart
-  const cartItemId = payload.data.deleteCartItem.id
+  const cartItemId = payload.data.deleteCartItem?.id
   const updatedCart = data.user.cart.filter(
     (cartItem: RemoveFromCart_deleteCartItem) => cartItem.id !== cartItemId
   )

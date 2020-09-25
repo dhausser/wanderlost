@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { CartItem } from '@prisma/client'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
@@ -27,7 +28,7 @@ function createApolloClient() {
           fields: {
             cart: {
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              merge(_existing = [], incoming: any[]) {
+              merge(_existing = [], incoming: CartItem[]) {
                 return [...incoming]
               },
             },

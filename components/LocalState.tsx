@@ -4,7 +4,18 @@ interface Props {
   children: JSX.Element
 }
 
-const LocalStateContext = createContext({})
+const LocalStateContext = createContext({
+  cartOpen: false,
+  toggleCart: function () {
+    return
+  },
+  closeCart: function () {
+    return
+  },
+  openCart: function () {
+    return
+  },
+})
 const LocalStateProvider = LocalStateContext.Provider
 
 function CartStateProvider({ children }: Props) {
@@ -36,7 +47,7 @@ function CartStateProvider({ children }: Props) {
   )
 }
 
-function useCart(): any {
+function useCart() {
   return useContext(LocalStateContext)
 }
 

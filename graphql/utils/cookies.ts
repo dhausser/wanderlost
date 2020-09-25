@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { CookieParseOptions, serialize } from 'cookie'
+import { serialize } from 'cookie'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 
 interface Options {

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { serialize } from 'cookie'
+import { CookieParseOptions, serialize } from 'cookie'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 
 interface Options {
@@ -16,20 +16,14 @@ interface ApiRequest extends NextApiRequest {
 }
 
 interface ApiResponse extends NextApiResponse {
-  cookie: any
+  cookie: (name: string, value: string, options: Options) => void
 }
 
 /**
  * This sets `cookie` on `res` object
  */
-const setCookie = (
-  res: NextApiResponse,
-  name: string,
-  value: unknown,
-  options: Options = {}
-) => {
-  const stringValue =
-    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
+const setCookie = (res: NextApiResponse, name: string, value: unknown, options: Options = {}) => {
+  const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if (options.maxAge) {
     options.expires = new Date(Date.now() + options.maxAge)
@@ -54,10 +48,7 @@ const decodeIncomingRequestCookies = (req: ApiRequest) => {
 /**
  * Adds `cookie` function on `res.cookie` to set cookies for response
  */
-const cookies = (handler: NextApiHandler) => (
-  req: ApiRequest,
-  res: ApiResponse
-) => {
+const cookies = (handler: NextApiHandler) => (req: ApiRequest, res: ApiResponse) => {
   decodeIncomingRequestCookies(req)
 
   res.cookie = (name: string, value: string, options: Options) =>

@@ -26,7 +26,7 @@ const RESET_PASSWORD_MUTATION = gql`
   }
 `
 
-function Reset({ resetToken }) {
+function Reset({ resetToken }: ResetPasswordVariables) {
   const { inputs, handleChange, resetForm } = useForm({
     password: '',
     confirmPassword: '',

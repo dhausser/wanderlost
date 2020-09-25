@@ -4,16 +4,9 @@ import CartStyles from './styles/CartStyles'
 import Supreme from './styles/Supreme'
 import CloseButton from './styles/CloseButton'
 import CartItem from './CartItem'
+import calcTotalPrice from '../lib/calcTotalPrice'
 import formatMoney from '../lib/formatMoney'
 import Checkout from './Checkout'
-import { GetCurrentUser_user_cart } from './__generated__/GetCurrentUser'
-
-function calcTotalPrice(cart: Array<GetCurrentUser_user_cart>) {
-  return cart.reduce((tally, cartItem) => {
-    if (!cartItem.item) return tally
-    return tally + cartItem.quantity * cartItem.item.price
-  }, 0)
-}
 
 function Cart() {
   let totalItems = 0

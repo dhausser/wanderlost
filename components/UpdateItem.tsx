@@ -33,7 +33,7 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `
 
-function UpdateItem({ id }) {
+function UpdateItem({ id }: UpdateItemVariables) {
   const router = useRouter()
   const { data, loading } = useQuery<GetItem, GetItemVariables>(
     SINGLE_ITEM_QUERY,

@@ -1,4 +1,5 @@
 import casual from 'casual'
+import { GetCurrentUser_user_cart } from '../components/__generated__/GetCurrentUser'
 
 // seed it so we get consistent results
 casual.seed(777)
@@ -44,7 +45,7 @@ const fakeOrder = () => ({
   user: fakeUser(),
 })
 
-const fakeCartItem = (overrides) => ({
+const fakeCartItem = (overrides: Partial<GetCurrentUser_user_cart>) => ({
   __typename: 'CartItem',
   id: 'omg123',
   quantity: 3,

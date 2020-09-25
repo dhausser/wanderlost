@@ -11,11 +11,11 @@ interface TokenInterface {
   userId: string
 }
 
-interface ApiRequest extends NextApiRequest {
+export interface ApiRequest extends NextApiRequest {
   userId: string
 }
 
-interface ApiResponse extends NextApiResponse {
+export interface ApiResponse extends NextApiResponse {
   cookie: (name: string, value: string, options: Options) => void
 }
 

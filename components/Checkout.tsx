@@ -1,11 +1,6 @@
 import { useState, FormEvent } from 'react'
 import NProgress from 'nprogress'
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js'
 import { loadStripe, StripeError, StripeCardElement } from '@stripe/stripe-js'
 import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -14,10 +9,7 @@ import SickButton from './styles/SickButton'
 import { CURRENT_USER_QUERY } from './User'
 import { useCart } from './LocalState'
 import { USER_ORDERS_QUERY } from './OrderList'
-import {
-  Checkout as CheckoutTypes,
-  CheckoutVariables,
-} from './__generated__/Checkout'
+import { Checkout as CheckoutTypes, CheckoutVariables } from './__generated__/Checkout'
 
 const stripeLoad = loadStripe('pk_test_zywrqZUXI6crPwbzolFxAyF100AF2Wh0HA')
 
@@ -56,15 +48,9 @@ function useCheckout() {
   const { closeCart } = useCart()
   const router = useRouter()
 
-  const [checkout] = useMutation<CheckoutTypes, CheckoutVariables>(
-    CREATE_ORDER_MUTATION,
-    {
-      refetchQueries: [
-        { query: CURRENT_USER_QUERY },
-        { query: USER_ORDERS_QUERY },
-      ],
-    }
-  )
+  const [checkout] = useMutation<CheckoutTypes, CheckoutVariables>(CREATE_ORDER_MUTATION, {
+    refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_ORDERS_QUERY }],
+  })
 
   // manually call the mutation once we have the stripe token
 
@@ -79,10 +65,7 @@ function useCheckout() {
     if (!stripe) {
       return null
     }
-    const {
-      error: paymentError,
-      paymentMethod,
-    } = await stripe.createPaymentMethod({
+    const { error: paymentError, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements?.getElement(CardElement) as StripeCardElement,
     })
@@ -94,7 +77,7 @@ function useCheckout() {
     }
 
     // 5. Send it to the server and charge it
-    const order: any = await checkout({
+    const order = await checkout({
       variables: {
         token: paymentMethod.id,
       },
@@ -130,11 +113,7 @@ function CheckoutForm() {
   const { handleSubmit, error } = useCheckout()
   return (
     <CheckoutFormStyles onSubmit={(e) => handleSubmit(e)}>
-      {error !== undefined ? (
-        <p>{error !== undefined ? error.message : ''}</p>
-      ) : (
-        ''
-      )}
+      {error !== undefined ? <p>{error !== undefined ? error.message : ''}</p> : ''}
       <CardElement options={{ style }} />
       <SickButton type="submit">Pay</SickButton>
     </CheckoutFormStyles>

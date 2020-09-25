@@ -1,19 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
-
-interface Request extends NextApiRequest {
-  userId: string
-}
-
-interface Response extends NextApiResponse {
-  cookie: any
-}
+import { ApiRequest, ApiResponse } from '../graphql/utils/cookies'
 
 const prisma = new PrismaClient()
 
 export interface Context {
-  req: Request
-  res: Response
+  req: ApiRequest
+  res: ApiResponse
   prisma: PrismaClient
 }
 

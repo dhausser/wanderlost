@@ -136,8 +136,8 @@ function UserPermission({ user }: { user: GetUsers_users }) {
           <SickButton
             type="button"
             disabled={loading}
+            // @ts-expect-error
             onClick={handlePermissionChange}
-            // handlePermissionChange as (e: ChangeEvent<HTMLInputElement>) => null | undefined
           >
             Updat{loading ? 'ing' : 'e'}
           </SickButton>

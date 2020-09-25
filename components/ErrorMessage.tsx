@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { ApolloError } from '@apollo/client'
 
-interface Props {
+interface DisplayErrorProps {
   error: ApolloError | undefined | null
 }
 
@@ -20,13 +20,11 @@ const ErrorStyles = styled.div`
   }
 `
 
-const DisplayError = ({ error }: Props) => {
+const DisplayError = ({ error }: DisplayErrorProps) => {
   if (!error || !error.message) return null
-  if (
-    error.networkError &&
-    error.networkError.result &&
-    error.networkError.result.errors.length
-  ) {
+  // @ts-expect-error
+  if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
+    // @ts-expect-error
     return error.networkError.result.errors.map((err: ApolloError) => (
       <ErrorStyles key={err.message}>
         <p data-test="graphql-error">

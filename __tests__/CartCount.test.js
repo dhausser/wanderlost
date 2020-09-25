@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react'
-import wait from 'waait'
 import CartCount from '../components/CartCount'
+
+const wait = (amount = 0) =>
+  new Promise((resolve) => setTimeout(resolve, amount))
 
 describe('<CartCount/>', () => {
   it('renders', () => {

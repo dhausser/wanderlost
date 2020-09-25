@@ -4,13 +4,9 @@ import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
 import { GetUsers, GetUsers_users } from './__generated__/GetUsers'
-import {
-  UpdatePermissions,
-  UpdatePermissionsVariables,
-} from './__generated__/UpdatePermissions'
+import { UpdatePermissions, UpdatePermissionsVariables } from './__generated__/UpdatePermissions'
 import { Permission } from '../__generated__/globalTypes'
 
-// const possiblePermissions = ['USER', 'ADMIN', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE']
 const possiblePermissions = Permission
 
 const UPDATE_PERMISSIONS_MUTATION = gql`
@@ -59,9 +55,10 @@ const Permissions = () => {
             </tr>
           </thead>
           <tbody>
-            {data.users.map((user) => (
-              <UserPermission user={user!} key={user?.id} />
-            ))}
+            {data.users.map((user) => {
+              if (!user) return null
+              return <UserPermission user={user} key={user?.id} />
+            })}
           </tbody>
         </Table>
       </div>
@@ -73,12 +70,12 @@ function UserPermission({ user }: { user: GetUsers_users }) {
   const [permissions, setPermissions] = useState(user.permissions)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [updatePermissions] = useMutation<
-    UpdatePermissions,
-    UpdatePermissionsVariables
-  >(UPDATE_PERMISSIONS_MUTATION, {
-    variables: { permissions, userId: user.id },
-  })
+  const [updatePermissions] = useMutation<UpdatePermissions, UpdatePermissionsVariables>(
+    UPDATE_PERMISSIONS_MUTATION,
+    {
+      variables: { permissions, userId: user.id },
+    }
+  )
   useEffect(() => {
     async function update() {
       try {
@@ -94,15 +91,14 @@ function UserPermission({ user }: { user: GetUsers_users }) {
   function handlePermissionChange(e: any) {
     const checkbox = e.target
     // take a copy of the current permission
-    let updatedPermissions = [...permissions!]
+    if (!permissions) return null
+    let updatedPermissions = [...permissions]
     // figure if we need to remove or add this permission
     if (checkbox.checked) {
       // add it in!
       updatedPermissions.push(checkbox.value)
     } else {
-      updatedPermissions = updatedPermissions.filter(
-        (permission) => permission !== checkbox.value
-      )
+      updatedPermissions = updatedPermissions.filter((permission) => permission !== checkbox.value)
     }
     setLoading(true)
     setPermissions(updatedPermissions)
@@ -120,25 +116,24 @@ function UserPermission({ user }: { user: GetUsers_users }) {
       <tr>
         <td>{user.name}</td>
         <td>{user.email}</td>
-        {Object.entries(possiblePermissions).map((permission) => (
-          <td key={String(permission)}>
-            <label htmlFor={`${user.id}-permission-${permission}`}>
-              <input
-                id={`${user.id}-permission-${permission}`}
-                type="checkbox"
-                checked={Object.entries(permissions!).includes(permission)}
-                value={permission}
-                onChange={handlePermissionChange}
-              />
-            </label>
-          </td>
-        ))}
+        {Object.entries(possiblePermissions).map((permission) => {
+          if (!permissions) return null
+          return (
+            <td key={String(permission)}>
+              <label htmlFor={`${user.id}-permission-${permission}`}>
+                <input
+                  id={`${user.id}-permission-${permission}`}
+                  type="checkbox"
+                  checked={Object.entries(permissions).includes(permission)}
+                  value={permission}
+                  onChange={handlePermissionChange}
+                />
+              </label>
+            </td>
+          )
+        })}
         <td>
-          <SickButton
-            type="button"
-            disabled={loading}
-            onClick={handlePermissionChange}
-          >
+          <SickButton type="button" disabled={loading} onClick={handlePermissionChange}>
             Updat{loading ? 'ing' : 'e'}
           </SickButton>
         </td>

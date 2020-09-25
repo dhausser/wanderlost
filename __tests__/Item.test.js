@@ -5,8 +5,6 @@ import { fakeItem } from '../lib/testUtils'
 
 const item = fakeItem()
 
-const mocks = {}
-
 describe('<Item/>', () => {
   it('renders and matches the snapshot', () => {
     const { container } = render(
@@ -40,11 +38,11 @@ describe('<Item/>', () => {
   })
 
   xit('renders out the buttons properly', () => {
-    const { container } = render(
-      <MockedProvider>
-        <ItemComponent item={item} />
-      </MockedProvider>
-    )
+    // const { container } = render(
+    //   <MockedProvider>
+    //     <ItemComponent item={item} />
+    //   </MockedProvider>
+    // )
 
     const edit = screen.getByText(/Edit/i)
     expect(edit.href).toContain('update?id=abc123')

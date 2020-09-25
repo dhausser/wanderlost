@@ -11,7 +11,7 @@ function IndexPage() {
   return <Items page={parseFloat(page as string) || 1} />
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient: ApolloClient<NormalizedCacheObject | null> = initializeApollo()
 
   await apolloClient.query({

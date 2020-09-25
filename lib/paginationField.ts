@@ -18,7 +18,7 @@ export default function paginationField() {
       incoming: Array<GetItems_items_items>,
       { args }: Args
     ) {
-      const { skip, first } = args
+      const { skip } = args
 
       const merged = existing ? existing.slice(0) : []
       // we do it this way because someone might visit page 2 first, so we need to pad blank spots in the array

@@ -1,9 +1,5 @@
 import { useMemo } from 'react'
-import {
-  ApolloClient,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from '@apollo/client'
+import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
@@ -30,6 +26,7 @@ function createApolloClient() {
         User: {
           fields: {
             cart: {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               merge(_existing = [], incoming: any[]) {
                 return [...incoming]
               },

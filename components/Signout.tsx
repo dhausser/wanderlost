@@ -11,7 +11,7 @@ const SIGN_OUT_MUTATION = gql`
 `
 
 function Signout() {
-  const [signout, { data }] = useMutation<SignoutTypes>(SIGN_OUT_MUTATION, {
+  const [signout] = useMutation<SignoutTypes>(SIGN_OUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
   return (

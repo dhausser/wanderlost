@@ -1,10 +1,23 @@
+import { GetItems_items_items } from '../components/__generated__/GetItems'
+
+interface Args {
+  args: {
+    skip: number
+    first: number
+  }
+}
+
 export default function paginationField() {
   return {
     keyArgs: false, // take full control of this field
     // We write custom functions to merge and read based on the 'first' and 'skip' args
     // first = 4 items per page
     // skip = how many items to offset
-    merge(existing, incoming, { args }) {
+    merge(
+      existing: Array<GetItems_items_items>,
+      incoming: Array<GetItems_items_items>,
+      { args }: Args
+    ) {
       const { skip, first } = args
 
       const merged = existing ? existing.slice(0) : []
@@ -14,7 +27,7 @@ export default function paginationField() {
       }
       return merged
     },
-    read(existing = [], { args }) {
+    read(existing = [], { args }: Args) {
       // When we fire off a query, Apollo will check the cache first. We control that with a read method
       const { skip, first } = args
       // See if we have the items we want

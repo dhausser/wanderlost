@@ -38,7 +38,13 @@ input ItemsInput {
 type Mutation {
   addToCart(id: ID!): CartItem
   checkout(token: String!): Order!
-  createItem(description: String!, image: String, largeImage: String, price: Int!, title: String!): Item!
+  createItem(
+    description: String!
+    image: String
+    largeImage: String
+    price: Int!
+    title: String!
+  ): Item!
   deleteCartItem(id: ID!): CartItem
   deleteItem(id: ID!): Item
   requestReset(email: String!): SuccessMessage!

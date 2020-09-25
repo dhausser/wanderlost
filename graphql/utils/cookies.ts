@@ -3,6 +3,7 @@ import { serialize } from 'cookie'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 
 interface Options {
+  httpOnly?: boolean
   expires?: Date
   maxAge?: number
 }

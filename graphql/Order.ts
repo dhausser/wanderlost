@@ -78,12 +78,16 @@ export const CartItem = objectType({
     })
     t.field('user', {
       type: 'User',
-      resolve(root, _args, ctx) {
-        return ctx.prisma.cartItem
+      async resolve(root, _args, ctx) {
+        const cartItem = await ctx.prisma.cartItem
           .findOne({
             where: { id: root.id },
           })
           .user()
+        if (!cartItem) {
+          throw new Error(`No cart item found for id: ${root.id}`)
+        }
+        return cartItem
       },
     })
   },

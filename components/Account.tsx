@@ -20,7 +20,10 @@ function Account() {
   const { inputs, handleChange } = useForm({
     name: me?.name,
   })
-  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(UPDATE_USER_MUTATION)
+  const [updateUser, { loading }] = useMutation<
+    UpdateUser,
+    UpdateUserVariables
+  >(UPDATE_USER_MUTATION)
   return (
     <Form
       onSubmit={async (e) => {
@@ -36,7 +39,12 @@ function Account() {
       }}
     >
       <fieldset disabled={loading}>
-        <FormItem label="" inputs={inputs} onChange={handleChange} name="name" />
+        <FormItem
+          label=""
+          inputs={inputs}
+          onChange={handleChange}
+          name="name"
+        />
         <button type="submit">Updat{loading ? 'ing' : 'e'}</button>
       </fieldset>
     </Form>

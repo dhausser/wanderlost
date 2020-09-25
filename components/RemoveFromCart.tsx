@@ -1,4 +1,9 @@
-import { useMutation, gql, ApolloCache, NormalizedCacheObject } from '@apollo/client'
+import {
+  useMutation,
+  gql,
+  ApolloCache,
+  NormalizedCacheObject,
+} from '@apollo/client'
 import styled from 'styled-components'
 import { CURRENT_USER_QUERY } from './User'
 import { GetCurrentUser } from './__generated__/GetCurrentUser'
@@ -52,19 +57,19 @@ function updateCart(cache: ApolloCache<RemoveFromCartTypes>, payload: any) {
 }
 
 function RemoveFromCart({ id }: RemoveFromCartVariables) {
-  const [removeFromCart, { loading }] = useMutation<RemoveFromCartTypes, RemoveFromCartVariables>(
-    REMOVE_FROM_CART_MUTATION,
-    {
-      variables: { id },
-      update: updateCart,
-      optimisticResponse: {
-        deleteCartItem: {
-          __typename: 'CartItem',
-          id,
-        },
+  const [removeFromCart, { loading }] = useMutation<
+    RemoveFromCartTypes,
+    RemoveFromCartVariables
+  >(REMOVE_FROM_CART_MUTATION, {
+    variables: { id },
+    update: updateCart,
+    optimisticResponse: {
+      deleteCartItem: {
+        __typename: 'CartItem',
+        id,
       },
-    }
-  )
+    },
+  })
   return (
     <BigButton
       disabled={loading}

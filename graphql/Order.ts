@@ -163,10 +163,15 @@ export const OrderMutation = extendType({
         id: idArg({ required: true }),
       },
       async resolve(_, args, ctx) {
-        const cartItem = await ctx.prisma.cartItem.findOne({ where: { id: args.id } })
+        const cartItem = await ctx.prisma.cartItem.findOne({
+          where: { id: args.id },
+        })
         if (!cartItem) throw new Error('No CartItem found!')
-        if (cartItem.userId !== ctx.req.userId) throw new Error('The item must be in your own cart')
-        const deleted = await ctx.prisma.cartItem.delete({ where: { id: args.id } })
+        if (cartItem.userId !== ctx.req.userId)
+          throw new Error('The item must be in your own cart')
+        const deleted = await ctx.prisma.cartItem.delete({
+          where: { id: args.id },
+        })
         return deleted
       },
     })
@@ -177,7 +182,8 @@ export const OrderMutation = extendType({
         token: stringArg({ required: true }),
       },
       async resolve(_root, args, ctx) {
-        if (!ctx.req.userId) throw new Error('You must be signed in to complete this order.')
+        if (!ctx.req.userId)
+          throw new Error('You must be signed in to complete this order.')
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
           include: {
@@ -190,16 +196,19 @@ export const OrderMutation = extendType({
         })
 
         const amount = user.cart.reduce(
-          (tally: number, cartItem: any) => tally + cartItem.item.price * cartItem.quantity,
+          (tally: number, cartItem: any) =>
+            tally + cartItem.item.price * cartItem.quantity,
           0
         )
 
-        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-          amount,
-          currency: 'USD',
-          confirm: true,
-          payment_method: args.token,
-        })
+        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(
+          {
+            amount,
+            currency: 'USD',
+            confirm: true,
+            payment_method: args.token,
+          }
+        )
 
         const orderItems = user.cart.map((cartItem: any) => {
           const { title, description, price, image, largeImage } = cartItem.item

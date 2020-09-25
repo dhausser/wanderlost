@@ -15,7 +15,8 @@ const DropDownItem = styled.div<{ highlighted: boolean }>`
   ${(props) => (props.highlighted ? 'padding-left: 2rem;' : null)};
   display: flex;
   align-items: center;
-  border-left: 10px solid ${(props) => (props.highlighted ? props.theme.lightgrey : 'white')};
+  border-left: 10px solid
+    ${(props) => (props.highlighted ? props.theme.lightgrey : 'white')};
   cursor: pointer;
   img {
     margin-right: 10px;

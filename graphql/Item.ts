@@ -1,4 +1,11 @@
-import { extendType, objectType, inputObjectType, stringArg, intArg, idArg } from '@nexus/schema'
+import {
+  extendType,
+  objectType,
+  inputObjectType,
+  stringArg,
+  intArg,
+  idArg,
+} from '@nexus/schema'
 
 export const Item = objectType({
   name: 'Item',

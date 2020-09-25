@@ -1,6 +1,9 @@
 import { useMutation, gql } from '@apollo/client'
 import { CURRENT_USER_QUERY } from './User'
-import { AddToCart as AddToCartTypes, AddToCartVariables } from './__generated__/AddToCart'
+import {
+  AddToCart as AddToCartTypes,
+  AddToCartVariables,
+} from './__generated__/AddToCart'
 
 const ADD_TO_CART_MUTATION = gql`
   mutation AddToCart($id: ID!) {
@@ -12,7 +15,10 @@ const ADD_TO_CART_MUTATION = gql`
 `
 
 function AddToCart({ id }: AddToCartVariables) {
-  const [addToCart, { loading }] = useMutation<AddToCartTypes, AddToCartVariables>(ADD_TO_CART_MUTATION, {
+  const [addToCart, { loading }] = useMutation<
+    AddToCartTypes,
+    AddToCartVariables
+  >(ADD_TO_CART_MUTATION, {
     variables: { id },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })

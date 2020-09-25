@@ -15,12 +15,22 @@ function Form() {
       >
         <label htmlFor="name">
           Name:
-          <input type="text" name="name" onChange={handleChange} value={inputs.name} />
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            value={inputs.name}
+          />
         </label>
 
         <label htmlFor="age">
           Age:
-          <input type="text" name="age" onChange={handleChange} value={inputs.age} />
+          <input
+            type="text"
+            name="age"
+            onChange={handleChange}
+            value={inputs.age}
+          />
         </label>
       </form>
     </>

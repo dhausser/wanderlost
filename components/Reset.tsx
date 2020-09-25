@@ -3,11 +3,22 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
-import { ResetPassword, ResetPasswordVariables } from './__generated__/ResetPassword'
+import {
+  ResetPassword,
+  ResetPasswordVariables,
+} from './__generated__/ResetPassword'
 
 const RESET_PASSWORD_MUTATION = gql`
-  mutation ResetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
-    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+  mutation ResetPassword(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    resetPassword(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
       email
       name
       password
@@ -20,17 +31,17 @@ function Reset({ resetToken }) {
     password: '',
     confirmPassword: '',
   })
-  const [resetPassword, { error, loading, data }] = useMutation<ResetPassword, ResetPasswordVariables>(
-    RESET_PASSWORD_MUTATION,
-    {
-      variables: {
-        resetToken,
-        password: inputs.password,
-        confirmPassword: inputs.confirmPassword,
-      },
-      refetchQueries: [{ query: CURRENT_USER_QUERY }],
-    }
-  )
+  const [resetPassword, { error, loading, data }] = useMutation<
+    ResetPassword,
+    ResetPasswordVariables
+  >(RESET_PASSWORD_MUTATION, {
+    variables: {
+      resetToken,
+      password: inputs.password,
+      confirmPassword: inputs.confirmPassword,
+    },
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  })
   return (
     <Form
       method="post"
@@ -42,7 +53,10 @@ function Reset({ resetToken }) {
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset your password</h2>
-        {data && data.resetPassword && data.resetPassword.email && 'Password has been reset successfully'}
+        {data &&
+          data.resetPassword &&
+          data.resetPassword.email &&
+          'Password has been reset successfully'}
         <Error error={error} />
         <label htmlFor="password">
           Password

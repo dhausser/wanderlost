@@ -17,7 +17,9 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function Autocomplete() {
   const router = useRouter()
-  const [findItems, { loading, data }] = useLazyQuery<SearchItems>(SEARCH_ITEMS_QUERY)
+  const [findItems, { loading, data }] = useLazyQuery<SearchItems>(
+    SEARCH_ITEMS_QUERY
+  )
   const items = data ? data.allItems : []
   const findItemsButChill = debounce(findItems, 350)
   resetIdCounter()
@@ -27,7 +29,13 @@ function Autocomplete() {
         onChange={(item) => router.push('/item/[id]', `/item/${item.id}`)}
         itemToString={(item) => (item === null ? '' : item.title)}
       >
-        {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+        {({
+          getInputProps,
+          getItemProps,
+          isOpen,
+          inputValue,
+          highlightedIndex,
+        }) => (
           <div>
             <input
               {...getInputProps({
@@ -57,7 +65,9 @@ function Autocomplete() {
                   </DropDownItem>
                 ))}
                 {!items.length && !loading && (
-                  <DropDownItem highlighted={false}>Nothing Found {inputValue}</DropDownItem>
+                  <DropDownItem highlighted={false}>
+                    Nothing Found {inputValue}
+                  </DropDownItem>
                 )}
               </DropDown>
             )}

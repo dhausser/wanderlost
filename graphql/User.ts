@@ -1,4 +1,11 @@
-import { objectType, enumType, extendType, stringArg, idArg, arg } from '@nexus/schema'
+import {
+  objectType,
+  enumType,
+  extendType,
+  stringArg,
+  idArg,
+  arg,
+} from '@nexus/schema'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import sgMail from '@sendgrid/mail'
@@ -71,7 +78,14 @@ export const SuccessMessage = objectType({
 
 export const Permission = enumType({
   name: 'Permission',
-  members: ['ADMIN', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE', 'PERMISSIONUPDATE', 'USER'],
+  members: [
+    'ADMIN',
+    'ITEMCREATE',
+    'ITEMDELETE',
+    'ITEMUPDATE',
+    'PERMISSIONUPDATE',
+    'USER',
+  ],
 })
 
 export const UserQuery = extendType({
@@ -120,10 +134,15 @@ export const UserMutation = extendType({
             email: args.email.toLocaleLowerCase(),
             name: args.name,
             password: await bcrypt.hash(args.password, 10),
-            permissions: { set: ['USER', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE'] },
+            permissions: {
+              set: ['USER', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE'],
+            },
           },
         })
-        const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: user.id },
+          process.env.APP_SECRET as string
+        )
         ctx.res.cookie('token', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
@@ -141,7 +160,9 @@ export const UserMutation = extendType({
       },
       async resolve(_root, args, ctx) {
         // 1. check if there is a user with that email
-        const user = await ctx.prisma.user.findOne({ where: { email: args.email } })
+        const user = await ctx.prisma.user.findOne({
+          where: { email: args.email },
+        })
         if (!user) {
           throw new Error(`No such user found for email ${args.email}`)
         }
@@ -152,7 +173,10 @@ export const UserMutation = extendType({
         }
 
         // 3. generate the JWT Token
-        const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: user.id },
+          process.env.APP_SECRET as string
+        )
 
         // 4. Set the cookie with the token
         ctx.res.cookie('token', token, {
@@ -179,7 +203,9 @@ export const UserMutation = extendType({
         email: stringArg({ required: true }),
       },
       async resolve(_, args, ctx) {
-        const user = await ctx.prisma.user.findOne({ where: { email: args.email } })
+        const user = await ctx.prisma.user.findOne({
+          where: { email: args.email },
+        })
         if (!user) {
           throw new Error(`No user found for email: ${args.email}'`)
         }
@@ -254,7 +280,10 @@ export const UserMutation = extendType({
           },
         })
         // 6. Generate JWT
-        const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: updatedUser.id },
+          process.env.APP_SECRET as string
+        )
         // 7. Set the JWT cookie
         ctx.res.cookie('token', token, {
           httpOnly: true,

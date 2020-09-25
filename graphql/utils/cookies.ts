@@ -14,8 +14,14 @@ interface TokenInterface {
 /**
  * This sets `cookie` on `res` object
  */
-const setCookie = (res: NextApiResponse, name: string, value: unknown, options: Options = {}) => {
-  const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
+const setCookie = (
+  res: NextApiResponse,
+  name: string,
+  value: unknown,
+  options: Options = {}
+) => {
+  const stringValue =
+    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if ('maxAge' in options) {
     options.expires = new Date(Date.now() + options.maxAge)

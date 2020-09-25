@@ -7,11 +7,24 @@ import useForm from '../lib/useForm'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 import { GetItem, GetItemVariables } from './__generated__/GetItem'
-import { UpdateItem as UpdateItemTypes, UpdateItemVariables } from './__generated__/UpdateItem'
+import {
+  UpdateItem as UpdateItemTypes,
+  UpdateItemVariables,
+} from './__generated__/UpdateItem'
 
 const UPDATE_ITEM_MUTATION = gql`
-  mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
-    updateItem(id: $id, title: $title, description: $description, price: $price) {
+  mutation UpdateItem(
+    $id: ID!
+    $title: String
+    $description: String
+    $price: Int
+  ) {
+    updateItem(
+      id: $id
+      title: $title
+      description: $description
+      price: $price
+    ) {
       id
       title
       description
@@ -22,9 +35,12 @@ const UPDATE_ITEM_MUTATION = gql`
 
 function UpdateItem({ id }) {
   const router = useRouter()
-  const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
-    variables: { id },
-  })
+  const { data, loading } = useQuery<GetItem, GetItemVariables>(
+    SINGLE_ITEM_QUERY,
+    {
+      variables: { id },
+    }
+  )
   const { inputs, setInputs, handleChange } = useForm(data?.item)
 
   useEffect(() => {
@@ -37,17 +53,17 @@ function UpdateItem({ id }) {
     }
   }, [data])
 
-  const [updateItem, { loading: updating, error }] = useMutation<UpdateItemTypes, UpdateItemVariables>(
-    UPDATE_ITEM_MUTATION,
-    {
-      variables: { id, ...inputs },
-      refetchQueries: [
-        {
-          query: ALL_ITEMS_QUERY,
-        },
-      ],
-    }
-  )
+  const [updateItem, { loading: updating, error }] = useMutation<
+    UpdateItemTypes,
+    UpdateItemVariables
+  >(UPDATE_ITEM_MUTATION, {
+    variables: { id, ...inputs },
+    refetchQueries: [
+      {
+        query: ALL_ITEMS_QUERY,
+      },
+    ],
+  })
 
   if (loading) return <p>Loading...</p>
   if (!data || !data.item) {

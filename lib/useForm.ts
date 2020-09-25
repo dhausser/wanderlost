@@ -18,10 +18,13 @@ async function uploadFile({ value, inputs, setInputs }) {
   // TODO: configure upload present for wanderlost instead of sickfits
   data.append('upload_preset', 'sickfits')
 
-  const res = await fetch('https://api.cloudinary.com/v1_1/davyhausser/image/upload', {
-    method: 'POST',
-    body: data,
-  })
+  const res = await fetch(
+    'https://api.cloudinary.com/v1_1/davyhausser/image/upload',
+    {
+      method: 'POST',
+      body: data,
+    }
+  )
   const file = await res.json()
   setInputs({
     ...inputs,
@@ -33,7 +36,9 @@ async function uploadFile({ value, inputs, setInputs }) {
 export default function useForm(initial): Form {
   const [inputs, setInputs] = useState(initial)
 
-  function handleChange(e: { target: { files?: any; name?: any; type?: any; value?: any } }) {
+  function handleChange(e: {
+    target: { files?: any; name?: any; type?: any; value?: any }
+  }) {
     const { name, type } = e.target
     let { value } = e.target
     if (type === 'number') {
@@ -54,7 +59,9 @@ export default function useForm(initial): Form {
   }
 
   function clearForm() {
-    const blankState = Object.fromEntries(Object.entries(inputs).map(([key]) => [key, '']))
+    const blankState = Object.fromEntries(
+      Object.entries(inputs).map(([key]) => [key, ''])
+    )
     setInputs(blankState)
   }
 

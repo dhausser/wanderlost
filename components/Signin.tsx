@@ -20,7 +20,10 @@ function Signin() {
     email: '',
     password: '',
   })
-  const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
+  const [signin, { loading, error }] = useMutation<
+    SigninTypes,
+    SigninVariables
+  >(SIGNIN_MUTATION, {
     variables: {
       email: inputs.email,
       password: inputs.password,
@@ -41,7 +44,13 @@ function Signin() {
         <Error error={error} />
         <label htmlFor="email">
           Email
-          <input type="email" name="email" placeholder="email" value={inputs.email} onChange={handleChange} />
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            value={inputs.email}
+            onChange={handleChange}
+          />
         </label>
         <label htmlFor="password">
           Password

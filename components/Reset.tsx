@@ -8,6 +8,10 @@ import {
   ResetPasswordVariables,
 } from './__generated__/ResetPassword'
 
+interface Props {
+  resetToken: string
+}
+
 const RESET_PASSWORD_MUTATION = gql`
   mutation ResetPassword(
     $resetToken: String!
@@ -26,7 +30,7 @@ const RESET_PASSWORD_MUTATION = gql`
   }
 `
 
-function Reset({ resetToken }: ResetPasswordVariables) {
+function Reset({ resetToken }: Props) {
   const { inputs, handleChange, resetForm } = useForm({
     password: '',
     confirmPassword: '',

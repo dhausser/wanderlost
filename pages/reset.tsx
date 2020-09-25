@@ -8,7 +8,7 @@ const ResetPage = () => {
   return (
     <>
       <p>Reset your password</p>
-      <Reset resetToken={resetToken} />
+      <Reset resetToken={resetToken as string} />
     </>
   )
 }

@@ -2,7 +2,9 @@ import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 // TODO: strict type safety for inputs
 type Inputs = Record<string, any>
+
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+
 interface Form {
   inputs: Inputs
   setInputs: Dispatch<SetStateAction<Inputs>>
@@ -11,8 +13,14 @@ interface Form {
   clearForm: () => void
 }
 
+interface FileUploadProps {
+  value: string
+  inputs: Inputs
+  setInputs: Dispatch<SetStateAction<Inputs>>
+}
+
 // TODO: upgrade to cloudinary v2 SDK
-async function uploadFile({ value, inputs, setInputs }) {
+async function uploadFile({ value, inputs, setInputs }: FileUploadProps) {
   const data = new FormData()
   data.append('file', value)
   // TODO: configure upload present for wanderlost instead of sickfits
@@ -33,7 +41,7 @@ async function uploadFile({ value, inputs, setInputs }) {
   })
 }
 
-export default function useForm(initial): Form {
+export default function useForm(initial: Inputs): Form {
   const [inputs, setInputs] = useState(initial)
 
   function handleChange(e: {

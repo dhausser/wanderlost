@@ -41,7 +41,7 @@ function UpdateItem({ id }: UpdateItemVariables) {
       variables: { id },
     }
   )
-  const { inputs, setInputs, handleChange } = useForm(data?.item)
+  const { inputs, setInputs, handleChange } = useForm(data?.item || {})
 
   useEffect(() => {
     if (data?.item) {

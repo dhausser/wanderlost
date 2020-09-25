@@ -21,17 +21,17 @@ function Signup() {
     name: '',
     password: '',
   })
-  const [signup, { error, loading, data }] = useMutation<
-    SignupTypes,
-    SignupVariables
-  >(SIGNUP_MUTATION, {
-    variables: {
-      email: inputs.email,
-      name: inputs.name,
-      password: inputs.password,
-    },
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
-  })
+  const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(
+    SIGNUP_MUTATION,
+    {
+      variables: {
+        email: inputs.email,
+        name: inputs.name,
+        password: inputs.password,
+      },
+      refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    }
+  )
 
   return (
     <Form
@@ -42,9 +42,7 @@ function Signup() {
       }}
     >
       <fieldset disabled={loading} aria-busy={loading}>
-        {data && data.signup && (
-          <p>Signed up with {data.signup.email} — Please Sign In now</p>
-        )}
+        {data && data.signup && <p>Signed up with {data.signup.email} — Please Sign In now</p>}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
         <label htmlFor="email">

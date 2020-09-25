@@ -3,26 +3,15 @@ import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
-import {
-  ResetPassword,
-  ResetPasswordVariables,
-} from './__generated__/ResetPassword'
+import { ResetPassword, ResetPasswordVariables } from './__generated__/ResetPassword'
 
 interface Props {
   resetToken: string
 }
 
 const RESET_PASSWORD_MUTATION = gql`
-  mutation ResetPassword(
-    $resetToken: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    resetPassword(
-      resetToken: $resetToken
-      password: $password
-      confirmPassword: $confirmPassword
-    ) {
+  mutation ResetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
+    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
       email
       name
       password

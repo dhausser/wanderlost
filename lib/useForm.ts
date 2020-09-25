@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
 
-// TODO: strict type safety for inputs
-type Inputs = Record<string, string | number>
+type Inputs = Record<string, string>
 
 type Event = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 

@@ -81,11 +81,4 @@ class LocalStorageMock {
   }
 }
 
-export {
-  LocalStorageMock,
-  fakeItem,
-  fakeUser,
-  fakeCartItem,
-  fakeOrder,
-  fakeOrderItem,
-}
+export { LocalStorageMock, fakeItem, fakeUser, fakeCartItem, fakeOrder, fakeOrderItem }

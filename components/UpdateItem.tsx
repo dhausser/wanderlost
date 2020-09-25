@@ -7,24 +7,11 @@ import useForm from '../lib/useForm'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 import { GetItem, GetItemVariables } from './__generated__/GetItem'
-import {
-  UpdateItem as UpdateItemTypes,
-  UpdateItemVariables,
-} from './__generated__/UpdateItem'
+import { UpdateItem as UpdateItemTypes, UpdateItemVariables } from './__generated__/UpdateItem'
 
 const UPDATE_ITEM_MUTATION = gql`
-  mutation UpdateItem(
-    $id: ID!
-    $title: String
-    $description: String
-    $price: Int
-  ) {
-    updateItem(
-      id: $id
-      title: $title
-      description: $description
-      price: $price
-    ) {
+  mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
+    updateItem(id: $id, title: $title, description: $description, price: $price) {
       id
       title
       description
@@ -35,20 +22,21 @@ const UPDATE_ITEM_MUTATION = gql`
 
 function UpdateItem({ id }: UpdateItemVariables) {
   const router = useRouter()
-  const { data, loading } = useQuery<GetItem, GetItemVariables>(
-    SINGLE_ITEM_QUERY,
-    {
-      variables: { id },
-    }
-  )
-  const { inputs, setInputs, handleChange } = useForm(data?.item || {})
+  const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
+    variables: { id },
+  })
+  const { inputs, setInputs, handleChange } = useForm({
+    title: data?.item?.title as string,
+    description: data?.item?.description as string,
+    price: String(data?.item?.price),
+  })
 
   useEffect(() => {
     if (data?.item) {
       setInputs({
         title: data.item.title,
         description: data.item.description,
-        price: data.item.price,
+        price: String(data.item.price),
       })
     }
   }, [data])

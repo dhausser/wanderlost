@@ -1,17 +1,17 @@
 import { useMemo } from 'react'
 import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import { SchemaLink } from '@apollo/client/link/schema'
+import { HttpLink } from '@apollo/client/link/http'
 import { CartItem } from '@prisma/client'
+import { schema } from '../graphql/schema'
+import { createContext } from './context'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
-    const { SchemaLink } = require('@apollo/client/link/schema')
-    const { schema } = require('../graphql/schema')
-    const { createContext } = require('./context')
     return new SchemaLink({ schema, context: createContext() })
   }
-  const { HttpLink } = require('@apollo/client/link/http')
   return new HttpLink({
     uri: '/api/graphql',
     credentials: 'same-origin',

@@ -2,10 +2,7 @@ import { useMutation, gql } from '@apollo/client'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
-import {
-  DeleteItem as DeleteItemTypes,
-  DeleteItemVariables,
-} from './__generated__/DeleteItem'
+import { DeleteItem as DeleteItemTypes, DeleteItemVariables } from './__generated__/DeleteItem'
 
 interface Props extends DeleteItemVariables {
   children: string
@@ -20,13 +17,13 @@ const DELETE_ITEM_MUTATION = gql`
 `
 
 function DeleteItem({ id, children }: Props) {
-  const [deleteItem, { error }] = useMutation<
-    DeleteItemTypes,
-    DeleteItemVariables
-  >(DELETE_ITEM_MUTATION, {
-    variables: { id },
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
-  })
+  const [deleteItem, { error }] = useMutation<DeleteItemTypes, DeleteItemVariables>(
+    DELETE_ITEM_MUTATION,
+    {
+      variables: { id },
+      refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+    }
+  )
 
   if (error) {
     return <Error error={error} />

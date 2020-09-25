@@ -5,10 +5,7 @@ import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
-import {
-  CreateItem as CreateItemTypes,
-  CreateItemVariables,
-} from './__generated__/CreateItem'
+import { CreateItem as CreateItemTypes, CreateItemVariables } from './__generated__/CreateItem'
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CreateItem(
@@ -34,25 +31,25 @@ function CreateItem() {
   const { inputs, handleChange } = useForm({})
   const router = useRouter()
 
-  const [createItem, { loading, error }] = useMutation<
-    CreateItemTypes,
-    CreateItemVariables
-  >(CREATE_ITEM_MUTATION, {
-    variables: {
-      title: inputs.title,
-      description: inputs.description,
-      price: inputs.price,
-      image: inputs.image,
-      largeImage: inputs.largeImage,
-    },
-    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
-  })
+  const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
+    CREATE_ITEM_MUTATION,
+    { refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }] }
+  )
 
   return (
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
-        const res = await createItem()
+        if (!inputs) return
+        const res = await createItem({
+          variables: {
+            title: inputs.title,
+            description: inputs.description,
+            price: Number(inputs.price),
+            image: inputs.image,
+            largeImage: inputs.largeImage,
+          },
+        })
         router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
       }}
     >
@@ -68,9 +65,7 @@ function CreateItem() {
             required
             onChange={handleChange}
           />
-          {inputs.image && (
-            <img src={inputs.image} width="200" alt="Upload Preview" />
-          )}
+          {inputs.image && <img src={inputs.image} width="200" alt="Upload Preview" />}
         </label>
 
         <label htmlFor="title">

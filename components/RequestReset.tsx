@@ -17,14 +17,14 @@ const REQUEST_RESET_MUTATION = gql`
 
 function RequestReset() {
   const { inputs, handleChange, clearForm } = useForm({ email: '' })
-  const [reset, { loading, error, called }] = useMutation<
-    RequestResetTypes,
-    RequestResetVariables
-  >(REQUEST_RESET_MUTATION, {
-    variables: {
-      email: inputs.email,
-    },
-  })
+  const [reset, { loading, error, called }] = useMutation<RequestResetTypes, RequestResetVariables>(
+    REQUEST_RESET_MUTATION,
+    {
+      variables: {
+        email: inputs.email,
+      },
+    }
+  )
   return (
     <Form
       method="post"
@@ -38,9 +38,7 @@ function RequestReset() {
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Request a password reset</h2>
         <Error error={error} />
-        {!error && !loading && called && (
-          <p>Success! Check your email for a reset link</p>
-        )}
+        {!error && !loading && called && <p>Success! Check your email for a reset link</p>}
         <label htmlFor="email">
           Email
           <input

@@ -1,7 +1,7 @@
 import { Enumerable } from '@prisma/client'
 import { GetCurrentUser_user } from '../../components/__generated__/GetCurrentUser'
 
-const hasPermission = (user: GetCurrentUser_user, permissionsNeeded: boolean) => {
+const hasPermission = (user: GetCurrentUser_user, permissionsNeeded: string[]) => {
   if (!user || !user.permissions) return null
   const matchedPermissions = user.permissions.filter(
     (permissionTheyHave: Enumerable<string | null>) =>

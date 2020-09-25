@@ -1,5 +1,5 @@
 import { objectType, extendType, idArg, stringArg } from '@nexus/schema'
-import { CartItem, Item } from '@prisma/client'
+import { CartItem as CartItemType, Item } from '@prisma/client'
 import Stripe from 'stripe'
 
 export const OrderItem = objectType({
@@ -195,7 +195,7 @@ export const OrderMutation = extendType({
         })
 
         const amount = user.cart.reduce(
-          (tally: number, cartItem: CartItem & { item: Item }) =>
+          (tally: number, cartItem: CartItemType & { item: Item }) =>
             tally + cartItem.item.price * cartItem.quantity,
           0
         )
@@ -207,7 +207,7 @@ export const OrderMutation = extendType({
           payment_method: args.token,
         })
 
-        const orderItems = user.cart.map((cartItem: CartItem & { item: Item }) => {
+        const orderItems = user.cart.map((cartItem: CartItemType & { item: Item }) => {
           const { title, description, price, image, largeImage } = cartItem.item
           const orderItem = {
             title,
@@ -231,7 +231,7 @@ export const OrderMutation = extendType({
           include: { items: true },
         })
 
-        const cartItemIds = user.cart.map((cartItem: CartItem & { item: Item }) => cartItem.id)
+        const cartItemIds = user.cart.map((cartItem: CartItemType & { item: Item }) => cartItem.id)
 
         await ctx.prisma.cartItem.deleteMany({
           where: {

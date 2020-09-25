@@ -20,10 +20,7 @@ function Signin() {
     email: '',
     password: '',
   })
-  const [signin, { loading, error }] = useMutation<
-    SigninTypes,
-    SigninVariables
-  >(SIGNIN_MUTATION, {
+  const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
     variables: {
       email: inputs.email,
       password: inputs.password,

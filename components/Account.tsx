@@ -18,17 +18,17 @@ const UPDATE_USER_MUTATION = gql`
 function Account() {
   const me = useUser()
   const { inputs, handleChange } = useForm({
-    name: me?.name,
+    name: me?.name as string,
   })
-  const [updateUser, { loading }] = useMutation<
-    UpdateUser,
-    UpdateUserVariables
-  >(UPDATE_USER_MUTATION)
+  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(
+    UPDATE_USER_MUTATION
+  )
   return (
     <Form
       onSubmit={async (e) => {
         e.preventDefault()
         if (me) {
+          if (!inputs.name) return
           await updateUser({
             variables: {
               id: me.id,
@@ -39,12 +39,7 @@ function Account() {
       }}
     >
       <fieldset disabled={loading}>
-        <FormItem
-          label=""
-          inputs={inputs}
-          onChange={handleChange}
-          name="name"
-        />
+        <FormItem label="" inputs={inputs} onChange={handleChange} name="name" />
         <button type="submit">Updat{loading ? 'ing' : 'e'}</button>
       </fieldset>
     </Form>

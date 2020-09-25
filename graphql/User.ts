@@ -242,7 +242,7 @@ export const UserMutation = extendType({
           // \n\n
           // <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
         }
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
         sgMail.send(msg)
         return { message: 'Thanks!' }
       },

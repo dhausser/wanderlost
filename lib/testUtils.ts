@@ -55,21 +55,27 @@ const fakeCartItem = (overrides) => ({
 
 // Fake LocalStorage
 class LocalStorageMock {
-  store = {}
+  private store: {
+    [key: string]: string
+  }
+
+  constructor() {
+    this.store = {}
+  }
 
   clear() {
     this.store = {}
   }
 
-  getItem(key) {
+  getItem(key: string) {
     return this.store[key] || null
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: number) {
     this.store[key] = value.toString()
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     delete this.store[key]
   }
 }

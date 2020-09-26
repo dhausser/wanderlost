@@ -22,7 +22,7 @@ const CartItemStyles = styled.li`
   }
 `
 
-const CartItem = ({ cartItem }: Props) => {
+const CartItem = ({ cartItem }: Props): JSX.Element => {
   if (!cartItem.item) {
     return (
       <CartItemStyles>

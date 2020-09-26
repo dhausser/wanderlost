@@ -4,7 +4,7 @@ import { initializeApollo } from '../../apollo/client'
 import SingleItem, { SINGLE_ITEM_QUERY } from '../../components/SingleItem'
 import { GetItem } from '../../components/__generated__/GetItem'
 
-function Item({ item }: GetItem) {
+function Item({ item }: GetItem): JSX.Element {
   return <SingleItem item={item} />
 }
 

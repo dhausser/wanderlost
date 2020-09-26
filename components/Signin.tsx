@@ -15,7 +15,7 @@ const SIGNIN_MUTATION = gql`
   }
 `
 
-function Signin() {
+function Signin(): JSX.Element {
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
     password: '',

@@ -15,7 +15,7 @@ const SEARCH_ITEMS_QUERY = gql`
   }
 `
 
-function Autocomplete() {
+function Autocomplete(): JSX.Element {
   const router = useRouter()
   const [findItems, { loading, data }] = useLazyQuery<SearchItems>(SEARCH_ITEMS_QUERY)
   const items = data ? data.allItems : []

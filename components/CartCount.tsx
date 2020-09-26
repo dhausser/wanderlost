@@ -42,7 +42,7 @@ const Dot = styled.div`
   font-variant-numeric: tabular-nums;
 `
 
-const CartCount = ({ count }: Props) => (
+const CartCount = ({ count }: Props): JSX.Element => (
   <AnimationStyles>
     <TransitionGroup>
       <CSSTransition

@@ -4,7 +4,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { initializeApollo } from '../apollo/client'
 import Items, { ALL_ITEMS_QUERY } from '../components/Items'
 
-function IndexPage() {
+function IndexPage(): JSX.Element {
   const router = useRouter()
   const { page } = router.query
 

@@ -46,7 +46,7 @@ const StyledHeader = styled.header`
   }
 `
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const router = useRouter()
 
   useEffect(() => {

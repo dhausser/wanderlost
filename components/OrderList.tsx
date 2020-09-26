@@ -31,7 +31,7 @@ const OrderUl = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
 `
 
-function OrderList() {
+function OrderList(): JSX.Element {
   const { loading, error, data } = useQuery<GetUserOrders>(USER_ORDERS_QUERY)
   if (error) return <Error error={error} />
   if (loading || !data || !data.orders) return <p>Loading...</p>

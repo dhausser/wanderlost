@@ -8,11 +8,11 @@ import calcTotalPrice from '../lib/calcTotalPrice'
 import formatMoney from '../lib/formatMoney'
 import Checkout from './Checkout'
 
-function Cart() {
+function Cart(): JSX.Element {
   let totalItems = 0
   const user = useUser()
   const { cartOpen, toggleCart } = useCart()
-  if (!user) return null
+  if (!user) throw new Error('No user found')
 
   totalItems = user.cart.reduce((acc, current) => {
     return (acc = acc + current.quantity)

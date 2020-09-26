@@ -16,7 +16,7 @@ const DELETE_ITEM_MUTATION = gql`
   }
 `
 
-function DeleteItem({ id, children }: Props) {
+function DeleteItem({ id, children }: Props): JSX.Element {
   const [deleteItem, { error }] = useMutation<DeleteItemTypes, DeleteItemVariables>(
     DELETE_ITEM_MUTATION,
     {

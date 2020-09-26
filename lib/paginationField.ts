@@ -7,7 +7,17 @@ interface Args {
   }
 }
 
-export default function paginationField() {
+type PaginationField = {
+  keyArgs: boolean
+  merge(
+    existing: Array<GetItems_items_items>,
+    incoming: Array<GetItems_items_items>,
+    { args }: Args
+  ): GetItems_items_items[]
+  read(existing: never[] | undefined, { args }: Args): never[] | undefined
+}
+
+export default function paginationField(): PaginationField {
   return {
     keyArgs: false, // take full control of this field
     // We write custom functions to merge and read based on the 'first' and 'skip' args

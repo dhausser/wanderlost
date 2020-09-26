@@ -4,6 +4,13 @@ interface Props {
   children: JSX.Element
 }
 
+interface CartHook {
+  cartOpen: boolean
+  toggleCart: () => void
+  closeCart: () => void
+  openCart: () => void
+}
+
 const LocalStateContext = createContext({
   cartOpen: false,
   toggleCart: function () {
@@ -18,7 +25,7 @@ const LocalStateContext = createContext({
 })
 const LocalStateProvider = LocalStateContext.Provider
 
-function CartStateProvider({ children }: Props) {
+function CartStateProvider({ children }: Props): JSX.Element {
   const [cartOpen, setCartOpen] = useState(false)
 
   function toggleCart() {
@@ -47,7 +54,7 @@ function CartStateProvider({ children }: Props) {
   )
 }
 
-function useCart() {
+function useCart(): CartHook {
   return useContext(LocalStateContext)
 }
 

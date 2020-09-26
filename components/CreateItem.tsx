@@ -31,7 +31,7 @@ const CREATE_ITEM_MUTATION = gql`
   }
 `
 
-function CreateItem() {
+function CreateItem(): JSX.Element {
   const [image, setImage] = useState('')
   const [largeImage, setLargeImage] = useState('')
   const { register, handleSubmit, errors } = useForm<Inputs>()
@@ -58,6 +58,9 @@ function CreateItem() {
     setLargeImage(file.eager[0].secure_url)
   }
 
+  /**
+   * TODO: Cloudinary V2 integration
+   */
   // async function uploadFile(e: ChangeEvent<HTMLInputElement>) {
   //   const files = e.target.files as FileList
   //   console.log(files)

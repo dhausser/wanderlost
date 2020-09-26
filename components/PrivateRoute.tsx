@@ -5,7 +5,7 @@ interface Props {
   children: JSX.Element
 }
 
-function PrivateRoute({ children }: Props) {
+function PrivateRoute({ children }: Props): JSX.Element {
   const me = useUser()
   if (!me) return <Signin />
   return children

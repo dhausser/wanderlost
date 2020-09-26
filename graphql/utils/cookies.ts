@@ -23,7 +23,12 @@ export interface ApiResponse extends NextApiResponse {
 /**
  * This sets `cookie` on `res` object
  */
-const setCookie = (res: NextApiResponse, name: string, value: unknown, options: Options = {}) => {
+const setCookie = (
+  res: NextApiResponse,
+  name: string,
+  value: unknown,
+  options: Options = {}
+): void => {
   const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if (options.maxAge) {
@@ -49,7 +54,10 @@ const decodeIncomingRequestCookies = (req: ApiRequest) => {
 /**
  * Adds `cookie` function on `res.cookie` to set cookies for response
  */
-const cookies = (handler: NextApiHandler) => (req: ApiRequest, res: ApiResponse) => {
+const cookies = (handler: NextApiHandler) => (
+  req: ApiRequest,
+  res: ApiResponse
+): void | Promise<void> => {
   decodeIncomingRequestCookies(req)
 
   res.cookie = (name: string, value: string, options: Options) =>

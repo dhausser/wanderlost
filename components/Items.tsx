@@ -42,7 +42,7 @@ export const ItemsList = styled.div`
   }
 `
 
-export default function Items({ page }: Props) {
+export default function Items({ page }: Props): JSX.Element {
   const { data, loading, error } = useQuery(ALL_ITEMS_QUERY, {
     variables: { offset: page * perPage - perPage },
   })

@@ -20,8 +20,8 @@ const ErrorStyles = styled.div`
   }
 `
 
-const DisplayError = ({ error }: DisplayErrorProps) => {
-  if (!error || !error.message) return null
+const DisplayError = ({ error }: DisplayErrorProps): JSX.Element => {
+  if (!error || !error.message) throw new Error('No error not found')
   // @ts-expect-error
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
     // @ts-expect-error

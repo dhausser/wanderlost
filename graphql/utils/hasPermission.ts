@@ -1,6 +1,6 @@
 import { Enumerable, User } from '@prisma/client'
 
-const hasPermission = (user: User, permissionsNeeded: string[]) => {
+const hasPermission = (user: User, permissionsNeeded: string[]): null | undefined => {
   if (!user || !user.permissions) return null
   const matchedPermissions = user.permissions.filter(
     (permissionTheyHave: Enumerable<string | null>) =>

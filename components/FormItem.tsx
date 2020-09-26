@@ -9,7 +9,7 @@ interface Props {
   inputs: Record<string, string | number | readonly string[] | undefined>
 }
 
-export default function FormItem({ label, name, inputs, ...props }: Props) {
+export default function FormItem({ label, name, inputs, ...props }: Props): JSX.Element {
   return (
     <label htmlFor={name}>
       {label || capitalize(name)}

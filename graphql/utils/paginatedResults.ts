@@ -15,7 +15,7 @@ const paginatedResults = ({
   results,
   // can pass in a function to calculate an item's cursor
   getCursor = () => null,
-}: PaginatedResults) => {
+}: PaginatedResults): Item[] => {
   if (pageSize < 1) return []
 
   if (!cursor) return results.slice(0, pageSize)

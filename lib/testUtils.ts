@@ -1,31 +1,35 @@
 import casual from 'casual'
-import { GetCurrentUser_user_cart } from '../components/__generated__/GetCurrentUser'
+import { GetItem_item } from '../components/__generated__/GetItem'
+import { GetOrder_order, GetOrder_order_items } from '../components/__generated__/GetOrder'
+import {
+  GetCurrentUser_user,
+  GetCurrentUser_user_cart,
+} from '../components/__generated__/GetCurrentUser'
 
 // seed it so we get consistent results
 casual.seed(777)
 
-const fakeItem = () => ({
+const fakeItem = (): GetItem_item => ({
   __typename: 'Item',
   id: 'abc123',
   price: 5000,
-  user: null,
   image: 'dog-small.jpg',
   title: 'dogs are best',
   description: 'dogs',
   largeImage: 'dog.jpg',
 })
 
-const fakeUser = () => ({
+const fakeUser = (): Omit<GetCurrentUser_user, 'permissions'> => ({
   __typename: 'User',
   id: '4234',
   name: casual.name,
   email: casual.email,
-  permissions: ['ADMIN'],
-  orders: [],
+  // permissions: [Permission.ADMIN],
+  // orders: [],
   cart: [],
 })
 
-const fakeOrderItem = () => ({
+const fakeOrderItem = (): GetOrder_order_items => ({
   __typename: 'OrderItem',
   id: casual.uuid,
   image: `${casual.word}.jpg`,
@@ -35,7 +39,7 @@ const fakeOrderItem = () => ({
   description: casual.words(),
 })
 
-const fakeOrder = () => ({
+const fakeOrder = (): GetOrder_order => ({
   __typename: 'Order',
   id: 'ord123',
   charge: 'ch_123',
@@ -45,12 +49,12 @@ const fakeOrder = () => ({
   user: fakeUser(),
 })
 
-const fakeCartItem = (overrides: Partial<GetCurrentUser_user_cart>) => ({
+const fakeCartItem = (overrides: Partial<GetCurrentUser_user_cart>): GetCurrentUser_user_cart => ({
   __typename: 'CartItem',
   id: 'omg123',
   quantity: 3,
   item: fakeItem(),
-  user: fakeUser(),
+  // user: fakeUser(),
   ...overrides,
 })
 
@@ -64,19 +68,19 @@ class LocalStorageMock {
     this.store = {}
   }
 
-  clear() {
+  clear(): void {
     this.store = {}
   }
 
-  getItem(key: string) {
+  getItem(key: string): string | null {
     return this.store[key] || null
   }
 
-  setItem(key: string, value: number) {
+  setItem(key: string, value: number): void {
     this.store[key] = value.toString()
   }
 
-  removeItem(key: string) {
+  removeItem(key: string): void {
     delete this.store[key]
   }
 }

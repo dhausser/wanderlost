@@ -11,7 +11,7 @@ const ADD_TO_CART_MUTATION = gql`
   }
 `
 
-function AddToCart({ id }: AddToCartVariables) {
+function AddToCart({ id }: AddToCartVariables): JSX.Element {
   const [addToCart, { loading }] = useMutation<AddToCartTypes, AddToCartVariables>(
     ADD_TO_CART_MUTATION,
     {

@@ -19,7 +19,7 @@ const PAGINATION_QUERY = gql`
   }
 `
 
-function Pagination({ page }: Props) {
+function Pagination({ page }: Props): JSX.Element {
   const { error, loading, data } = useQuery<GetPagination>(PAGINATION_QUERY)
   if (loading || !data) return <p>Loading...</p>
   if (error) return <Error error={error} />

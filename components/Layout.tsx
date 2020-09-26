@@ -54,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-function Page({ children }: Props) {
+function Page({ children }: Props): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

@@ -22,7 +22,7 @@ const UPDATE_ITEM_MUTATION = gql`
   }
 `
 
-function UpdateItem({ id }: UpdateItemVariables) {
+function UpdateItem({ id }: UpdateItemVariables): JSX.Element {
   const router = useRouter()
   const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
     variables: { id },

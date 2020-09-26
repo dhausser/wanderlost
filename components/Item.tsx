@@ -7,8 +7,8 @@ import DeleteItem from './DeleteItem'
 import AddToCart from './AddToCart'
 import { GetItem } from './__generated__/GetItem'
 
-export default function Item({ item }: GetItem) {
-  if (!item) return null
+export default function Item({ item }: GetItem): JSX.Element {
+  if (!item) throw new Error('Item not found')
   return (
     <ItemStyles>
       {item.image && <img src={item.image} alt={item.title} />}

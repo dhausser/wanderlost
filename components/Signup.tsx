@@ -15,7 +15,7 @@ const SIGNUP_MUTATION = gql`
   }
 `
 
-function Signup() {
+function Signup(): JSX.Element {
   const { inputs, handleChange } = useForm({
     email: '',
     name: '',

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Reset from '../components/Reset'
 
-const ResetPage = () => {
+const ResetPage = (): JSX.Element => {
   const router = useRouter()
   const { resetToken } = router.query
 

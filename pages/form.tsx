@@ -1,6 +1,6 @@
 import useForm from '../lib/useForm'
 
-function Form() {
+function Form(): JSX.Element {
   const { inputs, handleChange, resetForm } = useForm({ name: '', age: '' })
   return (
     <>

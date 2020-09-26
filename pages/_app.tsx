@@ -4,7 +4,7 @@ import { useApollo } from '../apollo/client'
 import { CartStateProvider } from '../components/LocalState'
 import Layout from '../components/Layout'
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps): JSX.Element {
   const apolloClient = useApollo(pageProps.initialApolloState)
 
   return (

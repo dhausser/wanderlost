@@ -46,7 +46,7 @@ function Account() {
   )
 }
 
-function Component() {
+function Component(): JSX.Element {
   return (
     <PrivateRoute>
       <Account />

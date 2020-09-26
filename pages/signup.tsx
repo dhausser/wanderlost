@@ -9,7 +9,7 @@ const Columns = styled.div`
   grid-gap: 20px;
 `
 
-const SignupPage = () => (
+const SignupPage = (): JSX.Element => (
   <Columns>
     <Signup />
     <Signin />

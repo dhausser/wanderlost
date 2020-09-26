@@ -19,7 +19,7 @@ const RESET_PASSWORD_MUTATION = gql`
   }
 `
 
-function Reset({ resetToken }: Props) {
+function Reset({ resetToken }: Props): JSX.Element {
   const { inputs, handleChange, resetForm } = useForm({
     password: '',
     confirmPassword: '',

@@ -10,7 +10,7 @@ const SIGN_OUT_MUTATION = gql`
   }
 `
 
-function Signout() {
+function Signout(): JSX.Element {
   const [signout] = useMutation<SignoutTypes>(SIGN_OUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })

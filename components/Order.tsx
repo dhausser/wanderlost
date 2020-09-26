@@ -28,7 +28,7 @@ const SINGLE_ORDER_QUERY = gql`
   }
 `
 
-function Order({ id }: GetOrderVariables) {
+function Order({ id }: GetOrderVariables): JSX.Element {
   const { loading, error, data } = useQuery<GetOrder, GetOrderVariables>(SINGLE_ORDER_QUERY, {
     variables: { id },
   })

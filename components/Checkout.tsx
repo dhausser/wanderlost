@@ -33,7 +33,7 @@ const style = {
   },
 }
 
-function Checkout() {
+function Checkout(): JSX.Element {
   return (
     <Elements stripe={stripeLoad}>
       <CheckoutForm />

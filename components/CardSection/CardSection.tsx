@@ -20,7 +20,7 @@ const style = {
   },
 }
 
-const CardSection = () => {
+const CardSection = (): JSX.Element => {
   return (
     <label>
       Card details

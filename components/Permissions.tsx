@@ -31,7 +31,7 @@ const ALL_USERS_QUERY = gql`
   }
 `
 
-const Permissions = () => {
+const Permissions = (): JSX.Element => {
   const { loading, error, data } = useQuery<GetUsers>(ALL_USERS_QUERY)
   if (loading || !data || !data.users) return <p>Loading...</p>
   return (

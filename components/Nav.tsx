@@ -5,7 +5,7 @@ import NavStyles from './styles/NavStyles'
 import Signout from './Signout'
 import CartCount from './CartCount'
 
-function Nav() {
+function Nav(): JSX.Element {
   const me = useUser()
   const { toggleCart } = useCart()
   return (

@@ -35,8 +35,8 @@ const SINGLE_ITEM_QUERY = gql`
   }
 `
 
-function SingleItem({ item }: GetItem) {
-  if (!item) return null
+function SingleItem({ item }: GetItem): JSX.Element {
+  if (!item) throw new Error('Item not found')
   return (
     <SingleItemStyles>
       <Head>

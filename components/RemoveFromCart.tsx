@@ -54,7 +54,7 @@ function updateCart(
   })
 }
 
-function RemoveFromCart({ id }: RemoveFromCartVariables) {
+function RemoveFromCart({ id }: RemoveFromCartVariables): JSX.Element {
   const [removeFromCart, { loading }] = useMutation<RemoveFromCartTypes, RemoveFromCartVariables>(
     REMOVE_FROM_CART_MUTATION,
     {

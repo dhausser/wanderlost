@@ -15,7 +15,7 @@ const REQUEST_RESET_MUTATION = gql`
   }
 `
 
-function RequestReset() {
+function RequestReset(): JSX.Element {
   const { inputs, handleChange, clearForm } = useForm({ email: '' })
   const [reset, { loading, error, called }] = useMutation<RequestResetTypes, RequestResetVariables>(
     REQUEST_RESET_MUTATION,

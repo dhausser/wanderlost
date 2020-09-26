@@ -1,9 +1,9 @@
+import { useEffect } from 'react'
 import { useMutation, gql } from '@apollo/client'
 import { useUser } from './User'
-import useForm from '../lib/useForm'
+import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
 import PrivateRoute from './PrivateRoute'
-import FormItem from './FormItem'
 import { UpdateUser, UpdateUserVariables } from './__generated__/UpdateUser'
 
 const UPDATE_USER_MUTATION = gql`
@@ -16,30 +16,33 @@ const UPDATE_USER_MUTATION = gql`
 `
 
 function Account() {
+  const defaultValues = { name: '' }
   const me = useUser()
-  const { inputs, handleChange } = useForm({
-    name: me?.name as string,
-  })
+  const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(
     UPDATE_USER_MUTATION
   )
+
+  useEffect(() => {
+    reset({ name: me?.name })
+  }, [me])
+
+  async function onSubmit(data: UpdateUserVariables) {
+    if (me) {
+      await updateUser({
+        variables: {
+          id: me.id,
+          name: data.name,
+        },
+      })
+    }
+  }
+
   return (
-    <Form
-      onSubmit={async (e) => {
-        e.preventDefault()
-        if (me) {
-          if (!inputs.name) return
-          await updateUser({
-            variables: {
-              id: me.id,
-              name: inputs.name,
-            },
-          })
-        }
-      }}
-    >
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
-        <FormItem label="" inputs={inputs} onChange={handleChange} name="name" />
+        <input name="name" ref={register({ required: true })} />
+        {errors.email && <p>This is required</p>}
         <button type="submit">Updat{loading ? 'ing' : 'e'}</button>
       </fieldset>
     </Form>

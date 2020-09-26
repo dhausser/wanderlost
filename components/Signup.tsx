@@ -16,11 +16,7 @@ const SIGNUP_MUTATION = gql`
 `
 
 function Signup(): JSX.Element {
-  const defaultValues = {
-    email: '',
-    name: '',
-    password: '',
-  }
+  const defaultValues = { email: '', name: '', password: '' }
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(
     SIGNUP_MUTATION,

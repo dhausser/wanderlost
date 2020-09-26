@@ -1,5 +1,5 @@
 import { useMutation, gql } from '@apollo/client'
-import useForm from '../lib/useForm'
+import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
@@ -20,30 +20,29 @@ const RESET_PASSWORD_MUTATION = gql`
 `
 
 function Reset({ resetToken }: Props): JSX.Element {
-  const { inputs, handleChange, resetForm } = useForm({
+  const defaultValues = {
     password: '',
     confirmPassword: '',
-  })
+  }
+  const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [resetPassword, { error, loading, data }] = useMutation<
     ResetPassword,
     ResetPasswordVariables
-  >(RESET_PASSWORD_MUTATION, {
-    variables: {
-      resetToken,
-      password: inputs.password,
-      confirmPassword: inputs.confirmPassword,
-    },
-    refetchQueries: [{ query: CURRENT_USER_QUERY }],
-  })
+  >(RESET_PASSWORD_MUTATION, { refetchQueries: [{ query: CURRENT_USER_QUERY }] })
+
+  async function onSubmit(data: ResetPasswordVariables) {
+    await resetPassword({
+      variables: {
+        resetToken,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+      },
+    })
+    reset(defaultValues)
+  }
+
   return (
-    <Form
-      method="post"
-      onSubmit={async (e) => {
-        e.preventDefault()
-        await resetPassword()
-        resetForm()
-      }}
-    >
+    <Form method="post" onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Reset your password</h2>
         {data &&
@@ -51,28 +50,13 @@ function Reset({ resetToken }: Props): JSX.Element {
           data.resetPassword.email &&
           'Password has been reset successfully'}
         <Error error={error} />
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={inputs.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label htmlFor="confirmPassword">
-          Confirm Password
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="confirmPassword"
-            value={inputs.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </label>
+        <label>Password</label>
+        <input type="password" name="password" ref={register({ required: true })} />
+        {errors.email && <p>This is required</p>}
+
+        <label>Confirm Password</label>
+        <input type="password" name="confirmPassword" ref={register({ required: true })} />
+        {errors.email && <p>This is required</p>}
 
         <button type="submit">Reset your password</button>
       </fieldset>

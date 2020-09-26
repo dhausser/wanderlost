@@ -1,9 +1,15 @@
 import { useMutation, gql } from '@apollo/client'
-import useForm from '../lib/useForm'
+import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signup as SignupTypes, SignupVariables } from './__generated__/Signup'
+
+const defaultValues = {
+  email: '',
+  name: '',
+  password: '',
+}
 
 const SIGNUP_MUTATION = gql`
   mutation Signup($email: String!, $name: String!, $password: String!) {
@@ -16,68 +22,58 @@ const SIGNUP_MUTATION = gql`
 `
 
 function Signup(): JSX.Element {
-  const { inputs, handleChange } = useForm({
-    email: '',
-    name: '',
-    password: '',
-  })
+  const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(
     SIGNUP_MUTATION,
-    {
-      variables: {
-        email: inputs.email,
-        name: inputs.name,
-        password: inputs.password,
-      },
-      refetchQueries: [{ query: CURRENT_USER_QUERY }],
-    }
+    { refetchQueries: [{ query: CURRENT_USER_QUERY }] }
   )
 
+  async function onSubmit(data: SignupVariables) {
+    await signup({
+      variables: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+      },
+    })
+    reset(defaultValues)
+  }
+
   return (
-    <Form
-      method="post"
-      onSubmit={async (e) => {
-        e.preventDefault()
-        await signup()
-      }}
-    >
+    <Form method="post" onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading} aria-busy={loading}>
         {data && data.signup && <p>Signed up with {data.signup.email} — Please Sign In now</p>}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
-        <label htmlFor="email">
-          Email
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={inputs.email}
-            onChange={handleChange}
-            autoComplete="email"
-          />
-        </label>
-        <label htmlFor="name">
-          Name
-          <input
-            type="text"
-            name="name"
-            placeholder="name"
-            value={inputs.name}
-            onChange={handleChange}
-            autoComplete="name"
-          />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={inputs.password}
-            onChange={handleChange}
-            autoComplete="new-password"
-          />
-        </label>
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          autoComplete="email"
+          ref={register({ required: true })}
+        />
+        {errors.email && <p>This is required</p>}
+
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          placeholder="name"
+          autoComplete="name"
+          ref={register({ required: true })}
+        />
+        {errors.name && <p>This is required</p>}
+
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          autoComplete="new-password"
+          ref={register({ required: true })}
+        />
+        {errors.password && <p>This is required</p>}
 
         <button type="submit">Sign Up!</button>
       </fieldset>

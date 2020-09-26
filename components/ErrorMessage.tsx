@@ -20,8 +20,8 @@ const ErrorStyles = styled.div`
   }
 `
 
-const DisplayError = ({ error }: DisplayErrorProps): JSX.Element => {
-  if (!error || !error.message) throw new Error('No error not found')
+const DisplayError = ({ error }: DisplayErrorProps): JSX.Element | null => {
+  if (!error) return null
   // @ts-expect-error
   if (error.networkError && error.networkError.result && error.networkError.result.errors.length) {
     // @ts-expect-error
@@ -38,7 +38,7 @@ const DisplayError = ({ error }: DisplayErrorProps): JSX.Element => {
     <ErrorStyles>
       <p data-test="graphql-error">
         <strong>Shoot!</strong>
-        {error.message.replace('GraphQL error: ', '')}
+        {error?.message.replace('GraphQL error: ', '')}
       </p>
     </ErrorStyles>
   )

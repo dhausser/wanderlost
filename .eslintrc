@@ -27,6 +27,6 @@
     "no-undef": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "warn"
   }
 }

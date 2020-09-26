@@ -12,11 +12,10 @@ function Cart(): JSX.Element {
   let totalItems = 0
   const user = useUser()
   const { cartOpen, toggleCart } = useCart()
-  if (!user) throw new Error('No user found')
 
-  totalItems = user.cart.reduce((acc, current) => {
+  totalItems = user?.cart.reduce((acc, current) => {
     return (acc = acc + current.quantity)
-  }, 0)
+  }, 0) as number
 
   return (
     <CartStyles open={cartOpen}>
@@ -24,19 +23,19 @@ function Cart(): JSX.Element {
         <CloseButton onClick={toggleCart} title="close">
           &times;
         </CloseButton>
-        <Supreme>{`${user.name}'s Cart`}</Supreme>
+        <Supreme>{`${user?.name}'s Cart`}</Supreme>
         <p>
           You Have {totalItems} Item{totalItems === 1 ? '' : 's'} in your cart.
         </p>
       </header>
       <ul>
-        {user.cart.map((cartItem) => (
+        {user?.cart.map((cartItem) => (
           <CartItem key={cartItem.id} cartItem={cartItem} />
         ))}
       </ul>
-      {user.cart.length && (
+      {user?.cart.length && (
         <footer>
-          <p>{formatMoney(calcTotalPrice(user.cart))}</p>
+          <p>{formatMoney(calcTotalPrice(user?.cart))}</p>
           <Checkout />
         </footer>
       )}

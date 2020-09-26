@@ -1,9 +1,14 @@
 import { useMutation, gql } from '@apollo/client'
-import useForm from '../lib/useForm'
+import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signin as SigninTypes, SigninVariables } from './__generated__/Signin'
+
+const defaultValues: SigninVariables = {
+  email: '',
+  password: '',
+}
 
 const SIGNIN_MUTATION = gql`
   mutation Signin($email: String!, $password: String!) {
@@ -16,49 +21,33 @@ const SIGNIN_MUTATION = gql`
 `
 
 function Signin(): JSX.Element {
-  const { inputs, handleChange, resetForm } = useForm({
-    email: '',
-    password: '',
-  })
+  const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
-    variables: {
-      email: inputs.email,
-      password: inputs.password,
-    },
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
+
+  async function onSubmit(data: SigninVariables) {
+    await signin({
+      variables: {
+        email: data.email,
+        password: data.password,
+      },
+    })
+    reset(defaultValues)
+  }
+
   return (
-    <Form
-      method="post"
-      onSubmit={async (e) => {
-        e.preventDefault()
-        await signin()
-        resetForm()
-      }}
-    >
+    <Form method="post" onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Sign into your Account</h2>
         <Error error={error} />
-        <label htmlFor="email">
-          Email
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={inputs.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={inputs.password}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Email</label>
+        <input type="email" name="email" ref={register({ required: true })} />
+        {errors.email && <p>This is required</p>}
+
+        <label>Password</label>
+        <input type="password" name="password" ref={register({ required: true })} />
+        {errors.password && <p>This is required</p>}
 
         <button type="submit">Sign In!</button>
       </fieldset>

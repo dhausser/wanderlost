@@ -88,7 +88,7 @@ function useCheckout() {
     // 6. Change the page to the new order
     router.push({
       pathname: '/order',
-      // @ts-expect-error
+      // @ts-expect-error as order is not of type void
       query: { id: order.data.checkout.id },
     })
 

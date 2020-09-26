@@ -136,7 +136,7 @@ function UserPermission({ user }: { user: GetUsers_users }) {
           <SickButton
             type="button"
             disabled={loading}
-            // @ts-expect-error
+            // @ts-expect-error as MouseEvent handler is expected
             onClick={handlePermissionChange}
           >
             Updat{loading ? 'ing' : 'e'}

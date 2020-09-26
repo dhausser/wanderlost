@@ -24,9 +24,15 @@
     }
   },
   "rules": {
-    "no-undef": "off",
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/ban-ts-comment": "warn"
-  }
+    "react/react-in-jsx-scope": "off"
+  },
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "rules": {
+        "no-undef": "off",
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

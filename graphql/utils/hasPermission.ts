@@ -4,7 +4,7 @@ const hasPermission = (user: User, permissionsNeeded: string[]): null | undefine
   if (!user || !user.permissions) return null
   const matchedPermissions = user.permissions.filter(
     (permissionTheyHave: Enumerable<string | null>) =>
-      // @ts-expect-error
+      // @ts-expect-error as permissionTheyHave 'null' is not assignable to type '[string, string]
       Object.entries(permissionsNeeded).includes(permissionTheyHave)
   )
   if (!matchedPermissions.length) {

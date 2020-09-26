@@ -197,6 +197,7 @@ export const OrderMutation = extendType({
             },
           },
         })
+        if (!user) throw new Error(`User not found: ${ctx.req.userId}`)
 
         const amount = user.cart.reduce(
           (tally: number, cartItem: CartItemType & { item: Item }) =>
@@ -217,8 +218,8 @@ export const OrderMutation = extendType({
             title,
             description,
             price,
-            image,
-            largeImage,
+            image: image as string,
+            largeImage: largeImage as string,
             quantity: cartItem.quantity,
             user: { connect: { id: user.id } },
           }
@@ -229,7 +230,7 @@ export const OrderMutation = extendType({
           data: {
             total: paymentIntent.amount,
             charge: paymentIntent.id,
-            items: { create: orderItems },
+            items: { create: [...orderItems] },
             user: { connect: { id: user.id } },
           },
           include: { items: true },

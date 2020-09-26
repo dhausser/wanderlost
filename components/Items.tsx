@@ -9,8 +9,6 @@ interface Props {
 }
 
 export const ALL_ITEMS_QUERY = gql`
-  # TODO: fix query variable
-  # query ALL_ITEMS_QUERY($offset: Int = 0, $limit: Int = ${perPage}) {
   query GetItems($offset: Int = 0, $limit: Int = 4) {
     items(offset: $offset, limit: $limit) {
       items {

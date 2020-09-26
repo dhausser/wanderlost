@@ -87,9 +87,9 @@ export const ItemQuery = extendType({
           throw new Error('Pagination values for offset and limit are not set')
         }
 
-        const allItems = await ctx.prisma.item.findMany()
-        allItems.reverse()
-
+        const allItems = await ctx.prisma.item.findMany({
+          orderBy: { createdAt: 'desc' },
+        })
         const total = allItems.length
         const items = allItems.slice(offset, offset + limit)
         const hasMore = allItems.length > offset + limit

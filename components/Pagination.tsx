@@ -29,7 +29,7 @@ function Pagination({ page }: Props): JSX.Element {
     <PaginationStyles data-testid="pagination">
       <Head>
         <title>
-          Sick Fits! — Page {page} of {pages}
+          Wanderlost — Page {page} of {pages}
         </title>
       </Head>
       <Link

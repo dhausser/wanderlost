@@ -5,12 +5,6 @@ import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signup as SignupTypes, SignupVariables } from './__generated__/Signup'
 
-const defaultValues = {
-  email: '',
-  name: '',
-  password: '',
-}
-
 const SIGNUP_MUTATION = gql`
   mutation Signup($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
@@ -22,6 +16,11 @@ const SIGNUP_MUTATION = gql`
 `
 
 function Signup(): JSX.Element {
+  const defaultValues = {
+    email: '',
+    name: '',
+    password: '',
+  }
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(
     SIGNUP_MUTATION,

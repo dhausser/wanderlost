@@ -5,11 +5,6 @@ import Error from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signin as SigninTypes, SigninVariables } from './__generated__/Signin'
 
-const defaultValues: SigninVariables = {
-  email: '',
-  password: '',
-}
-
 const SIGNIN_MUTATION = gql`
   mutation Signin($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
@@ -21,6 +16,10 @@ const SIGNIN_MUTATION = gql`
 `
 
 function Signin(): JSX.Element {
+  const defaultValues: SigninVariables = {
+    email: '',
+    password: '',
+  }
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
   const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],

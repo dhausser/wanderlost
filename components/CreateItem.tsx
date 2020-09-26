@@ -8,6 +8,8 @@ import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
 import { CreateItem as CreateItemTypes, CreateItemVariables } from './__generated__/CreateItem'
 
+type Inputs = Record<string, string>
+
 const CREATE_ITEM_MUTATION = gql`
   mutation CreateItem(
     $title: String!
@@ -31,7 +33,7 @@ const CREATE_ITEM_MUTATION = gql`
 function CreateItem() {
   const [image, setImage] = useState('')
   const [largeImage, setLargeImage] = useState('')
-  const { register, handleSubmit, errors } = useForm<CreateItemVariables>()
+  const { register, handleSubmit, errors } = useForm<Inputs>()
   const router = useRouter()
 
   const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
@@ -55,12 +57,12 @@ function CreateItem() {
     setLargeImage(file.eager[0].secure_url)
   }
 
-  async function onSubmit(data: CreateItemVariables) {
+  async function onSubmit(data: Inputs) {
     const res = await createItem({
       variables: {
         title: data.title,
         description: data.description,
-        price: data.price,
+        price: parseInt(data.price, 10),
         image: image,
         largeImage: largeImage,
       },

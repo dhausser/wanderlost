@@ -1,6 +1,7 @@
+import { useState, ChangeEvent } from 'react'
+import { useForm } from 'react-hook-form'
 import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
-import useForm from '../lib/useForm'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
@@ -28,7 +29,9 @@ const CREATE_ITEM_MUTATION = gql`
 `
 
 function CreateItem() {
-  const { inputs, handleChange } = useForm({})
+  const [image, setImage] = useState('')
+  const [largeImage, setLargeImage] = useState('')
+  const { register, handleSubmit, errors } = useForm<CreateItemVariables>()
   const router = useRouter()
 
   const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
@@ -36,75 +39,55 @@ function CreateItem() {
     { refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }] }
   )
 
+  async function uploadFile(e: ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files as FileList
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('upload_preset', 'sickfits')
+
+    const res = await fetch('https://api.cloudinary.com/v1_1/wesbostutorial/image/upload', {
+      method: 'POST',
+      body: data,
+    })
+    const file = await res.json()
+
+    setImage(file.secure_url)
+    setLargeImage(file.eager[0].secure_url)
+  }
+
+  async function onSubmit(data: CreateItemVariables) {
+    const res = await createItem({
+      variables: {
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        image: image,
+        largeImage: largeImage,
+      },
+    })
+    router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
+  }
+
   return (
-    <Form
-      onSubmit={async (e) => {
-        e.preventDefault()
-        if (!inputs) return
-        const res = await createItem({
-          variables: {
-            title: inputs.title,
-            description: inputs.description,
-            price: Number(inputs.price),
-            image: inputs.image,
-            largeImage: inputs.largeImage,
-          },
-        })
-        router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
-      }}
-    >
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        <label htmlFor="file">
-          Image
-          <input
-            type="file"
-            id="file"
-            name="file"
-            placeholder="Upload an image"
-            required
-            onChange={handleChange}
-          />
-          {inputs.image && <img src={inputs.image} width="200" alt="Upload Preview" />}
-        </label>
+        <label>Image</label>
+        <input name="file" type="file" ref={register({ required: true })} onChange={uploadFile} />
+        {image && <img src={image} width="200" alt="Upload Preview" />}
 
-        <label htmlFor="title">
-          Title
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Title"
-            required
-            value={inputs.title}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Title</label>
+        <input name="title" ref={register({ required: true })} />
+        {errors.title && <p>This is required</p>}
 
-        <label htmlFor="price">
-          Price
-          <input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="Price"
-            required
-            value={inputs.price}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Price</label>
+        <input name="price" type="number" ref={register({ required: true })} />
+        {errors.price && <p>This is required</p>}
 
-        <label htmlFor="description">
-          Description
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Enter A Description"
-            required
-            value={inputs.description}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Description</label>
+        <textarea name="description" ref={register({ required: true })} />
+        {errors.description && <p>This is required</p>}
+
         <button type="submit">Submit</button>
       </fieldset>
     </Form>

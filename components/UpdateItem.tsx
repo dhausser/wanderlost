@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import Form from './styles/Form'
 import Error from './ErrorMessage'
-import useForm from '../lib/useForm'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 import { GetItem, GetItemVariables } from './__generated__/GetItem'
 import { UpdateItem as UpdateItemTypes, UpdateItemVariables } from './__generated__/UpdateItem'
+
+type Inputs = Record<string, string>
 
 const UPDATE_ITEM_MUTATION = gql`
   mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
@@ -25,19 +27,14 @@ function UpdateItem({ id }: UpdateItemVariables) {
   const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
     variables: { id },
   })
-  const { inputs, setInputs, handleChange } = useForm({
-    title: data?.item?.title as string,
-    description: data?.item?.description as string,
-    price: String(data?.item?.price),
-  })
+  const { register, handleSubmit, reset, errors } = useForm<Inputs>()
 
   useEffect(() => {
     if (data?.item) {
-      setInputs({
-        title: data.item.title,
-        description: data.item.description,
-        price: String(data.item.price),
-      })
+      const {
+        item: { title, price, description },
+      } = data
+      reset({ title, price: price.toString(), description })
     }
   }, [data])
 
@@ -45,13 +42,20 @@ function UpdateItem({ id }: UpdateItemVariables) {
     UpdateItemTypes,
     UpdateItemVariables
   >(UPDATE_ITEM_MUTATION, {
-    variables: { id, ...inputs },
-    refetchQueries: [
-      {
-        query: ALL_ITEMS_QUERY,
-      },
-    ],
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }],
   })
+
+  async function onSubmit(data: Inputs) {
+    await updateItem({
+      variables: {
+        id,
+        title: data.title,
+        price: parseInt(data.price, 10),
+        description: data.description,
+      },
+    })
+    router.push('/item/[id]', `/item/${id}`)
+  }
 
   if (loading) return <p>Loading...</p>
   if (!data || !data.item) {
@@ -59,50 +63,21 @@ function UpdateItem({ id }: UpdateItemVariables) {
   }
 
   return (
-    <Form
-      onSubmit={async (e) => {
-        e.preventDefault()
-        await updateItem()
-        router.push('/item/[id]', `/item/${id}`)
-      }}
-    >
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={updating}>
-        <label htmlFor="title">
-          Title
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Title"
-            required
-            value={inputs?.title}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="price">
-          Price
-          <input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="Price"
-            required
-            value={inputs?.price}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="description">
-          Description
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Enter A Description"
-            required
-            value={inputs?.description}
-            onChange={handleChange}
-          />
-        </label>
+        <label>Title</label>
+        <input name="title" ref={register({ required: true })} />
+        {errors.title && <p>This is required</p>}
+
+        <label>Price</label>
+        <input name="price" type="number" ref={register({ required: true })} />
+        {errors.price && <p>This is required</p>}
+
+        <label>Description</label>
+        <textarea name="description" ref={register({ required: true })} />
+        {errors.description && <p>This is required</p>}
+
         <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
       </fieldset>
     </Form>

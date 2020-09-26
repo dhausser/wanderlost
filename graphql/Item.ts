@@ -136,7 +136,11 @@ export const ItemMutation = extendType({
         }
         const item = await ctx.prisma.item.create({
           data: {
-            ...args,
+            title: args.title,
+            description: args.description,
+            price: args.price,
+            image: args.image,
+            largeImage: args.largeImage,
             user: {
               connect: { id: ctx.req.userId },
             },
@@ -158,9 +162,9 @@ export const ItemMutation = extendType({
         return ctx.prisma.item.update({
           data: {
             id: args.id,
-            title: args.title as string,
-            description: args.description as string,
-            price: args.price as number,
+            title: args?.title as string,
+            description: args?.description as string,
+            price: args?.price as number,
           },
           where: { id: args.id },
         })

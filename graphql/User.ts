@@ -287,10 +287,11 @@ export const UserMutation = extendType({
         if (!ctx.req.userId) {
           throw new Error('You must be logged in!')
         }
-        // 3. Check if they have permissions to do this
+        // 2. Retrieve user from the database
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
         })
+        // 3. Check if they have permissions to do this
         if (!user) throw new Error(`User not found: ${ctx.req.userId}`)
         hasPermission(user, ['ADMIN', 'PERMISSIONUPDATE'])
         // 4. Update the permissions

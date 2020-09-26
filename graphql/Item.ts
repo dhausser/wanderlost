@@ -83,7 +83,9 @@ export const ItemQuery = extendType({
         limit: intArg(),
       },
       async resolve(_, { offset = 0, limit = 4 }, ctx) {
-        if (!offset || !limit) throw new Error('Pagination values for offset and limit are not set')
+        if (offset == null || limit == null) {
+          throw new Error('Pagination values for offset and limit are not set')
+        }
 
         const allItems = await ctx.prisma.item.findMany()
         allItems.reverse()

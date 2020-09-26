@@ -5,6 +5,7 @@ import sgMail from '@sendgrid/mail'
 import { promisify } from 'util'
 import { randomBytes } from 'crypto'
 import { setCookie, hasPermission } from './utils'
+import { Permission as PermissionType } from '@prisma/client'
 
 export const User = objectType({
   name: 'User',
@@ -290,11 +291,12 @@ export const UserMutation = extendType({
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
         })
+        if (!user) throw new Error(`User not found: ${ctx.req.userId}`)
         hasPermission(user, ['ADMIN', 'PERMISSIONUPDATE'])
         // 4. Update the permissions
         return ctx.prisma.user.update({
           data: {
-            permissions: { set: args?.permissions },
+            permissions: { set: args?.permissions as PermissionType[] },
           },
           where: {
             id: ctx.req.userId,

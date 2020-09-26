@@ -62,12 +62,12 @@ export const ItemQuery = extendType({
             OR: [
               {
                 title: {
-                  contains: args.searchTerm,
+                  contains: args.searchTerm as string | undefined,
                 },
               },
               {
                 description: {
-                  contains: args.searchTerm,
+                  contains: args.searchTerm as string | undefined,
                 },
               },
             ],
@@ -83,6 +83,8 @@ export const ItemQuery = extendType({
         limit: intArg(),
       },
       async resolve(_, { offset = 0, limit = 4 }, ctx) {
+        if (!offset || !limit) throw new Error('Pagination values for offset and limit are not set')
+
         const allItems = await ctx.prisma.item.findMany()
         allItems.reverse()
 
@@ -152,7 +154,12 @@ export const ItemMutation = extendType({
       },
       resolve(_, args, ctx) {
         return ctx.prisma.item.update({
-          data: { ...args },
+          data: {
+            id: args.id,
+            title: args.title as string,
+            description: args.description as string,
+            price: args.price as number,
+          },
           where: { id: args.id },
         })
       },
@@ -177,6 +184,7 @@ export const ItemMutation = extendType({
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
         })
+        if (!user) throw new Error(`User not found: ${ctx.req.userId}`)
         const hasPermissions = user.permissions.some((permission: string) =>
           ['ADMIN', 'ITEMDELETE'].includes(permission)
         )

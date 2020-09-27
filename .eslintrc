@@ -28,14 +28,5 @@
   },
   "globals": {
     "React": "writable"
-  },
-  "overrides": [
-    {
-      "files": "*.test.js",
-      "rules": {
-        "no-undef": "off",
-        "no-unused-expressions": "off"
-      }
-    }
-  ]
+  }
 }

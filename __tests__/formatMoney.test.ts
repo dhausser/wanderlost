@@ -1,4 +1,5 @@
 import formatMoney from '../lib/formatMoney'
+import '@testing-library/jest-dom/extend-expect'
 
 describe('formatMoney Function', () => {
   it('works with fractional dollars', () => {

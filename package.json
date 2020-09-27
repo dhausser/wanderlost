@@ -8,7 +8,8 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
-    "test": "NODE_ENV=test jest --watch",
+    "test": "jest",
+    "test-all": "yarn lint && yarn type-check && yarn test",
     "check": "apollo client:check",
     "codegen": "apollo client:codegen --target typescript"
   },
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
     "@babel/core": "^7.11.6",
+    "@babel/preset-typescript": "^7.10.4",
     "@prisma/cli": "^2.7.1",
     "@testing-library/dom": "^7.24.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -79,14 +81,10 @@
     "semi": false,
     "singleQuote": true
   },
-  "babel": {
-    "presets": [
-      "next/babel"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run type-check"
     }
   },
   "lint-staged": {

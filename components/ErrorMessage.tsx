@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { ApolloError } from '@apollo/client'
+import { FieldErrors } from 'react-hook-form'
 
 interface DisplayErrorProps {
   error: ApolloError | undefined | null
@@ -44,4 +45,26 @@ const DisplayError = ({ error }: DisplayErrorProps): JSX.Element | null => {
   )
 }
 
+function FormError({ error }: FieldErrors): JSX.Element | null {
+  if (error) {
+    switch (error.type) {
+      case 'required':
+        return <p>This is required</p>
+      case 'minLength':
+        return <p>Your last name need minmium 2 charcaters</p>
+      case 'pattern':
+        return <p>Enter a valid email address</p>
+      case 'min':
+        return <p>Minmium age is 18</p>
+      case 'validate':
+        return <p>Username is already used</p>
+      default:
+        return null
+    }
+  }
+
+  return null
+}
+
 export default DisplayError
+export { DisplayError, FormError }

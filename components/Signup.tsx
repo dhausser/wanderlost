@@ -1,7 +1,7 @@
 import { useMutation, gql } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signup as SignupTypes, SignupVariables } from './__generated__/Signup'
 
@@ -48,6 +48,7 @@ function Signup(): JSX.Element {
           autoComplete="email"
           ref={register({ required: true })}
         />
+        <FormError error={errors.email} />
         {errors.email && <p>This is required</p>}
 
         <label>Name</label>
@@ -58,7 +59,7 @@ function Signup(): JSX.Element {
           autoComplete="name"
           ref={register({ required: true })}
         />
-        {errors.name && <p>This is required</p>}
+        <FormError error={errors.name} />
 
         <label>Password</label>
         <input
@@ -68,7 +69,7 @@ function Signup(): JSX.Element {
           autoComplete="new-password"
           ref={register({ required: true })}
         />
-        {errors.password && <p>This is required</p>}
+        <FormError error={errors.password} />
 
         <button type="submit">Sign Up!</button>
       </fieldset>

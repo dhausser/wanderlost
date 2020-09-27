@@ -4,7 +4,7 @@ import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 // import { v2 as cloudinary } from 'cloudinary'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
 import { CreateItem as CreateItemTypes, CreateItemVariables } from './__generated__/CreateItem'
@@ -111,15 +111,15 @@ function CreateItem(): JSX.Element {
 
         <label>Title</label>
         <input name="title" ref={register({ required: true })} />
-        {errors.title && <p>This is required</p>}
+        <FormError error={errors.title} />
 
         <label>Price</label>
         <input name="price" type="number" ref={register({ required: true })} />
-        {errors.price && <p>This is required</p>}
+        <FormError error={errors.price} />
 
         <label>Description</label>
         <textarea name="description" ref={register({ required: true })} />
-        {errors.description && <p>This is required</p>}
+        <FormError error={errors.description} />
 
         <button type="submit">Submit</button>
       </fieldset>

@@ -1,6 +1,6 @@
 import { useMutation, gql } from '@apollo/client'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { useForm } from 'react-hook-form'
 import {
   RequestReset as RequestResetTypes,
@@ -39,7 +39,7 @@ function RequestReset(): JSX.Element {
         {!error && !loading && called && <p>Success! Check your email for a reset link</p>}
         <label>Email</label>
         <input type="email" name="email" ref={register({ required: true })} />
-        {errors.email && <p>This is required</p>}
+        <FormError error={errors.email} />
 
         <button type="submit">Request Reset!</button>
       </fieldset>

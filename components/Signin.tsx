@@ -1,7 +1,7 @@
 import { useMutation, gql } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { Signin as SigninTypes, SigninVariables } from './__generated__/Signin'
 
@@ -39,11 +39,11 @@ function Signin(): JSX.Element {
         <Error error={error} />
         <label>Email</label>
         <input type="email" name="email" ref={register({ required: true })} />
-        {errors.email && <p>This is required</p>}
+        <FormError error={errors.email} />
 
         <label>Password</label>
         <input type="password" name="password" ref={register({ required: true })} />
-        {errors.password && <p>This is required</p>}
+        <FormError error={errors.password} />
 
         <button type="submit">Sign In!</button>
       </fieldset>

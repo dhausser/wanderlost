@@ -1,7 +1,7 @@
 import { useMutation, gql } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { CURRENT_USER_QUERY } from './User'
 import { ResetPassword, ResetPasswordVariables } from './__generated__/ResetPassword'
 
@@ -52,11 +52,11 @@ function Reset({ resetToken }: Props): JSX.Element {
         <Error error={error} />
         <label>Password</label>
         <input type="password" name="password" ref={register({ required: true })} />
-        {errors.email && <p>This is required</p>}
+        <FormError error={errors.password} />
 
         <label>Confirm Password</label>
         <input type="password" name="confirmPassword" ref={register({ required: true })} />
-        {errors.email && <p>This is required</p>}
+        <FormError error={errors.confirmPassword} />
 
         <button type="submit">Reset your password</button>
       </fieldset>

@@ -14,7 +14,7 @@ type PaginationField = {
     incoming: Array<GetItems_items_items>,
     { args }: Args
   ): GetItems_items_items[]
-  read(existing: never[] | undefined, { args }: Args): never[] | undefined
+  read(existing: undefined[] | undefined, { args }: Args): undefined[] | undefined
 }
 
 export default function paginationField(): PaginationField {

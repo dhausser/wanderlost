@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useQuery, useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import Form from './styles/Form'
-import Error from './ErrorMessage'
+import Error, { FormError } from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 import { GetItem, GetItemVariables } from './__generated__/GetItem'
@@ -68,15 +68,15 @@ function UpdateItem({ id }: UpdateItemVariables): JSX.Element {
       <fieldset disabled={loading} aria-busy={updating}>
         <label>Title</label>
         <input name="title" ref={register({ required: true })} />
-        {errors.title && <p>This is required</p>}
+        <FormError error={errors.title} />
 
         <label>Price</label>
         <input name="price" type="number" ref={register({ required: true })} />
-        {errors.price && <p>This is required</p>}
+        <FormError error={errors.price} />
 
         <label>Description</label>
         <textarea name="description" ref={register({ required: true })} />
-        {errors.description && <p>This is required</p>}
+        <FormError error={errors.description} />
 
         <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
       </fieldset>

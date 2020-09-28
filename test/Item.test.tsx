@@ -33,7 +33,7 @@ describe('<Item/>', () => {
     )
     expect(screen.getByText('$50')).toBeInTheDocument()
     const link = container.querySelector('a')
-    expect(link).toHaveAttribute('href', '/item?id=abc123')
+    expect(link).toHaveAttribute('href', '/item/abc123')
     expect(link).toHaveTextContent(item.title)
   })
 

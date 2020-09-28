@@ -38,20 +38,20 @@ describe('<Item/>', () => {
   })
 
   it('renders out the buttons properly', () => {
-    const { container } = render(
+    render(
       <MockedProvider>
         <ItemComponent item={item} />
       </MockedProvider>
     )
 
-    const edit = container.getByText(/Edit/i)
-    expect(edit.href).toContain('update?id=abc123')
+    const edit = screen.getByText(/Edit/i)
+    expect(edit).toContain('update?id=abc123')
 
-    const addToCart = container.getByText(/add to cart/i)
+    const addToCart = screen.getByText(/add to cart/i)
     expect(addToCart).toHaveProperty('type', 'button')
     expect(addToCart).toBeInTheDocument()
 
-    const deleteItem = container.getByText(/delete/i)
+    const deleteItem = screen.getByText(/delete/i)
     expect(deleteItem).toHaveProperty('type', 'button')
     expect(deleteItem).toBeInTheDocument()
   })

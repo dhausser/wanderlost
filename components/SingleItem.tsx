@@ -38,7 +38,7 @@ const SINGLE_ITEM_QUERY = gql`
 function SingleItem({ item }: GetItem): JSX.Element {
   if (!item) throw new Error('Item not found')
   return (
-    <SingleItemStyles>
+    <SingleItemStyles data-testid="singleItem">
       <Head>
         <title>Wanderlost | {item.title}</title>
       </Head>

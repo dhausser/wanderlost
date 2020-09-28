@@ -42,6 +42,7 @@
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
     "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "@prisma/cli": "^2.7.1",
     "@testing-library/dom": "^7.24.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -63,10 +64,12 @@
     "babel-jest": "^26.3.0",
     "casual": "^1.6.2",
     "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-react": "^7.20.6",
     "graphql-scalars": "^1.2.7",
     "husky": ">=4",
     "jest": "^26.4.2",
+    "jest-watch-typeahead": "^0.6.1",
     "lint-staged": ">=10",
     "prettier": "^2.1.2",
     "react-test-renderer": "^16.12.0",
@@ -74,9 +77,7 @@
     "typescript": "^4.0.2"
   },
   "prettier": {
-    "trailingComma": "es5",
     "printWidth": 100,
-    "tabWidth": 2,
     "semi": false,
     "singleQuote": true
   },
@@ -89,30 +90,5 @@
   "lint-staged": {
     "*.{ts,tsx,js}": "eslint --fix",
     "*.{js,ts,tsx}": "prettier --write"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx",
-      "json"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>[/\\\\](node_modules|.next)[/\\\\]"
-    ],
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy",
-      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js",
-      "components(.*)$": "<rootDir>/components/$1"
-    }
   }
 }

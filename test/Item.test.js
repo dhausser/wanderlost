@@ -15,17 +15,17 @@ describe('<Item/>', () => {
     expect(container).toMatchSnapshot()
   })
 
-  xit('renders the image properly', () => {
+  it('renders the image properly', () => {
     render(
       <MockedProvider>
         <ItemComponent item={item} />
       </MockedProvider>
     )
-    const img = screen.getByAltText(item.name)
+    const img = screen.getByAltText(item.title)
     expect(img).toBeInTheDocument()
   })
 
-  xit('renders the pricetag and title', () => {
+  it('renders the pricetag and title', () => {
     const { container } = render(
       <MockedProvider>
         <ItemComponent item={item} />
@@ -34,24 +34,24 @@ describe('<Item/>', () => {
     expect(screen.getByText('$50')).toBeInTheDocument()
     const link = container.querySelector('a')
     expect(link).toHaveAttribute('href', '/item?id=abc123')
-    expect(link).toHaveTextContent(item.name)
+    expect(link).toHaveTextContent(item.title)
   })
 
-  xit('renders out the buttons properly', () => {
-    // const { container } = render(
-    //   <MockedProvider>
-    //     <ItemComponent item={item} />
-    //   </MockedProvider>
-    // )
+  it('renders out the buttons properly', () => {
+    const { container } = render(
+      <MockedProvider>
+        <ItemComponent item={item} />
+      </MockedProvider>
+    )
 
-    const edit = screen.getByText(/Edit/i)
+    const edit = container.getByText(/Edit/i)
     expect(edit.href).toContain('update?id=abc123')
 
-    const addToCart = screen.getByText(/add to cart/i)
+    const addToCart = container.getByText(/add to cart/i)
     expect(addToCart).toHaveProperty('type', 'button')
     expect(addToCart).toBeInTheDocument()
 
-    const deleteItem = screen.getByText(/delete/i)
+    const deleteItem = container.getByText(/delete/i)
     expect(deleteItem).toHaveProperty('type', 'button')
     expect(deleteItem).toBeInTheDocument()
   })

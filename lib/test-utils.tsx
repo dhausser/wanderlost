@@ -23,7 +23,7 @@ import {
 // You can override the router mock like this:
 //
 // const { baseElement } = render(<MyComponent />, {
-//
+//   router: { pathname: '/my-custom-pathname' },
 // });
 // --------------------------------------------------
 type DefaultParams = Parameters<typeof defaultRender>

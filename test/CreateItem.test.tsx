@@ -4,13 +4,10 @@ import Router from 'next/router'
 import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem'
 import { render, screen, waitFor, fakeItem } from '../lib/test-utils'
 
-jest.mock('next/router', () => ({
-  push: jest.fn(),
-}))
-
 const item = fakeItem()
+
 describe('<CreateItem/>', () => {
-  it('renders and matches snapshot', async () => {
+  test('renders and matches snapshot', () => {
     const { container } = render(
       <MockedProvider>
         <CreateItem />
@@ -19,22 +16,16 @@ describe('<CreateItem/>', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('handles state updating', async () => {
+  test('handles state updating', async () => {
     render(
       <MockedProvider>
         <CreateItem />
       </MockedProvider>
     )
 
-    await userEvent.type(screen.getByPlaceholderText('Title'), item.title)
-    await userEvent.type(
-      screen.getByPlaceholderText('Price'),
-      item.price.toString()
-    )
-    await userEvent.type(
-      screen.getByPlaceholderText('Description'),
-      item.description
-    )
+    userEvent.type(screen.getByPlaceholderText('Title'), item.title)
+    userEvent.type(screen.getByPlaceholderText('Price'), item.price.toString())
+    userEvent.type(screen.getByPlaceholderText('Description'), item.description)
 
     await waitFor(() => {
       expect(screen.getByDisplayValue(item.title)).toBeInTheDocument()
@@ -44,8 +35,8 @@ describe('<CreateItem/>', () => {
       expect(screen.getByDisplayValue(item.description)).toBeInTheDocument()
     })
   })
-  it('creates an item when the form is submitted', async () => {
-    // const router = Router
+
+  test('creates an item when the form is submitted', async () => {
     const mocks = [
       {
         request: {
@@ -73,31 +64,20 @@ describe('<CreateItem/>', () => {
       <MockedProvider mocks={mocks}>
         <CreateItem />
       </MockedProvider>
-      // {
-      //   router: {
-      //     pathname: '/item',
-      //     query: { id: 'abc123' },
-      //   },
-      // }
     )
-    await userEvent.type(screen.getByPlaceholderText('Title'), item.title)
-    await userEvent.type(
-      screen.getByPlaceholderText('Price'),
-      item.price.toString()
-    )
-    await userEvent.type(
-      screen.getByPlaceholderText('Description'),
-      item.description
-    )
-    // mock the router
-    Router.router = { push: jest.fn() }
-    await userEvent.click(screen.getByText('Submit'))
-    await waitFor(() => {
-      // expect(Router.push).toHaveBeenCalled()
-      // expect(Router.push).toHaveBeenCalledWith({
-      //   pathname: '/item',
-      //   query: { id: 'abc123' },
-      // })
+
+    userEvent.type(screen.getByPlaceholderText('Title'), item.title)
+    userEvent.type(screen.getByPlaceholderText('Price'), item.price.toString())
+    userEvent.type(screen.getByPlaceholderText('Description'), item.description)
+    userEvent.click(screen.getByText('Submit'))
+
+    // TODO: await waitFor(() => {
+    waitFor(() => {
+      expect(Router.push).toHaveBeenCalled()
+      expect(Router.push).toHaveBeenCalledWith({
+        pathname: '/item',
+        query: { id: 'abc123' },
+      })
     })
   })
 })

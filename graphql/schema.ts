@@ -1,5 +1,5 @@
 import { makeSchema, decorateType } from '@nexus/schema'
-import { GraphQLDate } from 'graphql-scalars'
+import { GraphQLDate } from 'graphql-iso-date'
 import path from 'path'
 
 import * as Item from './Item'

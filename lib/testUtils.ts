@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom/extend-expect'
 import casual from 'casual'
 import { GetItem_item } from '../components/__generated__/GetItem'
 import { GetOrder_order, GetOrder_order_items } from '../components/__generated__/GetOrder'

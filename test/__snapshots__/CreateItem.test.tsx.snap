@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateItem/> renders and matches snapshot 1`] = `
+<div>
+  <form
+    class="sc-bdnylx dgmYIl"
+  >
+    <fieldset
+      aria-busy="false"
+    >
+      <label>
+        Image
+      </label>
+      <input
+        name="file"
+        type="file"
+      />
+      
+      <label>
+        Title
+      </label>
+      <input
+        name="title"
+      />
+      <label>
+        Price
+      </label>
+      <input
+        name="price"
+        type="number"
+      />
+      <label>
+        Description
+      </label>
+      <textarea
+        name="description"
+      />
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </fieldset>
+  </form>
+</div>
+`;

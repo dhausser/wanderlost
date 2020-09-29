@@ -17,7 +17,9 @@ const SEARCH_ITEMS_QUERY = gql`
 
 function Autocomplete(): JSX.Element {
   const router = useRouter()
-  const [findItems, { loading, data }] = useLazyQuery<SearchItems>(SEARCH_ITEMS_QUERY)
+  const [findItems, { loading, data }] = useLazyQuery<SearchItems>(
+    SEARCH_ITEMS_QUERY
+  )
   const items = data ? data.allItems : []
   const findItemsButChill = debounce(findItems, 350)
   resetIdCounter()
@@ -27,7 +29,13 @@ function Autocomplete(): JSX.Element {
         onChange={(item) => router.push('/item/[id]', `/item/${item.id}`)}
         itemToString={(item) => (item === null ? '' : item.title)}
       >
-        {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+        {({
+          getInputProps,
+          getItemProps,
+          isOpen,
+          inputValue,
+          highlightedIndex,
+        }) => (
           <div>
             <input
               {...getInputProps({
@@ -54,13 +62,19 @@ function Autocomplete(): JSX.Element {
                       key={item.id}
                       highlighted={index === highlightedIndex}
                     >
-                      <img width="50" src={item.image as string} alt={item.title} />
+                      <img
+                        width="50"
+                        src={item.image as string}
+                        alt={item.title}
+                      />
                       {item.title}
                     </DropDownItem>
                   )
                 })}
                 {!items.length && !loading && (
-                  <DropDownItem highlighted={false}>Nothing Found {inputValue}</DropDownItem>
+                  <DropDownItem highlighted={false}>
+                    Nothing Found {inputValue}
+                  </DropDownItem>
                 )}
               </DropDown>
             )}

@@ -90,6 +90,7 @@ describe('<CreateItem/>', () => {
       item.description
     )
     // mock the router
+    Router.router = { push: jest.fn() }
     await userEvent.click(screen.getByText('Submit'))
     await waitFor(() => {
       // expect(Router.push).toHaveBeenCalled()

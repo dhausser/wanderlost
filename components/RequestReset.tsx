@@ -17,10 +17,13 @@ const REQUEST_RESET_MUTATION = gql`
 
 function RequestReset(): JSX.Element {
   const defaultValues = { email: '' }
-  const { register, handleSubmit, reset: resetForm, errors } = useForm({ defaultValues })
-  const [reset, { loading, error, called }] = useMutation<RequestResetTypes, RequestResetVariables>(
-    REQUEST_RESET_MUTATION
-  )
+  const { register, handleSubmit, reset: resetForm, errors } = useForm({
+    defaultValues,
+  })
+  const [reset, { loading, error, called }] = useMutation<
+    RequestResetTypes,
+    RequestResetVariables
+  >(REQUEST_RESET_MUTATION)
 
   async function onSubmit(data: RequestResetVariables) {
     await reset({
@@ -36,7 +39,9 @@ function RequestReset(): JSX.Element {
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Request a password reset</h2>
         <Error error={error} />
-        {!error && !loading && called && <p>Success! Check your email for a reset link</p>}
+        {!error && !loading && called && (
+          <p>Success! Check your email for a reset link</p>
+        )}
         <label>Email</label>
         <input type="email" name="email" ref={register({ required: true })} />
         <FormError error={errors.email} />

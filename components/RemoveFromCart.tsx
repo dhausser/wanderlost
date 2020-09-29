@@ -55,19 +55,19 @@ function updateCart(
 }
 
 function RemoveFromCart({ id }: RemoveFromCartVariables): JSX.Element {
-  const [removeFromCart, { loading }] = useMutation<RemoveFromCartTypes, RemoveFromCartVariables>(
-    REMOVE_FROM_CART_MUTATION,
-    {
-      variables: { id },
-      update: updateCart,
-      optimisticResponse: {
-        deleteCartItem: {
-          __typename: 'CartItem',
-          id,
-        },
+  const [removeFromCart, { loading }] = useMutation<
+    RemoveFromCartTypes,
+    RemoveFromCartVariables
+  >(REMOVE_FROM_CART_MUTATION, {
+    variables: { id },
+    update: updateCart,
+    optimisticResponse: {
+      deleteCartItem: {
+        __typename: 'CartItem',
+        id,
       },
-    }
-  )
+    },
+  })
   return (
     <BigButton
       disabled={loading}

@@ -4,7 +4,10 @@ import Error from './ErrorMessage'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
 import { GetUsers, GetUsers_users } from './__generated__/GetUsers'
-import { UpdatePermissions, UpdatePermissionsVariables } from './__generated__/UpdatePermissions'
+import {
+  UpdatePermissions,
+  UpdatePermissionsVariables,
+} from './__generated__/UpdatePermissions'
 import { Permission } from '../__generated__/globalTypes'
 
 const possiblePermissions = Permission
@@ -70,12 +73,12 @@ function UserPermission({ user }: { user: GetUsers_users }) {
   const [permissions, setPermissions] = useState(user.permissions)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [updatePermissions] = useMutation<UpdatePermissions, UpdatePermissionsVariables>(
-    UPDATE_PERMISSIONS_MUTATION,
-    {
-      variables: { permissions, userId: user.id },
-    }
-  )
+  const [updatePermissions] = useMutation<
+    UpdatePermissions,
+    UpdatePermissionsVariables
+  >(UPDATE_PERMISSIONS_MUTATION, {
+    variables: { permissions, userId: user.id },
+  })
   useEffect(() => {
     async function update() {
       try {
@@ -98,7 +101,9 @@ function UserPermission({ user }: { user: GetUsers_users }) {
       // add it in!
       updatedPermissions.push(checkbox.value as Permission)
     } else {
-      updatedPermissions = updatedPermissions.filter((permission) => permission !== checkbox.value)
+      updatedPermissions = updatedPermissions.filter(
+        (permission) => permission !== checkbox.value
+      )
     }
     setLoading(true)
     setPermissions(updatedPermissions)

@@ -18,7 +18,10 @@ const SIGNIN_MUTATION = gql`
 function Signin(): JSX.Element {
   const defaultValues: SigninVariables = { email: '', password: '' }
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
-  const [signin, { loading, error }] = useMutation<SigninTypes, SigninVariables>(SIGNIN_MUTATION, {
+  const [signin, { loading, error }] = useMutation<
+    SigninTypes,
+    SigninVariables
+  >(SIGNIN_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
   })
 
@@ -42,7 +45,11 @@ function Signin(): JSX.Element {
         <FormError error={errors.email} />
 
         <label>Password</label>
-        <input type="password" name="password" ref={register({ required: true })} />
+        <input
+          type="password"
+          name="password"
+          ref={register({ required: true })}
+        />
         <FormError error={errors.password} />
 
         <button type="submit">Sign In!</button>

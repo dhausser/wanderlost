@@ -1,5 +1,8 @@
 import { useQuery, gql } from '@apollo/client'
-import { GetCurrentUser, GetCurrentUser_user } from './__generated__/GetCurrentUser'
+import {
+  GetCurrentUser,
+  GetCurrentUser_user,
+} from './__generated__/GetCurrentUser'
 
 const CURRENT_USER_QUERY = gql`
   query GetCurrentUser {

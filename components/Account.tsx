@@ -19,9 +19,10 @@ function Account() {
   const defaultValues = { name: '' }
   const me = useUser()
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
-  const [updateUser, { loading }] = useMutation<UpdateUser, UpdateUserVariables>(
-    UPDATE_USER_MUTATION
-  )
+  const [updateUser, { loading }] = useMutation<
+    UpdateUser,
+    UpdateUserVariables
+  >(UPDATE_USER_MUTATION)
 
   useEffect(() => {
     reset({ name: me?.name })

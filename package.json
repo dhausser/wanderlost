@@ -8,7 +8,7 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
-    "test": "jest",
+    "test": "jest --watch",
     "test-all": "yarn lint && yarn type-check && yarn test",
     "check": "apollo client:check",
     "codegen": "apollo client:codegen --target typescript"
@@ -69,15 +69,6 @@
     "prettier": "^2.1.2",
     "typescript": "^4.0.2"
   },
-  "babel": {
-    "presets": [
-      "next/babel"
-    ]
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -87,5 +78,78 @@
   "lint-staged": {
     "*.{ts,tsx,js}": "eslint --fix",
     "*.{js,ts,tsx}": "prettier --write"
-  }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "prettier/react",
+      "prettier/@typescript-eslint"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "@typescript-eslint"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "babel": {
+    "presets": [
+      "next/babel"
+    ]
+  },
+  "eslintIgnore": [
+    "**/node_modules/*",
+    "**/out/*",
+    "**/.next/*",
+    "**/__generated__/*",
+    "nexusTypes.ts"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "prettierIgnore": [
+    "node_modules",
+    ".next",
+    "yarn.lock",
+    "package-lock.json",
+    "public"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhausser/wanderlost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhausser/wanderlost/issues"
+  },
+  "homepage": "https://testing-react-app.netlify.app",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

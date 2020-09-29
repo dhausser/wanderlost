@@ -7,13 +7,26 @@ import Error, { FormError } from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { SINGLE_ITEM_QUERY } from './SingleItem'
 import { GetItem, GetItemVariables } from './__generated__/GetItem'
-import { UpdateItem as UpdateItemTypes, UpdateItemVariables } from './__generated__/UpdateItem'
+import {
+  UpdateItem as UpdateItemTypes,
+  UpdateItemVariables,
+} from './__generated__/UpdateItem'
 
 type Inputs = Record<string, string>
 
 const UPDATE_ITEM_MUTATION = gql`
-  mutation UpdateItem($id: ID!, $title: String, $description: String, $price: Int) {
-    updateItem(id: $id, title: $title, description: $description, price: $price) {
+  mutation UpdateItem(
+    $id: ID!
+    $title: String
+    $description: String
+    $price: Int
+  ) {
+    updateItem(
+      id: $id
+      title: $title
+      description: $description
+      price: $price
+    ) {
       id
       title
       description
@@ -24,9 +37,12 @@ const UPDATE_ITEM_MUTATION = gql`
 
 function UpdateItem({ id }: UpdateItemVariables): JSX.Element {
   const router = useRouter()
-  const { data, loading } = useQuery<GetItem, GetItemVariables>(SINGLE_ITEM_QUERY, {
-    variables: { id },
-  })
+  const { data, loading } = useQuery<GetItem, GetItemVariables>(
+    SINGLE_ITEM_QUERY,
+    {
+      variables: { id },
+    }
+  )
   const { register, handleSubmit, reset, errors } = useForm<Inputs>()
 
   useEffect(() => {

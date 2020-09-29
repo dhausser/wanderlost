@@ -58,7 +58,12 @@ const Form = styled.form`
       height: 10px;
       content: '';
       display: block;
-      background-image: linear-gradient(to right, #0052cc 0%, #36b37e 50%, #0052cc 100%);
+      background-image: linear-gradient(
+        to right,
+        #0052cc 0%,
+        #36b37e 50%,
+        #0052cc 100%
+      );
     }
     &[aria-busy='true']::before {
       background-size: 50% auto;

@@ -172,7 +172,8 @@ export const OrderMutation = extendType({
           where: { id: args.id },
         })
         if (!cartItem) throw new Error('No CartItem found!')
-        if (cartItem.userId !== ctx.req.userId) throw new Error('The item must be in your own cart')
+        if (cartItem.userId !== ctx.req.userId)
+          throw new Error('The item must be in your own cart')
         const deleted = await ctx.prisma.cartItem.delete({
           where: { id: args.id },
         })
@@ -186,7 +187,8 @@ export const OrderMutation = extendType({
         token: stringArg({ required: true }),
       },
       async resolve(_root, args, ctx) {
-        if (!ctx.req.userId) throw new Error('You must be signed in to complete this order.')
+        if (!ctx.req.userId)
+          throw new Error('You must be signed in to complete this order.')
         const user = await ctx.prisma.user.findOne({
           where: { id: ctx.req.userId },
           include: {
@@ -205,26 +207,36 @@ export const OrderMutation = extendType({
           0
         )
 
-        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-          amount,
-          currency: 'USD',
-          confirm: true,
-          payment_method: args.token,
-        })
-
-        const orderItems = user.cart.map((cartItem: CartItemType & { item: Item }) => {
-          const { title, description, price, image, largeImage } = cartItem.item
-          const orderItem = {
-            title,
-            description,
-            price,
-            image: image as string,
-            largeImage: largeImage as string,
-            quantity: cartItem.quantity,
-            user: { connect: { id: user.id } },
+        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(
+          {
+            amount,
+            currency: 'USD',
+            confirm: true,
+            payment_method: args.token,
           }
-          return orderItem
-        })
+        )
+
+        const orderItems = user.cart.map(
+          (cartItem: CartItemType & { item: Item }) => {
+            const {
+              title,
+              description,
+              price,
+              image,
+              largeImage,
+            } = cartItem.item
+            const orderItem = {
+              title,
+              description,
+              price,
+              image: image as string,
+              largeImage: largeImage as string,
+              quantity: cartItem.quantity,
+              user: { connect: { id: user.id } },
+            }
+            return orderItem
+          }
+        )
 
         const order = await ctx.prisma.order.create({
           data: {
@@ -236,7 +248,9 @@ export const OrderMutation = extendType({
           include: { items: true },
         })
 
-        const cartItemIds = user.cart.map((cartItem: CartItemType & { item: Item }) => cartItem.id)
+        const cartItemIds = user.cart.map(
+          (cartItem: CartItemType & { item: Item }) => cartItem.id
+        )
 
         await ctx.prisma.cartItem.deleteMany({
           where: {

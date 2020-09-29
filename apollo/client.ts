@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client'
 import { CartItem } from '@prisma/client'
 // import { schema } from '../graphql/schema'
 // import { createContext } from './context'
@@ -42,7 +46,9 @@ function createApolloClient() {
   })
 }
 
-export function initializeApollo(initialState = null): ApolloClient<NormalizedCacheObject | null> {
+export function initializeApollo(
+  initialState = null
+): ApolloClient<NormalizedCacheObject | null> {
   const _apolloClient = apolloClient ?? createApolloClient()
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state

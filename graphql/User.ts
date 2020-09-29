@@ -1,4 +1,11 @@
-import { objectType, enumType, extendType, stringArg, idArg, arg } from '@nexus/schema'
+import {
+  objectType,
+  enumType,
+  extendType,
+  stringArg,
+  idArg,
+  arg,
+} from '@nexus/schema'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import sgMail from '@sendgrid/mail'
@@ -72,7 +79,14 @@ export const SuccessMessage = objectType({
 
 export const Permission = enumType({
   name: 'Permission',
-  members: ['ADMIN', 'ITEMCREATE', 'ITEMDELETE', 'ITEMUPDATE', 'PERMISSIONUPDATE', 'USER'],
+  members: [
+    'ADMIN',
+    'ITEMCREATE',
+    'ITEMDELETE',
+    'ITEMUPDATE',
+    'PERMISSIONUPDATE',
+    'USER',
+  ],
 })
 
 export const UserQuery = extendType({
@@ -126,7 +140,10 @@ export const UserMutation = extendType({
             },
           },
         })
-        const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: user.id },
+          process.env.APP_SECRET as string
+        )
         ctx.res.cookie('token', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
@@ -157,7 +174,10 @@ export const UserMutation = extendType({
         }
 
         // 3. generate the JWT Token
-        const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: user.id },
+          process.env.APP_SECRET as string
+        )
 
         // 4. Set the cookie with the token
         ctx.res.cookie('token', token, {
@@ -260,7 +280,10 @@ export const UserMutation = extendType({
           },
         })
         // 6. Generate JWT
-        const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET as string)
+        const token = jwt.sign(
+          { userId: updatedUser.id },
+          process.env.APP_SECRET as string
+        )
         // 7. Set the JWT cookie
         ctx.res.cookie('token', token, {
           httpOnly: true,

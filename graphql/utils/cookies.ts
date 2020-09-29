@@ -29,7 +29,8 @@ const setCookie = (
   value: unknown,
   options: Options = {}
 ): void => {
-  const stringValue = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
+  const stringValue =
+    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
 
   if (options.maxAge) {
     options.expires = new Date(Date.now() + options.maxAge)

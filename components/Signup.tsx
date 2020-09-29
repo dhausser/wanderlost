@@ -18,10 +18,10 @@ const SIGNUP_MUTATION = gql`
 function Signup(): JSX.Element {
   const defaultValues = { email: '', name: '', password: '' }
   const { register, handleSubmit, reset, errors } = useForm({ defaultValues })
-  const [signup, { error, loading, data }] = useMutation<SignupTypes, SignupVariables>(
-    SIGNUP_MUTATION,
-    { refetchQueries: [{ query: CURRENT_USER_QUERY }] }
-  )
+  const [signup, { error, loading, data }] = useMutation<
+    SignupTypes,
+    SignupVariables
+  >(SIGNUP_MUTATION, { refetchQueries: [{ query: CURRENT_USER_QUERY }] })
 
   async function onSubmit(data: SignupVariables) {
     await signup({
@@ -37,7 +37,9 @@ function Signup(): JSX.Element {
   return (
     <Form method="post" onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading} aria-busy={loading}>
-        {data && data.signup && <p>Signed up with {data.signup.email} — Please Sign In now</p>}
+        {data && data.signup && (
+          <p>Signed up with {data.signup.email} — Please Sign In now</p>
+        )}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
         <label>Email</label>

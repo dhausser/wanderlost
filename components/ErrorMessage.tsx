@@ -23,10 +23,11 @@ const ErrorStyles = styled.div`
 
 const DisplayError = ({ error }: DisplayErrorProps): JSX.Element | null => {
   if (!error) return null
-  // @ts-expect-error as networkError exits on ApolloError
   if (
     error.networkError &&
+    // @ts-expect-error as networkError exits on ApolloError
     error.networkError.result &&
+    // @ts-expect-error as networkError exits on ApolloError
     error.networkError.result.errors.length
   ) {
     // @ts-expect-error as networkError exits on ApolloError

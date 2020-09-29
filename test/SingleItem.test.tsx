@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'
 import SingleItem, { SINGLE_ITEM_QUERY } from '../components/SingleItem'
-import { fakeItem } from '../lib/testUtils'
+import { fakeItem } from '../lib/test-utils'
 
 const item = fakeItem()
 describe('<SingleItem/>', () => {

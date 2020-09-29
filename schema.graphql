@@ -48,7 +48,11 @@ type Mutation {
   deleteCartItem(id: ID!): CartItem
   deleteItem(id: ID!): Item
   requestReset(email: String!): SuccessMessage!
-  resetPassword(confirmPassword: String!, password: String!, resetToken: String!): User!
+  resetPassword(
+    confirmPassword: String!
+    password: String!
+    resetToken: String!
+  ): User!
   signin(email: String!, password: String!): User
   signout: SuccessMessage!
   signup(email: String!, name: String!, password: String!): User!

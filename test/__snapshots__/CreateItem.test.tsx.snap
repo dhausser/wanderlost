@@ -21,12 +21,14 @@ exports[`<CreateItem/> renders and matches snapshot 1`] = `
       </label>
       <input
         name="title"
+        placeholder="Title"
       />
       <label>
         Price
       </label>
       <input
         name="price"
+        placeholder="Price"
         type="number"
       />
       <label>
@@ -34,6 +36,7 @@ exports[`<CreateItem/> renders and matches snapshot 1`] = `
       </label>
       <textarea
         name="description"
+        placeholder="Description"
       />
       <button
         type="submit"

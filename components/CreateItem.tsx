@@ -1,13 +1,17 @@
 import { useState, ChangeEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, gql } from '@apollo/client'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
+// import { useRouter } from 'next/router'
 // import { v2 as cloudinary } from 'cloudinary'
 import Form from './styles/Form'
 import Error, { FormError } from './ErrorMessage'
 import { ALL_ITEMS_QUERY } from './Items'
 import { PAGINATION_QUERY } from './Pagination'
-import { CreateItem as CreateItemTypes, CreateItemVariables } from './__generated__/CreateItem'
+import {
+  CreateItem as CreateItemTypes,
+  CreateItemVariables,
+} from './__generated__/CreateItem'
 
 type Inputs = Record<string, string>
 
@@ -35,12 +39,14 @@ function CreateItem(): JSX.Element {
   const [image, setImage] = useState('')
   const [largeImage, setLargeImage] = useState('')
   const { register, handleSubmit, errors } = useForm<Inputs>()
-  const router = useRouter()
+  // const router = useRouter()
 
-  const [createItem, { loading, error }] = useMutation<CreateItemTypes, CreateItemVariables>(
-    CREATE_ITEM_MUTATION,
-    { refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }] }
-  )
+  const [createItem, { loading, error }] = useMutation<
+    CreateItemTypes,
+    CreateItemVariables
+  >(CREATE_ITEM_MUTATION, {
+    refetchQueries: [{ query: ALL_ITEMS_QUERY }, { query: PAGINATION_QUERY }],
+  })
 
   async function uploadFile(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files as FileList
@@ -48,10 +54,13 @@ function CreateItem(): JSX.Element {
     data.append('file', files[0])
     data.append('upload_preset', 'wanderlost')
 
-    const res = await fetch('https://api.cloudinary.com/v1_1/davyhausser/image/upload', {
-      method: 'POST',
-      body: data,
-    })
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/davyhausser/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      }
+    )
     const file = await res.json()
 
     setImage(file.secure_url)
@@ -98,7 +107,7 @@ function CreateItem(): JSX.Element {
         largeImage: largeImage,
       },
     })
-    router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
+    Router.push('/item/[id]', `/item/${res.data?.createItem.id}`)
   }
 
   return (
@@ -106,19 +115,37 @@ function CreateItem(): JSX.Element {
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
         <label>Image</label>
-        <input name="file" type="file" ref={register({ required: true })} onChange={uploadFile} />
+        <input
+          name="file"
+          type="file"
+          ref={register({ required: true })}
+          onChange={uploadFile}
+        />
         {image && <img src={image} width="200" alt="Upload Preview" />}
 
         <label>Title</label>
-        <input name="title" ref={register({ required: true })} />
+        <input
+          name="title"
+          placeholder="Title"
+          ref={register({ required: true })}
+        />
         <FormError error={errors.title} />
 
         <label>Price</label>
-        <input name="price" type="number" ref={register({ required: true })} />
+        <input
+          name="price"
+          placeholder="Price"
+          type="number"
+          ref={register({ required: true })}
+        />
         <FormError error={errors.price} />
 
         <label>Description</label>
-        <textarea name="description" ref={register({ required: true })} />
+        <textarea
+          name="description"
+          placeholder="Description"
+          ref={register({ required: true })}
+        />
         <FormError error={errors.description} />
 
         <button type="submit">Submit</button>

@@ -9,7 +9,8 @@
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
     "test": "jest --watch",
-    "test-all": "yarn lint && yarn type-check && yarn test",
+    "test:ci": "jest",
+    "test-all": "yarn lint && yarn type-check && yarn test:ci",
     "check": "apollo client:check",
     "codegen": "apollo client:codegen --target typescript"
   },

@@ -1,7 +1,9 @@
 import React from 'react'
 import { render as defaultRender, RenderResult } from '@testing-library/react'
+import { MockedProvider, MockedResponse } from '@apollo/react-testing'
 import { RouterContext } from 'next/dist/next-server/lib/router-context'
 import { NextRouter } from 'next/router'
+
 import '@testing-library/jest-dom/extend-expect'
 import casual from 'casual'
 
@@ -28,18 +30,23 @@ import {
 // --------------------------------------------------
 type DefaultParams = Parameters<typeof defaultRender>
 type RenderUI = DefaultParams[0]
-type RenderOptions = DefaultParams[1] & { router?: Partial<NextRouter> }
+type RenderOptions = DefaultParams[1] & {
+  router?: Partial<NextRouter>
+  mocks?: MockedResponse<Record<string, string>>[] | undefined
+}
 
 export function render(
   ui: RenderUI,
-  { wrapper, router, ...options }: RenderOptions = {}
+  { wrapper, router, mocks, ...options }: RenderOptions = {}
 ): RenderResult {
   if (!wrapper) {
     wrapper = ({ children }) => {
       const Wrapper = (
-        <RouterContext.Provider value={{ ...mockRouter, ...router }}>
-          {children}
-        </RouterContext.Provider>
+        <MockedProvider mocks={mocks}>
+          <RouterContext.Provider value={{ ...mockRouter, ...router }}>
+            {children}
+          </RouterContext.Provider>
+        </MockedProvider>
       )
       return Wrapper
     }

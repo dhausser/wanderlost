@@ -1,11 +1,10 @@
-import { render, screen } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'
+import { render, fakeItem } from '../lib/test-utils'
 import SingleItem, { SINGLE_ITEM_QUERY } from '../components/SingleItem'
-import { fakeItem } from '../lib/test-utils'
 
 const item = fakeItem()
 describe('<SingleItem/>', () => {
-  it('renders with proper data', async () => {
+  test('renders with proper data', async () => {
     const mocks = [
       {
         // when someone makes a request with this query and variable combo
@@ -18,16 +17,16 @@ describe('<SingleItem/>', () => {
         },
       },
     ]
-    const { container } = render(
+    const { container, findByTestId } = render(
       <MockedProvider mocks={mocks}>
         <SingleItem item={item} />
       </MockedProvider>
     )
-    await screen.findByTestId('singleItem')
+    await findByTestId('singleItem')
     expect(container).toMatchSnapshot()
   })
 
-  // it('Errors with a not found item', async () => {
+  // test('Errors with a not found item', async () => {
   //   const mocks = [
   //     {
   //       request: { query: SINGLE_ITEM_QUERY, variables: { id: '123' } },

@@ -40,10 +40,15 @@ function RequestReset(): JSX.Element {
         <h2>Request a password reset</h2>
         <Error error={error} />
         {!error && !loading && called && (
-          <p>Success! Check your email for a reset link</p>
+          <p>Success! Check your email for a reset link!</p>
         )}
         <label>Email</label>
-        <input type="email" name="email" ref={register({ required: true })} />
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          ref={register({ required: true })}
+        />
         <FormError error={errors.email} />
 
         <button type="submit">Request Reset!</button>

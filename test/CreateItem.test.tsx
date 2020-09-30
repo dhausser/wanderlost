@@ -1,8 +1,8 @@
+import { render, screen, waitFor, fakeItem } from '../lib/test-utils'
 import userEvent from '@testing-library/user-event'
 import { MockedProvider } from '@apollo/react-testing'
 import Router from 'next/router'
 import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem'
-import { render, screen, waitFor, fakeItem } from '../lib/test-utils'
 
 const item = fakeItem()
 

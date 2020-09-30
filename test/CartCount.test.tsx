@@ -5,16 +5,16 @@ const wait = (amount = 0) =>
   new Promise((resolve) => setTimeout(resolve, amount))
 
 describe('<CartCount/>', () => {
-  it('renders', () => {
+  test('renders', () => {
     render(<CartCount count={10} />)
   })
 
-  it('matches the snapshot', () => {
+  test('matches the snapshot', () => {
     const { container } = render(<CartCount count={11} />)
     expect(container).toMatchSnapshot()
   })
 
-  it('updates via props', async () => {
+  test('updates via props', async () => {
     const { container, rerender } = render(<CartCount count={11} />)
     expect(container.textContent).toBe('11')
     rerender(<CartCount count={12} />)

@@ -1,12 +1,11 @@
-import { render, screen } from '@testing-library/react'
 import { MockedProvider } from '@apollo/react-testing'
+import { render, fakeItem } from '../lib/test-utils'
 import ItemComponent from '../components/Item'
-import { fakeItem } from '../lib/test-utils'
 
 const item = fakeItem()
 
 describe('<Item/>', () => {
-  it('renders and matches the snapshot', () => {
+  test('renders and matches the snapshot', () => {
     const { container } = render(
       <MockedProvider>
         <ItemComponent item={item} />
@@ -15,43 +14,44 @@ describe('<Item/>', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders the image properly', () => {
-    render(
+  test('renders the image properly', () => {
+    const { getByAltText } = render(
       <MockedProvider>
         <ItemComponent item={item} />
       </MockedProvider>
     )
-    const img = screen.getByAltText(item.title)
+    const img = getByAltText(item.title)
     expect(img).toBeInTheDocument()
   })
 
-  it('renders the pricetag and title', () => {
-    const { container } = render(
+  test('renders the pricetag and title', () => {
+    const { container, getByText } = render(
       <MockedProvider>
         <ItemComponent item={item} />
       </MockedProvider>
     )
-    expect(screen.getByText('$50')).toBeInTheDocument()
+    expect(getByText('$50')).toBeInTheDocument()
     const link = container.querySelector('a')
     expect(link).toHaveAttribute('href', '/item/abc123')
     expect(link).toHaveTextContent(item.title)
   })
 
-  it('renders out the buttons properly', () => {
-    render(
+  test('renders out the buttons properly', () => {
+    const { getByText } = render(
       <MockedProvider>
         <ItemComponent item={item} />
       </MockedProvider>
     )
 
-    // const edit = screen.getByText(/Edit/i)
-    // expect(edit.href).toContain('update?id=abc123')
+    const edit = getByText(/Edit/i)
+    // @ts-expect-error href is not detected by typescript but test passes
+    expect(edit.href).toContain('update?id=abc123')
 
-    const addToCart = screen.getByText(/add to cart/i)
+    const addToCart = getByText(/add to cart/i)
     expect(addToCart).toHaveProperty('type', 'button')
     expect(addToCart).toBeInTheDocument()
 
-    const deleteItem = screen.getByText(/delete/i)
+    const deleteItem = getByText(/delete/i)
     expect(deleteItem).toHaveProperty('type', 'button')
     expect(deleteItem).toBeInTheDocument()
   })

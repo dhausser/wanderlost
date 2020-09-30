@@ -1,7 +1,8 @@
-import { gql } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components'
 import Head from 'next/head'
-import { GetItem } from './__generated__/GetItem'
+import Error from './ErrorMessage'
+import { GetItemVariables } from './__generated__/GetItem'
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
@@ -35,8 +36,14 @@ const SINGLE_ITEM_QUERY = gql`
   }
 `
 
-function SingleItem({ item }: GetItem): JSX.Element {
-  if (!item) throw new Error('Item not found')
+function SingleItem({ id }: GetItemVariables): JSX.Element {
+  const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
+    variables: { id },
+  })
+  if (error) return <Error error={error} />
+  if (loading) return <p>Loading...</p>
+  if (!data.item) return <p>No Item Found for {id}</p>
+  const { item } = data
   return (
     <SingleItemStyles data-testid="singleItem">
       <Head>

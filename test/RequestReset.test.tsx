@@ -18,7 +18,7 @@ const mocks = [
 ]
 
 describe('<RequestReset/>', () => {
-  it('renders and matches snapshot', async () => {
+  test('renders and matches snapshot', async () => {
     const { container } = render(
       <MockedProvider>
         <RequestReset />
@@ -27,7 +27,7 @@ describe('<RequestReset/>', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('calls the mutation', async () => {
+  test('calls the mutation', async () => {
     const { container, getByText, getByPlaceholderText, findByText } = render(
       <MockedProvider mocks={mocks}>
         <RequestReset />

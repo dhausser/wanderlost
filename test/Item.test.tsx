@@ -27,6 +27,7 @@ describe('<Item/>', () => {
     const { getByText } = render(<ItemComponent item={item} />)
 
     const edit = getByText(/Edit/i)
+    // @ts-expect-error because TS
     expect(edit.href).toContain('update?id=abc123')
 
     const addToCart = getByText(/add to cart/i)

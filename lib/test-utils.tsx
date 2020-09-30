@@ -86,8 +86,9 @@ const fakeUser = (): Omit<GetCurrentUser_user, 'permissions'> => ({
   id: '4234',
   name: casual.name,
   email: casual.email,
-  // permissions: [Permission.ADMIN],
-  // orders: [],
+  // @ts-expect-error since permission type needs to be checked
+  permissions: ['ADMIN'], // [Permission.ADMIN],
+  orders: [],
   cart: [],
 })
 

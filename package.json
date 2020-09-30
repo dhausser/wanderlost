@@ -8,7 +8,7 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
-    "test": "jest --watch",
+    "test": "jest",
     "test:ci": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test:ci",
     "check": "apollo client:check",

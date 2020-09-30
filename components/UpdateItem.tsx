@@ -82,16 +82,26 @@ function UpdateItem({ id }: UpdateItemVariables): JSX.Element {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={updating}>
-        <label>Title</label>
-        <input name="title" ref={register({ required: true })} />
+        <label>
+          Title
+          <input name="title" ref={register({ required: true })} />
+        </label>
         <FormError error={errors.title} />
 
-        <label>Price</label>
-        <input name="price" type="number" ref={register({ required: true })} />
+        <label>
+          Price
+          <input
+            name="price"
+            type="number"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.price} />
 
-        <label>Description</label>
-        <textarea name="description" ref={register({ required: true })} />
+        <label>
+          Description
+          <textarea name="description" ref={register({ required: true })} />
+        </label>
         <FormError error={errors.description} />
 
         <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>

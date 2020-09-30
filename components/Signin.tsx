@@ -40,16 +40,26 @@ function Signin(): JSX.Element {
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>Sign into your Account</h2>
         <Error error={error} />
-        <label>Email</label>
-        <input type="email" name="email" ref={register({ required: true })} />
+        <label>
+          Email
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.email} />
 
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          ref={register({ required: true })}
-        />
+        <label>
+          Password
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.password} />
 
         <button type="submit">Sign In!</button>

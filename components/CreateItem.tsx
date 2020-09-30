@@ -114,38 +114,46 @@ function CreateItem(): JSX.Element {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Error error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        <label>Image</label>
-        <input
-          name="file"
-          type="file"
-          ref={register({ required: true })}
-          onChange={uploadFile}
-        />
+        <label>
+          Image
+          <input
+            name="file"
+            type="file"
+            ref={register({ required: true })}
+            onChange={uploadFile}
+          />
+        </label>
         {image && <img src={image} width="200" alt="Upload Preview" />}
 
-        <label>Title</label>
-        <input
-          name="title"
-          placeholder="Title"
-          ref={register({ required: true })}
-        />
+        <label>
+          Title
+          <input
+            name="title"
+            placeholder="Title"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.title} />
 
-        <label>Price</label>
-        <input
-          name="price"
-          placeholder="Price"
-          type="number"
-          ref={register({ required: true })}
-        />
+        <label>
+          Price
+          <input
+            name="price"
+            placeholder="Price"
+            type="number"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.price} />
 
-        <label>Description</label>
-        <textarea
-          name="description"
-          placeholder="Description"
-          ref={register({ required: true })}
-        />
+        <label>
+          Description
+          <textarea
+            name="description"
+            placeholder="Description"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.description} />
 
         <button type="submit">Submit</button>

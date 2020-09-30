@@ -36,41 +36,47 @@ function Signup(): JSX.Element {
 
   return (
     <Form method="post" onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={loading} aria-busy={loading}>
+      <fieldset disabled={loading} aria-busy={loading} data-testid="loading">
         {data && data.signup && (
           <p>Signed up with {data.signup.email} — Please Sign In now</p>
         )}
         <h2>Sign Up for an Account</h2>
         <Error error={error} />
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          autoComplete="email"
-          ref={register({ required: true })}
-        />
+        <label>
+          Email
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            autoComplete="email"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.email} />
         {errors.email && <p>This is required</p>}
 
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="name"
-          autoComplete="name"
-          ref={register({ required: true })}
-        />
+        <label>
+          Name
+          <input
+            type="text"
+            name="name"
+            placeholder="name"
+            autoComplete="name"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.name} />
 
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          autoComplete="new-password"
-          ref={register({ required: true })}
-        />
+        <label>
+          Password
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            autoComplete="new-password"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.password} />
 
         <button type="submit">Sign Up!</button>
@@ -80,4 +86,4 @@ function Signup(): JSX.Element {
 }
 
 export default Signup
-export { SIGNUP_MUTATION }
+export { SIGNUP_MUTATION, Signup }

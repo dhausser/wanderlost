@@ -34,16 +34,17 @@ type RenderUI = DefaultParams[0]
 type RenderOptions = DefaultParams[1] & {
   router?: Partial<NextRouter>
   mocks?: MockedResponse<Record<string, any>>[] | undefined
+  addTypename?: boolean
 }
 
 export function render(
   ui: RenderUI,
-  { wrapper, router, mocks, ...options }: RenderOptions = {}
+  { wrapper, router, mocks, addTypename, ...options }: RenderOptions = {}
 ): RenderResult {
   if (!wrapper) {
     wrapper = ({ children }) => {
       const Wrapper = (
-        <MockedProvider mocks={mocks}>
+        <MockedProvider mocks={mocks} addTypename={addTypename}>
           <RouterContext.Provider value={{ ...mockRouter, ...router }}>
             {children}
           </RouterContext.Provider>
@@ -89,15 +90,16 @@ const fakeItem = (): GetItem_item => ({
   largeImage: 'dog.jpg',
 })
 
-const fakeUser = (): Omit<GetCurrentUser_user, 'permissions'> => ({
+const fakeUser = (overrides?: GetCurrentUser_user): GetCurrentUser_user => ({
   __typename: 'User',
   id: '4234',
   name: casual.name,
   email: casual.email,
-  // @ts-expect-error since permission type needs to be checked
-  permissions: ['ADMIN'], // [Permission.ADMIN],
+  // @ts-expect-error not recognized
+  permissions: ['ADMIN'],
   orders: [],
   cart: [],
+  ...overrides,
 })
 
 const fakeOrderItem = (): GetOrder_order_items => ({

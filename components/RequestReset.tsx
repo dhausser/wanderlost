@@ -42,13 +42,15 @@ function RequestReset(): JSX.Element {
         {!error && !loading && called && (
           <p>Success! Check your email for a reset link!</p>
         )}
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          ref={register({ required: true })}
-        />
+        <label>
+          Email
+          <input
+            type="email"
+            name="email"
+            placeholder="email"
+            ref={register({ required: true })}
+          />
+        </label>
         <FormError error={errors.email} />
 
         <button type="submit">Request Reset!</button>

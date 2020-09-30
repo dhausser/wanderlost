@@ -3,11 +3,12 @@ import { render as defaultRender, RenderResult } from '@testing-library/react'
 import { MockedProvider, MockedResponse } from '@apollo/react-testing'
 import { RouterContext } from 'next/dist/next-server/lib/router-context'
 import { NextRouter } from 'next/router'
-
-import '@testing-library/jest-dom/extend-expect'
 import casual from 'casual'
 
+import '@testing-library/jest-dom/extend-expect'
+
 export * from '@testing-library/react'
+export { default as userEvent } from '@testing-library/user-event'
 
 import { GetItem_item } from '../components/__generated__/GetItem'
 import {
@@ -32,7 +33,7 @@ type DefaultParams = Parameters<typeof defaultRender>
 type RenderUI = DefaultParams[0]
 type RenderOptions = DefaultParams[1] & {
   router?: Partial<NextRouter>
-  mocks?: MockedResponse<Record<string, string>>[] | undefined
+  mocks?: MockedResponse<Record<string, any>>[] | undefined
 }
 
 export function render(

@@ -1,4 +1,3 @@
-import { MockedProvider } from '@apollo/react-testing'
 import { render, fakeUser } from '../lib/test-utils'
 import PrivateRoute from '../components/PrivateRoute'
 import { CURRENT_USER_QUERY } from '../components/User'
@@ -21,11 +20,10 @@ describe('<PrivateRoute/>', () => {
   test('renders the sign in dialog to logged out users', async () => {
     const Hey = () => <p>Hey!</p>
     const { container } = render(
-      <MockedProvider mocks={notSignedInMocks}>
-        <PrivateRoute>
-          <Hey />
-        </PrivateRoute>
-      </MockedProvider>
+      <PrivateRoute>
+        <Hey />
+      </PrivateRoute>,
+      { mocks: notSignedInMocks }
     )
 
     expect(container).toHaveTextContent(/Sign into your/)
@@ -34,11 +32,10 @@ describe('<PrivateRoute/>', () => {
   test('renders the child component when the user is signed in', async () => {
     const Hey = () => <p>Hey!</p>
     const { container, findByText } = render(
-      <MockedProvider mocks={signedInMocks}>
-        <PrivateRoute>
-          <Hey />
-        </PrivateRoute>
-      </MockedProvider>
+      <PrivateRoute>
+        <Hey />
+      </PrivateRoute>,
+      { mocks: signedInMocks }
     )
     await findByText('Hey!')
     expect(container).toContainHTML('<p>Hey!</p>')

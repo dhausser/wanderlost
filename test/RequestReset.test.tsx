@@ -1,6 +1,4 @@
-import { MockedProvider } from '@apollo/react-testing'
-import { render } from '../lib/test-utils'
-import userEvent from '@testing-library/user-event'
+import { render, userEvent } from '../lib/test-utils'
 import RequestReset, {
   REQUEST_RESET_MUTATION,
 } from '../components/RequestReset'
@@ -19,20 +17,17 @@ const mocks = [
 
 describe('<RequestReset/>', () => {
   test('renders and matches snapshot', async () => {
-    const { container } = render(
-      <MockedProvider>
-        <RequestReset />
-      </MockedProvider>
-    )
+    const { container } = render(<RequestReset />)
     expect(container).toMatchSnapshot()
   })
 
   test('calls the mutation', async () => {
-    const { container, getByText, getByPlaceholderText, findByText } = render(
-      <MockedProvider mocks={mocks}>
-        <RequestReset />
-      </MockedProvider>
-    )
+    const {
+      container,
+      getByText,
+      getByPlaceholderText,
+      findByText,
+    } = render(<RequestReset />, { mocks: mocks })
 
     userEvent.type(getByPlaceholderText('email'), 'davy.hausser@gmail.com')
     userEvent.click(getByText(/Request Reset/i))

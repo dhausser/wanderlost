@@ -1,6 +1,4 @@
-import { render, screen, waitFor, fakeItem } from '../lib/test-utils'
-import userEvent from '@testing-library/user-event'
-import { MockedProvider } from '@apollo/react-testing'
+import { render, screen, waitFor, userEvent, fakeItem } from '../lib/test-utils'
 import Router from 'next/router'
 import CreateItem, { CREATE_ITEM_MUTATION } from '../components/CreateItem'
 
@@ -8,20 +6,12 @@ const item = fakeItem()
 
 describe('<CreateItem/>', () => {
   test('renders and matches snapshot', () => {
-    const { container } = render(
-      <MockedProvider>
-        <CreateItem />
-      </MockedProvider>
-    )
+    const { container } = render(<CreateItem />)
     expect(container).toMatchSnapshot()
   })
 
   test('handles state updating', async () => {
-    render(
-      <MockedProvider>
-        <CreateItem />
-      </MockedProvider>
-    )
+    render(<CreateItem />)
 
     userEvent.type(screen.getByPlaceholderText('Title'), item.title)
     userEvent.type(screen.getByPlaceholderText('Price'), item.price.toString())
@@ -60,11 +50,7 @@ describe('<CreateItem/>', () => {
       },
     ]
 
-    render(
-      <MockedProvider mocks={mocks}>
-        <CreateItem />
-      </MockedProvider>
-    )
+    render(<CreateItem />, { mocks })
 
     userEvent.type(screen.getByPlaceholderText('Title'), item.title)
     userEvent.type(screen.getByPlaceholderText('Price'), item.price.toString())

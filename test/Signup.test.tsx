@@ -1,4 +1,3 @@
-import { MockedProvider } from '@apollo/react-testing'
 import { render, fakeUser } from '../lib/test-utils'
 import SignUp, { SIGNUP_MUTATION } from '../components/Signup'
 import { CURRENT_USER_QUERY } from '../components/User'

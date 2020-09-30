@@ -59,4 +59,4 @@ function SingleItem({ id }: GetItemVariables): JSX.Element {
 }
 
 export default SingleItem
-export { SINGLE_ITEM_QUERY }
+export { SINGLE_ITEM_QUERY, SingleItem }

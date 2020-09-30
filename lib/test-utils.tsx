@@ -83,10 +83,10 @@ casual.seed(777)
 const fakeItem = (): GetItem_item => ({
   __typename: 'Item',
   id: 'abc123',
-  price: 5000,
-  image: 'dog-small.jpg',
   title: 'dogs are best',
+  price: 5000,
   description: 'dogs',
+  image: 'dog-small.jpg',
   largeImage: 'dog.jpg',
 })
 

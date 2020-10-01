@@ -3,6 +3,8 @@ import { render, cleanup } from '@testing-library/react'
 
 import { GET_DOG_QUERY, Dog } from '../components/Dog'
 
+const dog = { id: 1, name: 'Buck', breed: 'poodle' }
+
 const mocks = [
   {
     request: {
@@ -13,13 +15,15 @@ const mocks = [
     },
     result: {
       data: {
-        dog: { id: '1', name: 'Buck', breed: 'bulldog' },
+        dog,
       },
     },
   },
 ]
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+})
 
 it('renders without error', () => {
   render(
@@ -29,6 +33,16 @@ it('renders without error', () => {
   )
 })
 
+// it('should render loading state initially', () => {
+//   const { getByText } = render(
+//     <MockedProvider mocks={[]}>
+//       <Dog name="Buck" />
+//     </MockedProvider>
+//   )
+
+//   expect(getByText('Loading...')).toBeInTheDocument
+// })
+
 it('should render dog', async () => {
   const dogMock = {
     request: {
@@ -36,7 +50,7 @@ it('should render dog', async () => {
       variables: { name: 'Buck' },
     },
     result: {
-      data: { dog: { id: 1, name: 'Buck', breed: 'poodle' } },
+      data: { dog },
     },
   }
 
@@ -47,5 +61,7 @@ it('should render dog', async () => {
   )
 
   const text = await findByText('Buck is a poodle')
+  console.log(text)
+
   expect(text).toBeInTheDocument
 })

@@ -1,7 +1,6 @@
 import { MockedProvider } from '@apollo/client/testing'
-import { screen, render, cleanup } from '@testing-library/react'
+import { render, cleanup } from '@testing-library/react'
 
-// The component AND the query need to be exported
 import { GET_DOG_QUERY, Dog } from '../components/Dog'
 
 const mocks = [

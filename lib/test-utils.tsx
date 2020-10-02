@@ -12,6 +12,7 @@ import {
   GetOrder_order_items,
 } from '../components/__generated__/GetOrder'
 import {
+  GetCurrentUser,
   GetCurrentUser_user,
   GetCurrentUser_user_cart,
 } from '../components/__generated__/GetCurrentUser'
@@ -119,14 +120,13 @@ const fakeOrder = (): GetOrder_order => ({
 })
 
 const fakeCartItem = (
-  overrides: Partial<GetCurrentUser_user_cart>
-): GetCurrentUser_user_cart => ({
+  id: string
+): GetCurrentUser_user_cart & GetCurrentUser => ({
   __typename: 'CartItem',
-  id: 'omg123',
+  id,
   quantity: 3,
   item: fakeItem(),
-  // user: fakeUser(),
-  ...overrides,
+  user: fakeUser(),
 })
 
 // Fake LocalStorage

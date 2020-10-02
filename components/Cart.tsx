@@ -18,7 +18,7 @@ function Cart(): JSX.Element {
   }, 0) as number
 
   return (
-    <CartStyles open={cartOpen}>
+    <CartStyles open={cartOpen} data-testid="cart">
       <header>
         <CloseButton onClick={toggleCart} title="close">
           &times;
@@ -44,3 +44,4 @@ function Cart(): JSX.Element {
 }
 
 export default Cart
+export { Cart }

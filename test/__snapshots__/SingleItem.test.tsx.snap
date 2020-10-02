@@ -1,9 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SingleItem/> it renders loading state 1`] = `
+exports[`<SingleItem/> renders with proper data 1`] = `
 <div>
-  <p>
-    Loading...
-  </p>
+  <div
+    class="sc-gtssRu lbUhcM"
+    data-testid="singleItem"
+  >
+    <img
+      alt="dogs are best"
+      src="dog.jpg"
+    />
+    <div
+      class="details"
+    >
+      <h2>
+        Viewing 
+        dogs are best
+      </h2>
+      <p>
+        dogs
+      </p>
+    </div>
+  </div>
 </div>
 `;

@@ -10,34 +10,34 @@ exports[`<CreateItem/> renders and matches snapshot 1`] = `
     >
       <label>
         Image
+        <input
+          name="file"
+          type="file"
+        />
       </label>
-      <input
-        name="file"
-        type="file"
-      />
       
       <label>
         Title
+        <input
+          name="title"
+          placeholder="Title"
+        />
       </label>
-      <input
-        name="title"
-        placeholder="Title"
-      />
       <label>
         Price
+        <input
+          name="price"
+          placeholder="Price"
+          type="number"
+        />
       </label>
-      <input
-        name="price"
-        placeholder="Price"
-        type="number"
-      />
       <label>
         Description
+        <textarea
+          name="description"
+          placeholder="Description"
+        />
       </label>
-      <textarea
-        name="description"
-        placeholder="Description"
-      />
       <button
         type="submit"
       >

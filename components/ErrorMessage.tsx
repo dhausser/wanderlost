@@ -33,7 +33,7 @@ const DisplayError = ({ error }: DisplayErrorProps): JSX.Element | null => {
     // @ts-expect-error as networkError exits on ApolloError
     return error.networkError.result.errors.map((err: ApolloError) => (
       <ErrorStyles key={err.message}>
-        <p data-test="graphql-error">
+        <p data-testid="graphql-error">
           <strong>Shoot!</strong>
           {err.message.replace('GraphQL error: ', '')}
         </p>
@@ -42,7 +42,7 @@ const DisplayError = ({ error }: DisplayErrorProps): JSX.Element | null => {
   }
   return (
     <ErrorStyles>
-      <p data-test="graphql-error">
+      <p data-testid="graphql-error">
         <strong>Shoot!</strong>
         {error?.message.replace('GraphQL error: ', '')}
       </p>

@@ -22,29 +22,15 @@ const mocks = [
 ]
 
 describe('Dog', () => {
-  // automatically unmount and cleanup DOM after the test is finished.
-  afterEach(() => {
-    cleanup()
-  })
+  afterEach(cleanup)
 
-  it('renders without error', () => {
-    render(
+  it('renders loading state', () => {
+    const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Dog name="Buck" />
       </MockedProvider>
     )
-  })
-
-  it('should render loading state initially', async () => {
-    const { findByText } = render(
-      <MockedProvider mocks={[]}>
-        <Dog name="Buck" />
-      </MockedProvider>
-    )
-
-    const text = await findByText('Loading...')
-    expect(text).toBeInTheDocument
-    // expect(getByText('Loading...')).toBeInTheDocument
+    expect(getByText('Loading...')).toBeInTheDocument
   })
 
   it('should render dog', async () => {

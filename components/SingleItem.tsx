@@ -40,10 +40,13 @@ function SingleItem({ id }: GetItemVariables): JSX.Element {
   const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
     variables: { id },
   })
+
   if (error) return <Error error={error} />
   if (loading) return <p>Loading...</p>
   if (!data.item) return <p>No Item Found for {id}</p>
+
   const { item } = data
+
   return (
     <SingleItemStyles data-testid="singleItem">
       <Head>

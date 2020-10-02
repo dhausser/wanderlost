@@ -16,6 +16,7 @@ import {
   GetCurrentUser_user,
   GetCurrentUser_user_cart,
 } from '../components/__generated__/GetCurrentUser'
+import { DocumentNode } from 'graphql'
 
 // --------------------------------------------------
 // Override the default test render with our own

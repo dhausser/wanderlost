@@ -15,12 +15,12 @@ exports[`<RequestReset/> renders and matches snapshot 1`] = `
       </h2>
       <label>
         Email
+        <input
+          name="email"
+          placeholder="email"
+          type="email"
+        />
       </label>
-      <input
-        name="email"
-        placeholder="email"
-        type="email"
-      />
       <button
         type="submit"
       >

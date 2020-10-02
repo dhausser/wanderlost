@@ -87,16 +87,15 @@ const fakeItem = (): GetItem_item => ({
   largeImage: 'dog.jpg',
 })
 
-const fakeUser = (overrides?: GetCurrentUser_user): GetCurrentUser_user => ({
+const fakeUser = (): GetCurrentUser_user => ({
   __typename: 'User',
   id: '4234',
-  name: casual.name,
-  email: casual.email,
+  name: 'Davy',
+  email: 'davy@prisma.io',
   // @ts-expect-error not recognized
   permissions: ['ADMIN'],
   orders: [],
   cart: [],
-  ...overrides,
 })
 
 const fakeOrderItem = (): GetOrder_order_items => ({
@@ -120,7 +119,7 @@ const fakeOrder = (): GetOrder_order => ({
 })
 
 const fakeCartItem = (
-  id: string
+  id = 'omg123'
 ): GetCurrentUser_user_cart & GetCurrentUser => ({
   __typename: 'CartItem',
   id,

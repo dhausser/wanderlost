@@ -8,6 +8,7 @@ import CartCount from './CartCount'
 function Nav(): JSX.Element {
   const me = useUser()
   const { toggleCart } = useCart()
+
   return (
     <NavStyles>
       <Link href="/items">

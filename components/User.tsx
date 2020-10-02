@@ -28,8 +28,6 @@ const CURRENT_USER_QUERY = gql`
 
 function useUser(): GetCurrentUser_user | null {
   const { data } = useQuery<GetCurrentUser>(CURRENT_USER_QUERY)
-  console.log(data)
-
   if (data) {
     return data.user
   }

@@ -16,16 +16,67 @@ exports[`<Cart/> renders and matches the snapshot 1`] = `
       <h3
         class="sc-gtssRu egxXhP"
       >
-        undefined's Cart
+        Davy's Cart
       </h3>
       <p>
         You Have 
+        3
          Item
         s
          in your cart.
       </p>
     </header>
-    <ul />
+    <ul>
+      <li
+        class="sc-eCApGN ehOohY"
+      >
+        <img
+          alt="dogs are best"
+          src="dog-small.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $150
+             - 
+            <em>
+              3
+               × 
+              $50
+               Each
+            </em>
+          </p>
+        </div>
+        <button
+          class="sc-hKFyIo hjhEMf"
+          title="Delete Item"
+        >
+          ×
+        </button>
+      </li>
+    </ul>
+    <footer>
+      <p>
+        $150
+      </p>
+      <form
+        class="sc-pNWxx bBiJhz"
+      >
+        
+        <div />
+        <button
+          class="sc-jSFkmK dJUPrO"
+          type="submit"
+        >
+          Pay
+        </button>
+      </form>
+    </footer>
   </div>
 </div>
 `;

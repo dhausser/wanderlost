@@ -3,6 +3,7 @@ import {
   waitFor,
   userEvent,
   fakeUser,
+  cleanup,
   fakeCartItem,
 } from '../lib/test-utils'
 
@@ -12,14 +13,8 @@ import { REMOVE_FROM_CART_MUTATION } from '../components/RemoveFromCart'
 import { CartStateProvider } from '../components/LocalState'
 
 const user = {
-  // __typename: 'User',
-  id: '4234',
-  email: 'davy@prisma.io',
-  name: 'Davy',
-  permissions: ['ADMIN'],
-  orders: [],
-  cart: [],
-  // cart: [fakeCartItem('omg123'), fakeCartItem('abc123')],
+  ...fakeUser(),
+  cart: [fakeCartItem()],
 }
 
 const mocks = [
@@ -31,28 +26,31 @@ const mocks = [
       },
     },
   },
-  // {
-  //   request: { query: REMOVE_FROM_CART_MUTATION, variables: { id: 'omg123' } },
-  //   result: {
-  //     data: {
-  //       deleteCartItem: { id: 'omg123' },
-  //     },
-  //   },
-  // },
+  {
+    request: { query: REMOVE_FROM_CART_MUTATION, variables: { id: 'omg123' } },
+    result: {
+      data: {
+        deleteCartItem: { id: 'omg123' },
+      },
+    },
+  },
 ]
 
 describe('<Cart/>', () => {
+  afterEach(cleanup)
+
   it('renders and matches the snapshot', async () => {
-    const { container, findByTestId } = render(
+    const { container, getByText } = render(
       <CartStateProvider>
         <Cart />
       </CartStateProvider>,
       { mocks, addTypename: false }
     )
-    // await findByTestId('cart')
-    await waitFor(() => {
-      expect(container).toMatchSnapshot()
-    })
+
+    await waitFor(() => getByText(`${user.name}'s Cart`))
+
+    expect(getByText(`${user.name}'s Cart`)).toBeInTheDocument()
+    expect(container).toMatchSnapshot()
   })
 })
 

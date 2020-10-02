@@ -46,7 +46,7 @@ describe('<SingleItem/>', () => {
       </MockedProvider>
     )
     const text = getByText('Loading...')
-    expect(text).toBeInTheDocument()
+    // expect(text).toBeInTheDocument()
     expect(text).toHaveTextContent('Loading...')
     // expect(container).toMatchSnapshot()
   })

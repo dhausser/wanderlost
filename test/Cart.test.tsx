@@ -14,7 +14,7 @@ import { CartStateProvider } from '../components/LocalState'
 
 const user = {
   ...fakeUser(),
-  cart: [fakeCartItem()],
+  cart: [fakeCartItem('omg123'), fakeCartItem('abc123')],
 }
 
 const mocks = [
@@ -54,21 +54,25 @@ describe('<Cart/>', () => {
   })
 })
 
-// describe('<RemoveFromCart/>', () => {
-//   it('udpates when an item is removed', async () => {
-//     const { container, findByTestId, getAllByTitle } = render(
-//       <CartStateProvider>
-//         <Cart />
-//       </CartStateProvider>,
-//       { mocks }
-//     )
-//     await findByTestId('cart')
-//     expect(container).toHaveTextContent(/You have 2 items/i)
-//     const deleteButtons = getAllByTitle(/Remove Item/i)
-//     expect(deleteButtons).toHaveLength(2)
-//     userEvent.click(deleteButtons[0])
-//     const deleteButtonsUpdated = getAllByTitle(/Remove Item/i)
-//     expect(container).toHaveTextContent(/You have 1 item/i)
-//     expect(deleteButtonsUpdated).toHaveLength(1)
-//   })
-// })
+describe('<RemoveFromCart/>', () => {
+  it('udpates when an item is removed', async () => {
+    const { container, findByTestId, getAllByTitle } = render(
+      <CartStateProvider>
+        <Cart />
+      </CartStateProvider>,
+      { mocks, addTypename: false }
+    )
+
+    await findByTestId('cart')
+    expect(container).toHaveTextContent(/You have 2 items/i)
+    const deleteButtons = getAllByTitle(/Delete Item/i)
+    expect(deleteButtons).toHaveLength(2)
+
+    userEvent.click(deleteButtons[0])
+
+    await findByTestId('cart')
+    const deleteButtonsUpdated = getAllByTitle(/Delete Item/i)
+    expect(container).toHaveTextContent(/You have 1 item/i)
+    expect(deleteButtonsUpdated).toHaveLength(1)
+  })
+})

@@ -16,7 +16,6 @@ import {
   GetCurrentUser_user,
   GetCurrentUser_user_cart,
 } from '../components/__generated__/GetCurrentUser'
-import { DocumentNode } from 'graphql'
 
 // --------------------------------------------------
 // Override the default test render with our own
@@ -120,11 +119,11 @@ const fakeOrder = (): GetOrder_order => ({
 })
 
 const fakeCartItem = (
-  id = 'omg123'
+  id: string
 ): GetCurrentUser_user_cart & GetCurrentUser => ({
   __typename: 'CartItem',
   id,
-  quantity: 3,
+  quantity: 1,
   item: fakeItem(),
   user: fakeUser(),
 })

@@ -20,7 +20,7 @@ exports[`<Cart/> renders and matches the snapshot 1`] = `
       </h3>
       <p>
         You Have 
-        3
+        2
          Item
         s
          in your cart.
@@ -42,10 +42,42 @@ exports[`<Cart/> renders and matches the snapshot 1`] = `
             dogs are best
           </h3>
           <p>
-            $150
+            $50
              - 
             <em>
-              3
+              1
+               × 
+              $50
+               Each
+            </em>
+          </p>
+        </div>
+        <button
+          class="sc-hKFyIo hjhEMf"
+          title="Delete Item"
+        >
+          ×
+        </button>
+      </li>
+      <li
+        class="sc-eCApGN ehOohY"
+      >
+        <img
+          alt="dogs are best"
+          src="dog-small.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $50
+             - 
+            <em>
+              1
                × 
               $50
                Each
@@ -62,7 +94,7 @@ exports[`<Cart/> renders and matches the snapshot 1`] = `
     </ul>
     <footer>
       <p>
-        $150
+        $100
       </p>
       <form
         class="sc-pNWxx bBiJhz"

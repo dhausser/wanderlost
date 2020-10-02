@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SingleItem/> it renders loading state 1`] = `
+<div>
+  <p>
+    Loading...
+  </p>
+</div>
+`;

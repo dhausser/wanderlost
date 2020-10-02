@@ -40,25 +40,26 @@ describe('<SingleItem/>', () => {
   })
 
   test('it renders loading state', () => {
-    const { getByText } = render(
+    const { container, getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <SingleItem id="123" />
       </MockedProvider>
     )
-
-    // expect(getByText('Loading...')).toBeInTheDocument()
+    // const text = getByText('Loading...')
+    // // expect(text).toBeInTheDocument()
+    expect(container).toMatchSnapshot()
   })
 
-  it('renders with proper data', async () => {
-    const { container } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <SingleItem id="123" />
-      </MockedProvider>
-    )
-    // await screen.findByTestId('singleItem')
-    // await new Promise((resolve) => setTimeout(resolve, 0)) // wait for response
-    // expect(container).toMatchSnapshot()
-  })
+  // it('renders with proper data', async () => {
+  //   const { container, findByTestId } = render(
+  //     <MockedProvider mocks={mocks} addTypename={false}>
+  //       <SingleItem id="123" />
+  //     </MockedProvider>
+  //   )
+  //   await findByTestId('singleItem')
+  //   // await new Promise((resolve) => setTimeout(resolve, 0)) // wait for response
+  //   expect(container).toMatchSnapshot()
+  // })
 
   // test('renders with proper data', async () => {
   //   const item = {

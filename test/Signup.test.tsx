@@ -49,20 +49,7 @@ describe('<Signup/>', () => {
     render(<Signup />, { mocks: [] })
   })
 
-  it('should render loading state initially', async () => {
-    const component = render(<Signup />, { mocks })
-
-    // find the button and simulate a click
-    const button = await component.findByRole('button')
-    waitFor(() => {
-      fireEvent.click(button) // fires the mutation
-    })
-
-    expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true')
-    expect(screen.getByTestId('loading')).not.toHaveAttribute('disabled')
-  })
-
-  it('calls the mutation properly', () => {
+  it('calls the mutation properly', async () => {
     render(<Signup />, { mocks })
     userEvent.type(screen.getByPlaceholderText('name'), me.name)
     userEvent.type(screen.getByPlaceholderText('email'), me.email)
@@ -71,23 +58,17 @@ describe('<Signup/>', () => {
     expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'false')
     expect(screen.getByTestId('loading')).not.toHaveAttribute('disabled')
 
-    waitFor(() => {
-      // userEvent.click(screen.getByText('Sign Up!'))
-      fireEvent.click(screen.getByText('Sign Up!'))
-    })
-
-    // await new Promise((resolve) => setTimeout(resolve, 0)) // wait for response
-
-    // waitFor(() => {
-    // expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true')
-    // expect(screen.getByTestId('loading')).toHaveAttribute('disabled')
-    // })
+    // const button = await component.findByRole('button')
+    // fireEvent.click(button) // fires the mutation
+    fireEvent.click(screen.getByText('Sign Up!'))
 
     // loading state
-    // waitFor(() => {
-    //   expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true')
-    //   expect(screen.getByTestId('loading')).toHaveAttribute('disabled')
-    // })
-    // screen.findByText(`Signed up with ${me.email} — Please Sign In now`)
+    await waitFor(() => {
+      // userEvent.click(screen.getByText('Sign Up!'))
+      expect(screen.getByTestId('loading')).toHaveAttribute('aria-busy', 'true')
+      expect(screen.getByTestId('loading')).toHaveAttribute('disabled')
+    })
+
+    screen.findByText(`Signed up with ${me.email} — Please Sign In now`)
   })
 })

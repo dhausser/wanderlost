@@ -45,9 +45,10 @@ describe('<SingleItem/>', () => {
         <SingleItem id="123" />
       </MockedProvider>
     )
-    // const text = getByText('Loading...')
-    // // expect(text).toBeInTheDocument()
-    expect(container).toMatchSnapshot()
+    const text = getByText('Loading...')
+    expect(text).toBeInTheDocument()
+    expect(text).toHaveTextContent('Loading...')
+    // expect(container).toMatchSnapshot()
   })
 
   // it('renders with proper data', async () => {

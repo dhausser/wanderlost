@@ -46,13 +46,13 @@ const mocks = [
 ]
 
 describe('<AddToCart/>', () => {
-  //   it('renders and matches the snap shot', async () => {
-  //     const { container } = render(<AddToCart id="abc123" />, {
-  //       mocks,
-  //       addTypename: false,
-  //     })
-  //     expect(container).toMatchSnapshot()
-  //   })
+  it('renders and matches the snap shot', async () => {
+    const { container } = render(<AddToCart id="abc123" />, {
+      mocks,
+      addTypename: false,
+    })
+    expect(container).toMatchSnapshot()
+  })
 
   it('adds an item to cart when clicked', async () => {
     // Here I show you how to reach directly into the apollo cache to test the data.
@@ -65,11 +65,12 @@ describe('<AddToCart/>', () => {
           return <AddToCart id="abc123" />
         }}
       </ApolloConsumer>,
-      { mocks, addTypename: false }
+      { mocks: [...mocks], addTypename: false }
     )
     // check that the cart is empty to start
     const {
       data: { authenticatedUser: me },
+      // @ts-expect-error with apolloClient
     } = await apolloClient.query({ query: CURRENT_USER_QUERY })
     expect(me.cart).toHaveLength(0)
     // Click the button
@@ -82,6 +83,7 @@ describe('<AddToCart/>', () => {
     // check if the item is in the cart
     const {
       data: { authenticatedUser: me2 },
+      // @ts-expect-error with apolloClient
     } = await apolloClient.query({ query: CURRENT_USER_QUERY })
     expect(me2.cart).toHaveLength(1)
     expect(me2.cart[0].id).toBe('omg123')

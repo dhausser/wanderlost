@@ -13,6 +13,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '14.x'
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.yarn 
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
     - run: yarn --frozen-lockfile
     - run: yarn build
     - run: yarn test

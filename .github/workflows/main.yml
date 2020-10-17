@@ -21,11 +21,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs linting
-      - name: Run a multi-line script
-        run: yarn lint
+    
+      - name: Install modules
+        run: yarn
+    
+      - name: Run ESLint
+        run: eslint . --ext .js,.jsx,.ts,.tsx
           
-      # Run tests
-      - name: Run a multi-line script
-        run: yarn test
+      - name: Run Jest
+        run: jest

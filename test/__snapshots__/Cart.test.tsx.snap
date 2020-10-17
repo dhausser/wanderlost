@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Cart/> renders and matches the snapshot 1`] = `
+<div>
+  <div
+    class="sc-bdnylx jMyLIc"
+    data-testid="cart"
+  >
+    <header>
+      <button
+        class="sc-dlnjPT cEBaNc"
+        title="close"
+      >
+        ×
+      </button>
+      <h3
+        class="sc-gtssRu egxXhP"
+      >
+        Davy's Cart
+      </h3>
+      <p>
+        You Have 
+        2
+         Item
+        s
+         in your cart.
+      </p>
+    </header>
+    <ul>
+      <li
+        class="sc-eCApGN ehOohY"
+      >
+        <img
+          alt="dogs are best"
+          src="dog-small.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $50
+             - 
+            <em>
+              1
+               × 
+              $50
+               Each
+            </em>
+          </p>
+        </div>
+        <button
+          class="sc-hKFyIo hjhEMf"
+          title="Delete Item"
+        >
+          ×
+        </button>
+      </li>
+      <li
+        class="sc-eCApGN ehOohY"
+      >
+        <img
+          alt="dogs are best"
+          src="dog-small.jpg"
+          width="100"
+        />
+        <div
+          class="cart-item-details"
+        >
+          <h3>
+            dogs are best
+          </h3>
+          <p>
+            $50
+             - 
+            <em>
+              1
+               × 
+              $50
+               Each
+            </em>
+          </p>
+        </div>
+        <button
+          class="sc-hKFyIo hjhEMf"
+          title="Delete Item"
+        >
+          ×
+        </button>
+      </li>
+    </ul>
+    <footer>
+      <p>
+        $100
+      </p>
+      <form
+        class="sc-pNWxx bBiJhz"
+      >
+        
+        <div />
+        <button
+          class="sc-jSFkmK dJUPrO"
+          type="submit"
+        >
+          Pay
+        </button>
+      </form>
+    </footer>
+  </div>
+</div>
+`;

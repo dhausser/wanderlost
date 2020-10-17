@@ -17,4 +17,4 @@ Built with:
 - GraphQL
 - TypeScript
 
-![Wanderlost](./public/static/wanderlost.png 'Wanderlost')
+![Wanderlost](https://github.com/dhausser/wanderlost/blob/main/public/static/wanderlost.png 'Wanderlost')

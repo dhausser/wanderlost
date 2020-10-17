@@ -22,8 +22,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs linting and test suites
+      # Runs linting
       - name: Run a multi-line script
         run: |
-          yarn lint,
-          yarn test.
+          yarn lint
+          
+      # Run tests
+      - name: Run a multi-line script
+        run: |
+          yarn test

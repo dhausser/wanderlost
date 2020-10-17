@@ -22,6 +22,7 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - run: yarn --frozen-lockfile
+    - run: yarn lint
     - run: yarn build
     - run: yarn test
       env:

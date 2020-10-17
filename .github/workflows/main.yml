@@ -24,10 +24,8 @@ jobs:
 
       # Runs linting
       - name: Run a multi-line script
-        run: |
-          yarn lint
+        run: yarn lint
           
       # Run tests
       - name: Run a multi-line script
-        run: |
-          yarn test
+        run: yarn test

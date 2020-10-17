@@ -16,3 +16,5 @@ Built with:
 - Prisma 2
 - GraphQL
 - TypeScript
+
+![Wanderlost](./public/static/wanderlost.png 'Wanderlost')

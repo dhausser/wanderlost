@@ -1,7 +1,0 @@
-.vscode/
-node_modules/
-src/generated/
-*.env*
-prisma/migrations/
-migration/
-dist/

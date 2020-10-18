@@ -18,7 +18,7 @@
     "@apollo/client": "^3.2.4",
     "@nexus/schema": "^0.15.0",
     "@prisma/client": "^2.9.0",
-    "@sendgrid/mail": "^7.2.6",
+    "@sendgrid/mail": "^7.3.0",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.10.0",
     "apollo-server-micro": "^2.18.2",

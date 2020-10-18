@@ -34,7 +34,7 @@
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^6.8.6",
+    "react-hook-form": "^6.9.4",
     "react-transition-group": "^4.4.1",
     "stripe": "^8.114.0",
     "styled-components": "^5.2.0"

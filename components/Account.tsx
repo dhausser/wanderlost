@@ -43,7 +43,8 @@ function Account() {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
         <input name="name" ref={register({ required: true })} />
-        {errors.email && <p>This is required</p>}
+        {/* TOFIX  */}
+        {/* {errors.email && <p>This is required</p>} */}
         <button type="submit">Updat{loading ? 'ing' : 'e'}</button>
       </fieldset>
     </Form>

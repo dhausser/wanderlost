@@ -21,9 +21,9 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
-    - run: prisma generate
     - run: yarn --frozen-lockfile
     - run: yarn lint
+    - run: prisma generate
     - run: yarn build
     - run: yarn test
       env:

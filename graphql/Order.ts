@@ -1,24 +1,6 @@
 import { objectType, extendType, idArg, stringArg } from '@nexus/schema'
+import { CartItem as CartItemType, Item } from '@prisma/client'
 import Stripe from 'stripe'
-
-interface CartItemType {
-  id: string
-  quantity: number
-  itemId: string
-  userId: string
-}
-
-interface Item {
-  id: string
-  title: string
-  description: string
-  image: string | null
-  largeImage: string | null
-  price: number
-  userId: string
-  createdAt: Date
-  updatedAt: Date
-}
 
 export const OrderItem = objectType({
   name: 'OrderItem',

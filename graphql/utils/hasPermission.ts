@@ -1,24 +1,4 @@
-type Permission =
-  | 'USER'
-  | 'ADMIN'
-  | 'ITEMCREATE'
-  | 'ITEMUPDATE'
-  | 'ITEMDELETE'
-  | 'PERMISSIONUPDATE'
-
-type Enumerable<T> = T | T[]
-
-interface User {
-  id: string
-  email: string
-  name: string
-  password: string
-  permissions: Permission[]
-  resetToken: string | null
-  resetTokenExpiry: number | null
-  createdAt: Date
-  updatedAt: Date
-}
+import { Enumerable, User } from '@prisma/client'
 
 const hasPermission = (
   user: User,

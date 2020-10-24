@@ -5,13 +5,9 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client'
-
-interface CartItem {
-  id: string
-  quantity: number
-  itemId: string
-  userId: string
-}
+import { CartItem } from '@prisma/client'
+// import { schema } from '../graphql/schema'
+// import { createContext } from './context'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
@@ -38,6 +34,7 @@ function createApolloClient() {
         User: {
           fields: {
             cart: {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               merge(_existing = [], incoming: CartItem[]) {
                 return [...incoming]
               },

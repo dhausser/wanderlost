@@ -12,7 +12,18 @@ import sgMail from '@sendgrid/mail'
 import { promisify } from 'util'
 import { randomBytes } from 'crypto'
 import { setCookie, hasPermission } from './utils'
-import { Permission as PermissionType } from '@prisma/client'
+
+// import { Permission as PermissionType } from '@prisma/client'
+// type Permissions = "ADMIN" | "ITEMCREATE" | "ITEMDELETE" | "ITEMUPDATE" | "PERMISSIONUPDATE" | "USER"
+
+interface PermissionType {
+  USER: 'USER'
+  ADMIN: 'ADMIN'
+  ITEMCREATE: 'ITEMCREATE'
+  ITEMUPDATE: 'ITEMUPDATE'
+  ITEMDELETE: 'ITEMDELETE'
+  PERMISSIONUPDATE: 'PERMISSIONUPDATE'
+}
 
 export const User = objectType({
   name: 'User',

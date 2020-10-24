@@ -42,10 +42,10 @@
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
     "@prisma/cli": "^2.9.0",
-    "@testing-library/dom": "^7.26.0",
-    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/dom": "^7.26.3",
+    "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.8",
+    "@testing-library/user-event": "^12.1.10",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie": "^0.4.0",
     "@types/graphql-iso-date": "^3.4.0",

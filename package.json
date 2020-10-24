@@ -15,7 +15,7 @@
     "codegen": "apollo client:codegen --target typescript"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.4",
+    "@apollo/client": "^3.2.5",
     "@nexus/schema": "^0.16.0",
     "@prisma/client": "^2.9.0",
     "@sendgrid/mail": "^7.3.0",
